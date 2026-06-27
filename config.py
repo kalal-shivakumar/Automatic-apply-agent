@@ -29,7 +29,7 @@ class Config:
     YOUR_EXPECTED_CTC = os.getenv("YOUR_EXPECTED_CTC", "")
     YOUR_CURRENT_CTC = os.getenv("YOUR_CURRENT_CTC", "")
 
-    MAX_APPLICATIONS = int(os.getenv("MAX_APPLICATIONS", "20"))
+    MAX_APPLICATIONS = int(os.getenv("MAX_APPLICATIONS", "50"))
 
     BROWSER_DATA_DIR = os.path.join(os.path.dirname(__file__), "browser_data")
 

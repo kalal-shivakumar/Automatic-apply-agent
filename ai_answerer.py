@@ -53,7 +53,14 @@ Profile:
 
 Question: {question}
 
-Reply with a concise, professional answer. Keep it brief (1-2 sentences max unless the question requires more detail). Do not add explanation or preamble."""
+IMPORTANT RULES:
+- If the question asks "how many years" or about years of experience, reply with ONLY a number (e.g. "11" or "8"). Never write a sentence for experience questions.
+- If the question asks for a city/location, reply with just the city name (e.g. "Bangalore").
+- If the question asks for a name, reply with just the name.
+- If the question asks for notice period, reply with just the period (e.g. "2 months").
+- If the question asks for current CTC or expected CTC, reply with just the number in LPA (e.g. "80 LPA").
+- For other questions, reply with a concise 1-2 sentence professional answer.
+- Never add preamble like "I have" or "My experience is" for numeric questions."""
 
         response = self.client.chat.completions.create(
             model=self.deployment,

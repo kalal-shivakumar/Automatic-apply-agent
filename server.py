@@ -230,22 +230,30 @@ async def run_agent():
     logger.info("Agent started via webapp")
 
     try:
-        for qi, (keywords, location) in enumerate(SEARCH_QUERIES, 1):
-            if state.should_stop or state.stats["applied"] >= Config.MAX_APPLICATIONS:
-                break
+        round_num = 0
+        while not state.should_stop and state.stats["applied"] < Config.MAX_APPLICATIONS:
+            round_num += 1
+            if round_num > 1:
+                await broadcast({"type": "log",
+                                 "message": f"--- Round {round_num}: Re-running all search queries (Applied: {state.stats['applied']}/{Config.MAX_APPLICATIONS}) ---"})
+                logger.info(f"Starting round {round_num}")
 
-            state.stats["current_query"] = f"{keywords} in {location} [{qi}/{len(SEARCH_QUERIES)}]"
-            await broadcast({
-                "type": "search_query",
-                "query_number": qi,
-                "total_queries": len(SEARCH_QUERIES),
-                "keywords": keywords,
-                "location": location,
-            })
-
-            for page_no in range(1, 4):
+            for qi, (keywords, location) in enumerate(SEARCH_QUERIES, 1):
                 if state.should_stop or state.stats["applied"] >= Config.MAX_APPLICATIONS:
                     break
+
+                state.stats["current_query"] = f"{keywords} in {location} [{qi}/{len(SEARCH_QUERIES)}] (Round {round_num})"
+                await broadcast({
+                    "type": "search_query",
+                    "query_number": qi,
+                    "total_queries": len(SEARCH_QUERIES),
+                    "keywords": keywords,
+                    "location": location,
+                })
+
+                for page_no in range(1, 4):
+                    if state.should_stop or state.stats["applied"] >= Config.MAX_APPLICATIONS:
+                        break
 
                 jobs = await searcher.search_jobs(
                     page_no=page_no, keywords=keywords, location=location
@@ -346,12 +354,16 @@ async def run_agent():
         with open("applied_jobs.json", "w", encoding="utf-8") as f:
             json.dump(applied, f, indent=2, ensure_ascii=False)
 
+    quota_reached = state.stats["applied"] >= Config.MAX_APPLICATIONS
+    if quota_reached:
+        msg = f"\u2705 Today's quota completed! Applied to {state.stats['applied']} jobs. Evaluated: {state.stats['evaluated']}, Skipped: {state.stats['skipped']}"
+    else:
+        msg = f"Agent completed. Applied: {state.stats['applied']}, Skipped: {state.stats['skipped']}, Evaluated: {state.stats['evaluated']}"
+
     await broadcast({
         "type": "agent_completed",
         "stats": state.stats,
-        "message": (f"Agent completed. Applied: {state.stats['applied']}, "
-                    f"Skipped: {state.stats['skipped']}, "
-                    f"Evaluated: {state.stats['evaluated']}"),
+        "message": msg,
     })
     logger.info(f"Agent completed: {state.stats}")
 
