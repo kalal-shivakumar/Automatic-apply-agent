@@ -1,0 +1,12 @@
+.env
+__pycache__/
+*.pyc
+browser_data/
+.venv/
+terraform.tfstate
+terraform.tfstate.backup
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/terraform.tfvars
+terraform/.terraform/
+*.log
