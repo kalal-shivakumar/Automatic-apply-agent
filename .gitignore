@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 browser_data/
 .venv/
+node_modules/
 terraform.tfstate
 terraform.tfstate.backup
 terraform/terraform.tfstate
