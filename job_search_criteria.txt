@@ -5,7 +5,7 @@
 - Total Experience: 11 Years
 - Current Role: Senior Azure & AWS DevOps Engineer
 - Current CTC: ₹52 LPA
-- Expected CTC: ₹80 LPA
+- Expected CTC: ₹80 LPA or not disclosed
 - Notice Period: 60 days
 - Preferred Location: Remote / Hyderabad / Bangalore / Pune / Chennai / Noida (prioritize Remote and Hyderabad)
 - Work Authorization: India
@@ -46,6 +46,11 @@ Nexus, Artifactory, HashiCorp Vault
 Multi-Cloud, Platform Engineering, SRE, DevSecOps, FinOps, Service Mesh (Istio),
 KEDA, OpenTelemetry, Azure Arc, Crossplane
 
+## Automation Filters
+- Minimum Match Score: 60%
+- Job Freshness: Last 24 hours only or 1 day
+- If the job is not suitable (below 60% match), skip the apply automatically
+
 ## Search Preferences
 Prioritize:
 - ₹75-95 LPA fixed or total compensation
@@ -78,7 +83,7 @@ Avoid:
 5. Location: Remote/Hybrid/Office, Office Location, Relocation
 6. Hiring Process: Rounds, Coding/System Design/Hands-on, K8s/Terraform/Azure/AWS
 7. Job Quality: Suitability, Red Flags, Growth, Learning, Work-Life Balance
-8. Final: Match Score /100, Should Apply?, Selection Probability, ₹80 LPA Probability
+8. Final: Match Score 60/100, Should Apply?, Selection Probability, ₹80 LPA or not disclosed Probability
 
 ## Ranking Criteria (Best to Worst)
 1. Salary Potential

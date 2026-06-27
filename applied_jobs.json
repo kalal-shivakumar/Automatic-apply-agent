@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Senior DevOps Engineer",
+    "company": "Optum",
+    "location": "Bengaluru, Hyderabad, Delhi / NCR",
+    "salary": "15-35 Lacs PA",
+    "experience": "10-15 Yrs",
+    "skills": " Python, Gcp Devops,  Terraform,  Scripting, Cloud,  Python Workflows",
+    "url": "https://www.naukri.com/job-listings-senior-devops-engineer-optum-hyderabad-bengaluru-delhi-ncr-10-to-15-years-260626031195",
+    "match_score": 72,
+    "match_reason": "Strong technical and experience match for senior DevOps/infrastructure work (Terraform, Kubernetes, Docker, CI/CD, Python, multi-cloud), but salary is far below target and the role is GCP-leaning with rotational shift, making it a decent but not ideal fit.",
+    "status": "Applied ✓",
+    "search_query": "Senior DevOps Engineer in bangalore"
+  },
+  {
+    "id": 3,
+    "title": "Infrastructure Engineer  6+ years Hyderabad/Chennai/Bangalore",
+    "company": "Crescendo Global Leadership Hiring India",
+    "location": "Bengaluru, Hyderabad, Chennai",
+    "salary": "Not disclosed",
+    "experience": "7-12 Yrs",
+    "skills": "Infrastructure Engineer, Terraform, Platform Engineer, Kubernetes, Infrastructure Management",
+    "url": "https://www.naukri.com/job-listings-infrastructure-engineer-6-years-hyderabad-chennai-bangalore-crescendo-global-leadership-hiring-india-hyderabad-chennai-bengaluru-7-to-12-years-260626031453",
+    "match_score": 72,
+    "match_reason": "Strong match on infrastructure/platform engineering, Kubernetes, Terraform, CI/CD, scripting, and 11 years’ experience; title and location fit well, but it lacks explicit Azure/AWS depth in the JD, salary is undisclosed, and the role is more GCP/RPA-focused than the candidate’s Azure/AWS multi-cloud preference.",
+    "status": "Applied ✓",
+    "search_query": "Senior DevOps Engineer in bangalore"
+  },
+  {
+    "id": 4,
+    "title": "Senior Cloud Site Reliability Engineer",
+    "company": "Augusta Infotech",
+    "location": "Hybrid - Bengaluru",
+    "salary": "Not disclosed",
+    "experience": "9-13 Yrs",
+    "skills": "Site Reliability Engineering, Silos, Grafana, Azure Monitoring, SLOs, SRE, Prometheus, Reliability Engineering, Azure Cloud, Error Budgets, SLAs, Terr",
+    "url": "https://www.naukri.com/job-listings-senior-cloud-site-reliability-engineer-augusta-infotech-bengaluru-9-to-13-years-120626002967",
+    "match_score": 78,
+    "match_reason": "Strong match for senior Azure-focused SRE/DevOps with excellent overlap in Azure, Kubernetes, Terraform, Prometheus/Grafana, Python, and 11 years’ experience; title and level fit well, but AWS is not emphasized, salary is undisclosed, and hybrid Bengaluru is less preferred than remote.",
+    "status": "Applied ✓",
+    "search_query": "Senior DevOps Engineer in bangalore"
+  }
+]

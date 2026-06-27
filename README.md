@@ -11,7 +11,7 @@ An autonomous AI-powered agent that searches, evaluates, and applies for jobs on
 | **Multi-Query Search** | Rotates through 25+ keyword/location combinations (DevOps, SRE, Platform, Cloud Architect, etc.) across Bangalore, Hyderabad, Pune, Chennai, Noida |
 | **Fresh Jobs Only** | Filters to jobs posted in the **last 1 day** (`jobAge=1`) |
 | **AI Job Scoring** | Extracts full JD (JSON-LD, CSS selectors, JS heuristic) and scores match 0–100% using weighted criteria (skills 35%, role 20%, experience 15%, salary 10%, location 10%, quality 10%) |
-| **Threshold Gating** | Only applies to jobs scoring **≥ 65%** match |
+| **Threshold Gating** | Only applies to jobs scoring **≥ 60%** match |
 | **AI Questionnaire Answering** | Handles Naukri chatbot questions — text inputs, radio buttons, checkboxes, dropdowns, quick-reply chips, and contenteditable divs |
 | **Persistent Login** | Playwright persistent browser context preserves login session across runs |
 | **Human-Like Behavior** | Random delays, scrolling, and typing speed to avoid bot detection |
@@ -167,7 +167,7 @@ For each of 25 search queries:
         ├─ Open job page
         ├─ Extract full JD (JSON-LD → CSS selectors → JS heuristic)
         ├─ AI scores match (0–100%)
-        ├─ Skip if < 65%
+        ├─ Skip if < 60%
         ├─ Click Apply / Easy Apply
         ├─ Handle chatbot Q&A:
         │   ├─ Text input (contenteditable div)

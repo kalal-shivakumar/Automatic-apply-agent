@@ -104,6 +104,9 @@ class JobApplicant:
         self.applied_jobs = []
         self._last_question = None
         self._stuck_count = 0
+        self.last_match_score = 0
+        self.last_match_reason = ""
+        self.last_skip_reason = ""
 
     async def _extract_full_jd(self) -> str:
         """Extract the complete job description from the current job page."""
@@ -241,10 +244,13 @@ class JobApplicant:
             pass
         return details
 
-    async def apply_to_job(self, job: dict, min_match_pct: int = 65) -> bool:
+    async def apply_to_job(self, job: dict, min_match_pct: int = 60) -> bool:
         """Open a job page, extract full JD, check match, then apply."""
         self._last_question = None
         self._stuck_count = 0
+        self.last_match_score = 0
+        self.last_match_reason = ""
+        self.last_skip_reason = ""
         try:
             logger.info(f"Opening: {job['title']} at {job['company']}")
 
@@ -280,9 +286,13 @@ class JobApplicant:
             print(f"  Match Score: {match_score}% — {match_reason}")
             logger.info(f"Match: {match_score}% for {job['title']} @ {job['company']} — {match_reason}")
 
+            self.last_match_score = match_score
+            self.last_match_reason = match_reason
+
             if match_score < min_match_pct:
                 print(f"  ✗ Skipping (below {min_match_pct}% threshold)")
                 logger.info(f"Skipped: {job['title']} @ {job['company']} ({match_score}% < {min_match_pct}%)")
+                self.last_skip_reason = "low_score"
                 return False
 
             print(f"  ✓ Good match — proceeding to apply")
@@ -300,20 +310,24 @@ class JobApplicant:
                     locator = self.page.locator(selector).first
                     if await locator.is_visible(timeout=2000):
                         btn_text = (await locator.inner_text()).strip().lower()
-                        # Only skip if the button ITSELF says "applied" as primary state
-                        # e.g. "Applied", "Already Applied", "Quick applyApplied"
-                        # But NOT "Apply" with sub-text like "234 applied"
+                        # Parse the primary button text (first line) vs counter sub-text
+                        # e.g. "Apply\n520 applied" → primary="apply", sub="520 applied"
+                        # vs "Applied" → primary="applied" (actually already applied)
+                        lines = [l.strip() for l in btn_text.split('\n') if l.strip()]
+                        primary_text = lines[0] if lines else btn_text
+                        # Only skip if the PRIMARY text is "applied" (not a sub-counter)
                         is_already_applied = (
-                            btn_text == "applied" or
-                            btn_text.endswith("applied") or
+                            primary_text == "applied" or
                             "already applied" in btn_text
                         )
                         if is_already_applied:
                             logger.info(f"Already applied to this job (button: '{btn_text}')")
+                            self.last_skip_reason = "already_applied"
                             return False
                         # Skip disabled buttons to avoid 30s timeout
                         if not await locator.is_enabled(timeout=1000):
                             logger.info("Apply button is disabled, skipping")
+                            self.last_skip_reason = "button_disabled"
                             return False
                         apply_btn = locator
                         break
@@ -322,6 +336,7 @@ class JobApplicant:
 
             if not apply_btn:
                 logger.info("No apply button found, skipping")
+                self.last_skip_reason = "no_button"
                 return False
 
             # Click apply

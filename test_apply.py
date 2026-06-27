@@ -86,8 +86,8 @@ async def main():
         )
         print(f"\n  Match Score: {match_score}% — {match_reason}")
 
-        if match_score < 65:
-            print(f"  ✗ Skipping (below 65% threshold)")
+        if match_score < 60:
+            print(f"  ✗ Skipping (below 60% threshold)")
             return
         print(f"  ✓ Good match — proceeding to apply")
 

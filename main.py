@@ -64,7 +64,7 @@ async def main():
     print(f"Experience: {Config.EXPERIENCE_YEARS} years")
     print(f"Max applications: {Config.MAX_APPLICATIONS}")
     print(f"Search queries: {len(SEARCH_QUERIES)}")
-    print(f"Filter: Posted in last 1 day | Match threshold: 65%")
+    print(f"Filter: Posted in last 24 hours | Match threshold: 60%")
     print()
 
     browser = NaukriBrowser()
@@ -136,7 +136,7 @@ async def main():
                     print(f"  {'─' * 66}")
 
                     try:
-                        success = await applicant.apply_to_job(job, min_match_pct=65)
+                        success = await applicant.apply_to_job(job, min_match_pct=60)
                         if success:
                             total_applied += 1
                         else:
