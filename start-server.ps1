@@ -10,6 +10,30 @@ function Write-Ok($msg)   { Write-Host "  [OK] $msg" -ForegroundColor Green }
 function Write-Warn($msg) { Write-Host "  [!!] $msg" -ForegroundColor Yellow }
 function Write-Fail($msg) { Write-Host " [ERR] $msg" -ForegroundColor Red }
 
+function Refresh-Path {
+    $machine = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
+    $user = [System.Environment]::GetEnvironmentVariable("Path", "User")
+    $env:Path = "$machine;$user"
+}
+
+function Install-WithWinget($id, $name) {
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Warn "winget is not available. Cannot auto-install $name."
+        return $false
+    }
+
+    Write-Warn "Attempting to install $name via winget..."
+    winget install --id $id --exact --accept-package-agreements --accept-source-agreements --silent 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warn "winget install failed for $name (id: $id)."
+        return $false
+    }
+
+    Refresh-Path
+    Write-Ok "$name installation completed via winget."
+    return $true
+}
+
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "   Naukri AI Job Agent - Setup & Launch     " -ForegroundColor Cyan
@@ -26,11 +50,36 @@ $prereqFailed = $false
 $savedPref = $ErrorActionPreference
 $ErrorActionPreference = "SilentlyContinue"
 
+# Git
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    Write-Warn "Git is not installed."
+    $gitInstalled = Install-WithWinget "Git.Git" "Git"
+    if (-not $gitInstalled -or -not (Get-Command git -ErrorAction SilentlyContinue)) {
+        Write-Fail "Git is not installed."
+        Write-Host "  Install from: https://git-scm.com/download/win" -ForegroundColor Yellow
+        $prereqFailed = $true
+    } else {
+        $gitVer = (git --version 2>&1) | Select-Object -First 1
+        Write-Ok "Git            : $gitVer"
+    }
+} else {
+    $gitVer = (git --version 2>&1) | Select-Object -First 1
+    Write-Ok "Git            : $gitVer"
+}
+
 # Azure CLI
 if (-not (Get-Command az -ErrorAction SilentlyContinue)) {
-    Write-Fail "Azure CLI (az) is not installed."
-    Write-Host "  Install from: https://aka.ms/installazurecliwindows" -ForegroundColor Yellow
-    $prereqFailed = $true
+    Write-Warn "Azure CLI (az) is not installed."
+    $azInstalled = Install-WithWinget "Microsoft.AzureCLI" "Azure CLI"
+    if (-not $azInstalled -or -not (Get-Command az -ErrorAction SilentlyContinue)) {
+        Write-Fail "Azure CLI (az) is not installed."
+        Write-Host "  Install from: https://aka.ms/installazurecliwindows" -ForegroundColor Yellow
+        $prereqFailed = $true
+    } else {
+        $azVerRaw = (az --version 2>&1) | Where-Object { $_ -match '^azure-cli' } | Select-Object -First 1
+        $azVer = "$azVerRaw" -replace 'azure-cli\s*',''
+        Write-Ok "Azure CLI      : $azVer"
+    }
 } else {
     $azVerRaw = (az --version 2>&1) | Where-Object { $_ -match '^azure-cli' } | Select-Object -First 1
     $azVer = "$azVerRaw" -replace 'azure-cli\s*',''
@@ -39,9 +88,17 @@ if (-not (Get-Command az -ErrorAction SilentlyContinue)) {
 
 # Terraform
 if (-not (Get-Command terraform -ErrorAction SilentlyContinue)) {
-    Write-Fail "Terraform is not installed."
-    Write-Host "  Install from: https://developer.hashicorp.com/terraform/install" -ForegroundColor Yellow
-    $prereqFailed = $true
+    Write-Warn "Terraform is not installed."
+    $tfInstalled = Install-WithWinget "Hashicorp.Terraform" "Terraform"
+    if (-not $tfInstalled -or -not (Get-Command terraform -ErrorAction SilentlyContinue)) {
+        Write-Fail "Terraform is not installed."
+        Write-Host "  Install from: https://developer.hashicorp.com/terraform/install" -ForegroundColor Yellow
+        $prereqFailed = $true
+    } else {
+        $tfVerLine = (terraform --version 2>&1) | Select-Object -First 1
+        $tfVer = "$tfVerLine" -replace 'Terraform v',''
+        Write-Ok "Terraform      : $tfVer"
+    }
 } else {
     $tfVerLine = (terraform --version 2>&1) | Select-Object -First 1
     $tfVer = "$tfVerLine" -replace 'Terraform v',''
@@ -97,7 +154,7 @@ $ErrorActionPreference = $savedPref
 
 if ($prereqFailed) {
     Write-Host ""
-    Write-Fail "One or more prerequisites are missing. Install them and re-run this script."
+    Write-Fail "One or more prerequisites are missing. Install/fix them and re-run this script."
     exit 1
 }
 
