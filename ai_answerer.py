@@ -24,10 +24,19 @@ class QuestionAnswerer:
             azure_endpoint=Config.AZURE_OPENAI_ENDPOINT,
             api_key=Config.AZURE_OPENAI_KEY,
             api_version=Config.AZURE_OPENAI_API_VERSION,
+            timeout=60.0,  # Increase timeout to 60 seconds
+            max_retries=3,  # Retry up to 3 times on transient failures
+            http_client=self._get_http_client(),  # Use custom HTTP client with SSL verification disabled
         )
         self.deployment = Config.AZURE_OPENAI_DEPLOYMENT
         self.profile = Config.get_profile_summary()
         self.search_criteria = _load_search_criteria()
+
+    @staticmethod
+    def _get_http_client():
+        """Create HTTP client with SSL verification disabled for corporate proxy environments"""
+        import httpx
+        return httpx.Client(verify=False)
 
     def answer_question(self, question: str, options: list[str] | None = None) -> str:
         """Answer a job application question using AI."""
@@ -136,5 +145,8 @@ REASON: <one line summary>"""
                     reason = line.split(":", 1)[1].strip()
             return (min(max(score, 0), 100), reason)
         except Exception as e:
+            import traceback
             logger.error(f"Match scoring error: {e}")
+            logger.error(f"Error type: {type(e).__name__}")
+            logger.error(f"Traceback: {traceback.format_exc()}")
             return (50, "Error during evaluation - defaulting to 50%")

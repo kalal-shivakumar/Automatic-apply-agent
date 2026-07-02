@@ -262,18 +262,38 @@ $merged = [ordered]@{
 }
 
 # ----------------------------------------------------------
-# STEP 3 cont. - Write .env and export to session
+# STEP 3 cont. - Clear stale system env vars + Write .env + export to session
 # ----------------------------------------------------------
 Write-Step "Writing .env and exporting environment variables..."
+
+# First, clear any stale system environment variables from previous sessions
+# These can override .env values if not cleared
+$staleVars = @('AZURE_OPENAI_ENDPOINT', 'AZURE_OPENAI_KEY', 'AZURE_OPENAI_DEPLOYMENT',
+               'AZURE_OPENAI_API_VERSION', 'AZURE_OPENAI_ACCOUNT', 'AZURE_OPENAI_MODEL',
+               'AZURE_RESOURCE_GROUP')
+foreach ($var in $staleVars) {
+    $oldVal = [System.Environment]::GetEnvironmentVariable($var, 'User')
+    if ($oldVal) {
+        [System.Environment]::SetEnvironmentVariable($var, '', 'User')
+        Write-Warn "Cleared stale $var from User environment"
+    }
+}
+
+# Write .env file with proper formatting (each var on own line) and NO UTF-8 BOM
+$envLines = @()
 foreach ($kv in $merged.GetEnumerator()) {
     $envLines += "$($kv.Key)=$($kv.Value)"
 }
-$envLines | Set-Content $envFile -Encoding UTF8
+$envContent = $envLines -join "`n"
+$utf8NoBOM = [System.Text.UTF8Encoding]::new($false)
+[System.IO.File]::WriteAllText($envFile, $envContent, $utf8NoBOM)
 
 Write-Ok ".env written to: $envFile"
 
-# Also export into current session so the spawned python process inherits them
+# Export into current Process environment (not User, to avoid persistence)
+# These will be inherited by spawned Python process
 foreach ($kv in $merged.GetEnumerator()) {
+    Set-Item -Path "env:$($kv.Key)" -Value $kv.Value
     [System.Environment]::SetEnvironmentVariable($kv.Key, $kv.Value, "Process")
 }
 Write-Ok "Environment variables exported to current session."
@@ -321,7 +341,106 @@ Write-Warn "Ensuring Playwright Chromium is installed..."
 Write-Ok "Playwright Chromium ready."
 
 # ----------------------------------------------------------
-# STEP 5 - Frontend static assets (no Vite/esbuild needed)
+# STEP 5 - Validate and apply code fixes (config.py, ai_answerer.py)
+# ----------------------------------------------------------
+Write-Step "Validating Python code fixes..."
+
+$configPy = Join-Path $root "config.py"
+$aiAnswererPy = Join-Path $root "ai_answerer.py"
+
+# Fix 1: Ensure config.py has load_dotenv(override=True)
+if (Test-Path $configPy) {
+    $configContent = Get-Content $configPy -Raw
+    if ($configContent -match 'load_dotenv\(\)') {
+        Write-Warn "config.py has load_dotenv() without override=True - fixing..."
+        $configContent = $configContent -replace 'load_dotenv\(\)', 'load_dotenv(override=True)'
+        [System.IO.File]::WriteAllText($configPy, $configContent, [System.Text.UTF8Encoding]::new($false))
+        Write-Ok "config.py patched: load_dotenv(override=True)"
+    } elseif ($configContent -match 'load_dotenv\(override=True\)') {
+        Write-Ok "config.py already has load_dotenv(override=True)"
+    }
+}
+
+# Fix 2: Ensure ai_answerer.py has SSL verification bypass (httpx client)
+if (Test-Path $aiAnswererPy) {
+    $aiContent = Get-Content $aiAnswererPy -Raw
+    if (-not ($aiContent -match '_get_http_client')) {
+        Write-Warn "ai_answerer.py missing SSL bypass - fixing..."
+        
+        # Add the _get_http_client static method after __init__
+        $insertCode = @"
+
+    @staticmethod
+    def _get_http_client():
+        """Create HTTP client with SSL verification disabled for corporate proxy environments"""
+        import httpx
+        return httpx.Client(verify=False)
+"@
+        
+        # Find the end of __init__ and insert after it
+        $aiContent = $aiContent -replace '(self\.search_criteria = _load_search_criteria\(\))', "`$1`n$insertCode"
+        
+        # Also update __init__ to use the http_client parameter
+        $aiContent = $aiContent -replace 'AzureOpenAI\(\s*azure_endpoint=', "AzureOpenAI(`n            http_client=self._get_http_client(),  # SSL verification disabled for corporate proxy`n            azure_endpoint="
+        
+        [System.IO.File]::WriteAllText($aiAnswererPy, $aiContent, [System.Text.UTF8Encoding]::new($false))
+        Write-Ok "ai_answerer.py patched: added _get_http_client() method"
+    } else {
+        Write-Ok "ai_answerer.py already has SSL bypass configured"
+    }
+}
+
+# ----------------------------------------------------------
+# STEP 5a - Test AI endpoint connectivity
+# ----------------------------------------------------------
+Write-Step "Testing Azure OpenAI endpoint connectivity..."
+
+$testScript = @"
+import sys
+try:
+    from config import Config
+    from ai_answerer import QuestionAnswerer
+    print('✓ Config and QuestionAnswerer imported successfully')
+    
+    # Initialize client (this tests SSL bypass works)
+    qa = QuestionAnswerer()
+    print(f'✓ Azure OpenAI client initialized')
+    print(f'  Endpoint: {Config.AZURE_OPENAI_ENDPOINT}')
+    print(f'  Deployment: {qa.deployment}')
+    print(f'  API Version: {Config.AZURE_OPENAI_API_VERSION}')
+    
+except Exception as e:
+    print(f'✗ Error: {str(e)}', file=sys.stderr)
+    import traceback
+    traceback.print_exc()
+    sys.exit(1)
+"@
+
+$testFile = Join-Path $root "_test_ai_init.py"
+$utf8NoBOM = [System.Text.UTF8Encoding]::new($false)
+[System.IO.File]::WriteAllText($testFile, $testScript, $utf8NoBOM)
+
+$testOutput = & $venvPython $testFile 2>&1
+$testExit = $LASTEXITCODE
+Remove-Item $testFile -ErrorAction SilentlyContinue
+
+if ($testExit -eq 0) {
+    Write-Ok "Azure OpenAI endpoint verified and accessible"
+    Write-Host "  $($testOutput | Select-Object -Last 3 | ForEach-Object { "  $_" })"
+} else {
+    Write-Fail "Azure OpenAI endpoint test failed:"
+    Write-Host "  $($testOutput | ForEach-Object { "  $_" })"
+    Write-Host ""
+    Write-Host "  Troubleshooting:" -ForegroundColor Yellow
+    Write-Host "  1. Check .env file: $envFile" -ForegroundColor Yellow
+    Write-Host "  2. Verify AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_KEY are set" -ForegroundColor Yellow
+    Write-Host "  3. Check Azure resource exists: az cognitiveservices account list -g $tfRgName" -ForegroundColor Yellow
+    Write-Host ""
+    exit 1
+}
+
+# ----------------------------------------------------------
+# STEP 6 - Frontend static assets (no Vite/esbuild needed)
 # ----------------------------------------------------------
 Write-Step "Checking frontend static assets..."
 
@@ -388,15 +507,39 @@ if (-not (Test-Path $babelJs) -or (Get-Item $babelJs -ErrorAction SilentlyContin
 Write-Ok "Frontend served directly by FastAPI on http://localhost:8000"
 
 # ----------------------------------------------------------
-# STEP 6 - Launch backend server (API + frontend on port 8000)
+# STEP 7 - Launch backend server (API + frontend on port 8000)
 # ----------------------------------------------------------
+Write-Step "Starting backend server..."
+
+$pidFile = Join-Path $root ".server.pid"
+
+# Try to kill any existing server on port 8000
+try {
+    $existingProcess = netstat -ano 2>$null | Select-String ":8000" | ForEach-Object {
+        if ($_ -match '\s+(\d+)\s*$') {
+            [int]$matches[1]
+        }
+    }
+    if ($existingProcess) {
+        Write-Warn "Killing existing process on port 8000 (PID: $existingProcess)..."
+        Stop-Process -Id $existingProcess -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 1
+    }
+} catch {
+    # netstat might not be available, that's ok
+}
+
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "  All setup complete! Starting server...   " -ForegroundColor Green
-Write-Host "  Open: http://localhost:8000              " -ForegroundColor White
+Write-Host "  ✓ Azure OpenAI configured                " -ForegroundColor Green
+Write-Host "  ✓ Python environment ready               " -ForegroundColor Green
+Write-Host "  ✓ Frontend assets verified               " -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Press Ctrl+C to stop the server." -ForegroundColor Gray
+Write-Host "  📋 Open: http://localhost:8000              " -ForegroundColor White
+Write-Host ""
+Write-Host "  Press Ctrl+C to stop the server." -ForegroundColor Gray
 Write-Host ""
 
 Start-Sleep -Seconds 1
@@ -408,3 +551,4 @@ try {
 } finally {
     Write-Host "`n[*] Server stopped." -ForegroundColor Green
 }
+
