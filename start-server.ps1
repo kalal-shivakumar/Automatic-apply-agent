@@ -34,6 +34,35 @@ function Install-WithWinget($id, $name) {
     return $true
 }
 
+function Find-Python39Plus {
+    foreach ($candidate in @('python', 'python3', 'py',
+                              'C:\Program Files\Python313\python.exe',
+                              'C:\Program Files\Python312\python.exe',
+                              'C:\Program Files\Python311\python.exe',
+                              'C:\Program Files\Python310\python.exe',
+                              'C:\Program Files\Python39\python.exe')) {
+        $cmd = Get-Command $candidate -ErrorAction SilentlyContinue
+        if (-not $cmd) { continue }
+
+        $source = $cmd.Source
+        if (-not $source) { continue }
+
+        $ver = (& $source --version 2>&1) | Select-Object -First 1
+        if ("$ver" -match 'Python (\d+)\.(\d+)') {
+            $major = [int]$matches[1]
+            $minor = [int]$matches[2]
+            if ($major -gt 3 -or ($major -eq 3 -and $minor -ge 9)) {
+                return [pscustomobject]@{
+                    Path    = $source
+                    Version = "$ver"
+                }
+            }
+        }
+    }
+
+    return $null
+}
+
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "   Naukri AI Job Agent - Setup & Launch     " -ForegroundColor Cyan
@@ -106,36 +135,38 @@ if (-not (Get-Command terraform -ErrorAction SilentlyContinue)) {
 }
 
 # Python (>=3.9)
-$pythonExe = $null
-foreach ($candidate in @('python', 'python3', 'C:\Program Files\Python313\python.exe',
-                          'C:\Program Files\Python312\python.exe',
-                          'C:\Program Files\Python311\python.exe',
-                          'C:\Program Files\Python310\python.exe',
-                          'C:\Program Files\Python39\python.exe')) {
-    $cmd = Get-Command $candidate -ErrorAction SilentlyContinue
-    if ($cmd) {
-        $ver = (& $cmd.Source --version 2>&1) | Select-Object -First 1
-        if ("$ver" -match 'Python (\d+)\.(\d+)') {
-            $major = [int]$matches[1]; $minor = [int]$matches[2]
-            if ($major -ge 3 -and $minor -ge 9) {
-                $pythonExe = $cmd.Source
-                Write-Ok "Python         : $ver  ($pythonExe)"
-                break
-            }
-        }
+$pythonInfo = Find-Python39Plus
+if (-not $pythonInfo) {
+    Write-Warn "Python 3.9+ is not installed or not in PATH."
+    $pyInstalled = Install-WithWinget "Python.Python.3.9" "Python 3.9"
+    if (-not $pyInstalled) {
+        $pyInstalled = Install-WithWinget "Python.Python.3" "Python 3"
     }
-}
-if (-not $pythonExe) {
-    Write-Fail "Python 3.9+ is not installed or not in PATH."
-    Write-Host "  Install from: https://www.python.org/downloads/" -ForegroundColor Yellow
-    $prereqFailed = $true
+
+    $pythonInfo = Find-Python39Plus
+    if (-not $pyInstalled -or -not $pythonInfo) {
+        Write-Fail "Python 3.9+ is not installed or not in PATH."
+        Write-Host "  Install from: https://www.python.org/downloads/" -ForegroundColor Yellow
+        $prereqFailed = $true
+    } else {
+        Write-Ok "Python         : $($pythonInfo.Version)  ($($pythonInfo.Path))"
+    }
+} else {
+    Write-Ok "Python         : $($pythonInfo.Version)  ($($pythonInfo.Path))"
 }
 
 # Node.js
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
-    Write-Fail "Node.js is not installed."
-    Write-Host "  Install from: https://nodejs.org/en/download" -ForegroundColor Yellow
-    $prereqFailed = $true
+    Write-Warn "Node.js is not installed."
+    $nodeInstalled = Install-WithWinget "OpenJS.NodeJS.LTS" "Node.js LTS"
+    if (-not $nodeInstalled -or -not (Get-Command node -ErrorAction SilentlyContinue)) {
+        Write-Fail "Node.js is not installed."
+        Write-Host "  Install from: https://nodejs.org/en/download" -ForegroundColor Yellow
+        $prereqFailed = $true
+    } else {
+        $nodeVer = (node --version 2>&1) | Select-Object -First 1
+        Write-Ok "Node.js        : $nodeVer"
+    }
 } else {
     $nodeVer = (node --version 2>&1) | Select-Object -First 1
     Write-Ok "Node.js        : $nodeVer"
@@ -143,8 +174,16 @@ if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
 
 # npm
 if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-    Write-Fail "npm is not installed (should come with Node.js)."
-    $prereqFailed = $true
+    Write-Warn "npm is not installed (should come with Node.js)."
+    $npmInstalled = Install-WithWinget "OpenJS.NodeJS.LTS" "Node.js LTS"
+    if (-not $npmInstalled -or -not (Get-Command npm -ErrorAction SilentlyContinue)) {
+        Write-Fail "npm is not installed (should come with Node.js)."
+        Write-Host "  Install from: https://nodejs.org/en/download" -ForegroundColor Yellow
+        $prereqFailed = $true
+    } else {
+        $npmVer = (npm --version 2>&1) | Select-Object -First 1
+        Write-Ok "npm            : $npmVer"
+    }
 } else {
     $npmVer = (npm --version 2>&1) | Select-Object -First 1
     Write-Ok "npm            : $npmVer"
