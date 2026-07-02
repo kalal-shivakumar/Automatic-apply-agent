@@ -335,6 +335,68 @@ Write-Warn "Installing Python dependencies from requirements.txt..."
 if ($LASTEXITCODE -ne 0) { Write-Fail "pip install failed."; exit 1 }
 Write-Ok "Python dependencies installed."
 
+# Validate required runtime modules are importable
+Write-Warn "Validating required Python modules..."
+$depsCheckScript = @"
+import importlib
+import sys
+
+required = [
+    ("openai", "openai"),
+    ("dotenv", "python-dotenv"),
+    ("fastapi", "fastapi"),
+    ("uvicorn", "uvicorn"),
+    ("websockets", "websockets"),
+    ("aiofiles", "aiofiles"),
+    ("playwright", "playwright"),
+    ("pypdf", "pypdf"),
+]
+
+missing = []
+for mod_name, pkg_name in required:
+    try:
+        importlib.import_module(mod_name)
+    except Exception:
+        missing.append(pkg_name)
+
+if missing:
+    print("MISSING=" + ",".join(missing))
+    sys.exit(2)
+
+print("ALL_REQUIRED_MODULES_OK")
+"@
+
+$depsCheckFile = Join-Path $root "_check_deps.py"
+[System.IO.File]::WriteAllText($depsCheckFile, $depsCheckScript, [System.Text.UTF8Encoding]::new($false))
+$depsOutput = & $venvPython $depsCheckFile 2>&1
+$depsExit = $LASTEXITCODE
+Remove-Item $depsCheckFile -ErrorAction SilentlyContinue
+
+if ($depsExit -ne 0) {
+    Write-Warn "Some modules are missing after requirements install. Attempting recovery install..."
+    if ("$depsOutput" -match "MISSING=(.*)") {
+        $missingPkgs = $matches[1].Split(',') | Where-Object { $_ -and $_.Trim() -ne "" }
+        if ($missingPkgs.Count -gt 0) {
+            & $venvPython -m pip install $missingPkgs
+            if ($LASTEXITCODE -ne 0) {
+                Write-Fail "Failed to install missing modules: $($missingPkgs -join ', ')"
+                exit 1
+            }
+            Write-Ok "Recovered missing modules: $($missingPkgs -join ', ')"
+        } else {
+            Write-Fail "Dependency validation failed, but missing package list could not be parsed."
+            Write-Host "  $depsOutput"
+            exit 1
+        }
+    } else {
+        Write-Fail "Dependency validation failed."
+        Write-Host "  $depsOutput"
+        exit 1
+    }
+} else {
+    Write-Ok "All required Python modules are available (including pypdf)."
+}
+
 # Install Playwright browser (Chromium) if not already installed
 Write-Warn "Ensuring Playwright Chromium is installed..."
 & $venvPython -m playwright install chromium 2>&1 | Out-Null

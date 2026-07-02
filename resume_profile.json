@@ -1,0 +1,36 @@
+{
+  "full_name": "SHIVAKUMAR",
+  "skills": [
+    "Azure",
+    "Aws",
+    "Terraform",
+    "Ansible",
+    "Docker",
+    "Kubernetes",
+    "Linux",
+    "Windows",
+    "Bash",
+    "Python",
+    "Java",
+    "Javascript",
+    "Jenkins",
+    "Ci/Cd",
+    "Devops",
+    "Elk",
+    "Splunk",
+    "Redis",
+    "Networking",
+    "Iam"
+  ],
+  "salary_min_lpa": "40 LPA",
+  "salary_max_lpa": "50 LPA",
+  "overall_experience_years": "5",
+  "key_search_keywords": [
+    "Azure DevOps Engineer",
+    "Aws",
+    "Terraform Engineer",
+    "Ansible",
+    "Docker"
+  ],
+  "resume_file_name": "aws-resume.pdf"
+}
