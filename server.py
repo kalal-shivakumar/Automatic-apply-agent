@@ -2,11 +2,14 @@
 import asyncio
 import json
 import logging
+import os
 import random
 import sys
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from browser import NaukriBrowser
 from naukri_agent import JobSearcher, JobApplicant, human_delay
 from config import Config
@@ -82,6 +85,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve React app static files (react.js, react-dom.js, babel.js)
+_webapp_dir = os.path.join(os.path.dirname(__file__), "webapp")
+_static_dir = os.path.join(_webapp_dir, "static")
+if os.path.isdir(_static_dir):
+    app.mount("/static", StaticFiles(directory=_static_dir), name="static")
+
+@app.get("/")
+async def serve_index():
+    index = os.path.join(_webapp_dir, "index.html")
+    return FileResponse(index, media_type="text/html")
 
 
 async def broadcast(data: dict):
@@ -255,92 +269,92 @@ async def run_agent():
                     if state.should_stop or state.stats["applied"] >= Config.MAX_APPLICATIONS:
                         break
 
-                jobs = await searcher.search_jobs(
-                    page_no=page_no, keywords=keywords, location=location
-                )
-                if not jobs:
-                    if page_no == 1:
-                        await broadcast({
-                            "type": "log",
-                            "message": f"No jobs found for '{keywords}' in {location}",
-                        })
-                    break
-
-                new_jobs = []
-                for j in jobs:
-                    jid = j.get("jobId", j["url"])
-                    if jid not in seen_job_ids:
-                        seen_job_ids.add(jid)
-                        new_jobs.append(j)
-
-                if not new_jobs:
-                    break
-
-                await broadcast({
-                    "type": "log",
-                    "message": (f"Page {page_no}: {len(new_jobs)} new jobs "
-                                f"({len(jobs) - len(new_jobs)} duplicates filtered)"),
-                })
-
-                for job in new_jobs:
-                    if state.should_stop or state.stats["applied"] >= Config.MAX_APPLICATIONS:
+                    jobs = await searcher.search_jobs(
+                        page_no=page_no, keywords=keywords, location=location
+                    )
+                    if not jobs:
+                        if page_no == 1:
+                            await broadcast({
+                                "type": "log",
+                                "message": f"No jobs found for '{keywords}' in {location}",
+                            })
                         break
 
-                    state.stats["evaluated"] += 1
-                    job_entry = {
-                        "id": state.stats["evaluated"],
-                        "title": job["title"],
-                        "company": job["company"],
-                        "location": job.get("location", "N/A"),
-                        "salary": job.get("salary", "N/A"),
-                        "experience": job.get("experience", "N/A"),
-                        "skills": job.get("skills", "N/A")[:150],
-                        "url": job.get("url", ""),
-                        "match_score": None,
-                        "match_reason": "",
-                        "status": "Evaluating...",
-                        "search_query": f"{keywords} in {location}",
-                    }
-                    state.jobs.append(job_entry)
-                    await broadcast({"type": "job_update", "job": job_entry,
-                                     "stats": state.stats})
+                    new_jobs = []
+                    for j in jobs:
+                        jid = j.get("jobId", j["url"])
+                        if jid not in seen_job_ids:
+                            seen_job_ids.add(jid)
+                            new_jobs.append(j)
 
-                    try:
-                        success = await applicant.apply_to_job(job, min_match_pct=60)
+                    if not new_jobs:
+                        break
 
-                        job_entry["match_score"] = applicant.last_match_score
-                        job_entry["match_reason"] = applicant.last_match_reason
+                    await broadcast({
+                        "type": "log",
+                        "message": (f"Page {page_no}: {len(new_jobs)} new jobs "
+                                    f"({len(jobs) - len(new_jobs)} duplicates filtered)"),
+                    })
 
-                        if success:
-                            state.stats["applied"] += 1
-                            job_entry["status"] = "Applied ✓"
-                        else:
-                            skip_reason = applicant.last_skip_reason
-                            if skip_reason == "already_applied":
-                                state.stats["already_applied"] += 1
-                                job_entry["status"] = "Skipped (Already Applied)"
-                            elif skip_reason == "low_score" or applicant.last_match_score < 60:
-                                state.stats["skipped"] += 1
-                                job_entry["status"] = "Skipped (Low Score)"
-                            elif skip_reason == "no_button":
-                                state.stats["skipped"] += 1
-                                job_entry["status"] = "Skipped (No Apply Button)"
-                            elif skip_reason == "button_disabled":
-                                state.stats["skipped"] += 1
-                                job_entry["status"] = "Skipped (Button Disabled)"
+                    for job in new_jobs:
+                        if state.should_stop or state.stats["applied"] >= Config.MAX_APPLICATIONS:
+                            break
+
+                        state.stats["evaluated"] += 1
+                        job_entry = {
+                            "id": state.stats["evaluated"],
+                            "title": job["title"],
+                            "company": job["company"],
+                            "location": job.get("location", "N/A"),
+                            "salary": job.get("salary", "N/A"),
+                            "experience": job.get("experience", "N/A"),
+                            "skills": job.get("skills", "N/A")[:150],
+                            "url": job.get("url", ""),
+                            "match_score": None,
+                            "match_reason": "",
+                            "status": "Evaluating...",
+                            "search_query": f"{keywords} in {location}",
+                        }
+                        state.jobs.append(job_entry)
+                        await broadcast({"type": "job_update", "job": job_entry,
+                                         "stats": state.stats})
+
+                        try:
+                            success = await applicant.apply_to_job(job, min_match_pct=60)
+
+                            job_entry["match_score"] = applicant.last_match_score
+                            job_entry["match_reason"] = applicant.last_match_reason
+
+                            if success:
+                                state.stats["applied"] += 1
+                                job_entry["status"] = "Applied ✓"
                             else:
-                                state.stats["skipped"] += 1
-                                job_entry["status"] = "Skipped"
-                    except Exception as e:
-                        state.stats["skipped"] += 1
-                        job_entry["match_score"] = applicant.last_match_score
-                        job_entry["match_reason"] = str(e)
-                        job_entry["status"] = "Error"
-                        logger.error(f"Error processing job: {e}")
+                                skip_reason = applicant.last_skip_reason
+                                if skip_reason == "already_applied":
+                                    state.stats["already_applied"] += 1
+                                    job_entry["status"] = "Skipped (Already Applied)"
+                                elif skip_reason == "low_score" or applicant.last_match_score < 60:
+                                    state.stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (Low Score)"
+                                elif skip_reason == "no_button":
+                                    state.stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (No Apply Button)"
+                                elif skip_reason == "button_disabled":
+                                    state.stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (Button Disabled)"
+                                else:
+                                    state.stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped"
+                        except Exception as e:
+                            state.stats["skipped"] += 1
+                            job_entry["match_score"] = applicant.last_match_score
+                            job_entry["match_reason"] = str(e)
+                            job_entry["status"] = "Error"
+                            logger.error(f"Error processing job: {e}")
 
-                    await broadcast({"type": "job_update", "job": job_entry,
-                                     "stats": state.stats})
-                    await asyncio.sleep(random.uniform(3.0, 8.0))
+                        await broadcast({"type": "job_update", "job": job_entry,
+                                         "stats": state.stats})
+                        await asyncio.sleep(random.uniform(3.0, 8.0))
 
     except Exception as e:
         logger.error(f"Agent error: {e}", exc_info=True)

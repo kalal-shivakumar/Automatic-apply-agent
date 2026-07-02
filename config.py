@@ -8,8 +8,11 @@ class Config:
     # Azure OpenAI
     AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT", "")
     AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY", "")
-    AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o-mini")
-    AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION", "2024-12-01-preview")
+    AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-5.4-mini")
+    AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION", "2025-01-01-preview")
+    AZURE_OPENAI_ACCOUNT = os.getenv("AZURE_OPENAI_ACCOUNT", "")
+    AZURE_OPENAI_MODEL = os.getenv("AZURE_OPENAI_MODEL", "")
+    AZURE_RESOURCE_GROUP = os.getenv("AZURE_RESOURCE_GROUP", "")
 
     # Job search
     JOB_KEYWORDS = os.getenv("JOB_KEYWORDS", "Python Developer")

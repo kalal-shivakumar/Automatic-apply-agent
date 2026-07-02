@@ -25,7 +25,7 @@ variable "openai_account_name" {
 variable "openai_deployment_name" {
   description = "Model deployment name"
   type        = string
-  default     = "gpt-4o-mini"
+  default     = "gpt-5.4-mini"
 }
 
 variable "openai_model_name" {
