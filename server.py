@@ -1064,6 +1064,12 @@ async def run_agent():
                                 if skip_reason == "already_applied":
                                     state.stats["already_applied"] += 1
                                     job_entry["status"] = "Skipped (Already Applied)"
+                                elif skip_reason == "salary_below_min":
+                                    state.stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (Salary Below Minimum)"
+                                elif skip_reason == "salary_missing_experience_mismatch":
+                                    state.stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (No Salary + Experience Mismatch)"
                                 elif skip_reason == "low_score" or applicant.last_match_score < 60:
                                     state.stats["skipped"] += 1
                                     job_entry["status"] = "Skipped (Low Score)"

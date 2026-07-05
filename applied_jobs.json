@@ -127,5 +127,121 @@
     "match_reason": "Excellent skills and location fit for an Azure DevOps/Cloud Architect role with strong overlap in Azure, Terraform, CI/CD, Kubernetes, and security; experience is close but slightly below the 11-year target, and the offered salary (30-45 LPA) is far below the candidate’s stated target of 80 LPA.",
     "status": "Applied ✓",
     "search_query": "Azure DevOps Engineer in hyderabad"
+  },
+  {
+    "id": 45,
+    "title": "Kafka Administrator",
+    "company": "Spigot Software",
+    "location": "Bengaluru, Hyderabad",
+    "salary": "Not disclosed",
+    "experience": "4-15 Yrs",
+    "skills": "Kafka, confluent cloud, Terraform",
+    "key_skills": "Kafka, confluent cloud, Terraform",
+    "url": "https://www.naukri.com/job-listings-kafka-administrator-spigot-software-hyderabad-bengaluru-4-to-15-years-010726030857",
+    "job_description": "Job Description\nRoles and Responsibilities :\nDesign, deploy, and manage Kafka clusters across multiple data centers to ensure high availability and scalability.\nTroubleshoot issues with Kafka brokers, topics, partitions, and consumer/producer applications.\nCollaborate with development teams to design and implement event-driven architecture using Apache Kafka.\nMonitor Kafka cluster performance metrics such as throughput, latency, and resource utilization.\nJob Requirements :\n4-15 years of experience in managing large-scale distributed systems like Apache Kafka.\nStrong understanding of cloud-based infrastructure management using Terraform or similar tools.\nExperience with monitoring tools like Prometheus/Grafana for real-time visibility into system performance.\nQuick apply\nApplied",
+    "questions_answers": [
+      {
+        "question": "How many years of experience do you have in confluent kafka ?",
+        "answer": "4"
+      },
+      {
+        "question": "How many years of experience do you have in confluent cloud ?",
+        "answer": "4"
+      },
+      {
+        "question": "How many years of experience do you have in terraform ?",
+        "answer": "7"
+      }
+    ],
+    "match_score": 78,
+    "match_reason": "Strong technical overlap with Terraform, Kubernetes, Docker, Prometheus/Grafana, and cloud infrastructure, plus Hyderabad location fit and experience range match; however the role is Kafka Administrator rather than DevOps/Platform, and salary is undisclosed so compensation fit is uncertain.",
+    "status": "Applied ✓",
+    "search_query": "Azure DevOps Engineer in hyderabad"
+  },
+  {
+    "id": 46,
+    "title": "Data Architect",
+    "company": "Epam Systems",
+    "location": "Bengaluru, Hyderabad, Pune",
+    "salary": "40-50 Lacs PA",
+    "experience": "10-20 Yrs",
+    "skills": "Snowflake, Platform, AWS, Administration, Terraform, DBT, Platform Enineering, DevOps",
+    "key_skills": "Snowflake, Platform, AWS, Administration, Terraform, DBT, Platform Enineering, DevOps",
+    "url": "https://www.naukri.com/job-listings-data-architect-epam-systems-hyderabad-pune-bengaluru-10-to-20-years-010726026870",
+    "job_description": "Job Description\nDear Candidates,\nEPAM Systems is hiring talented Snowflake Data Architect. Join our growing Data & Analytics team and work on modern cloud data platforms and AI-driven solutions.\nJob Details\nLocation: Pan India\nRole:Snowflake Data Architect\nExperience: 10+ Years\nNotice Period: Immediate to 15 Days\nMust have skills:\nSnowflake Admin\nPlatform Engineering\nAWS\nNice to have skills:\nCloud Data Services\nGitHub\nTerraform\nInterested candidates can share their updated resume at:\nswathi_v@epam.com\nFeel free to share this opportunity within your network.\nInterested? Apply Now!\nTotal Years of Experience:\nCurrent Company:\nCurrent Location:\nWork Location:\nCurrent CTC:\nExpected CTC:\nOfficial Notice Period:\nIf Serving Notice Period, Official Last Working Day (LWD):\nAre you OK with Hybrid Work Model? (Yes/No):\nPreferred Location (Bangalore, Gurgaon, Chennai, Pune, Hyderabad):\nMore details: EPAM Careers | Welcome to EPAM India\nLooking forward to your applications!\nView more\nCompensation\nCTC range₹40L - ₹50L/year\nQuick apply\nApplied",
+    "questions_answers": [
+      {
+        "question": "How many years of experience do you have in Snowflake Admin?",
+        "answer": "0"
+      },
+      {
+        "question": "How many years of experience do you have in Platform Engineering?",
+        "answer": "10"
+      }
+    ],
+    "match_score": 72,
+    "match_reason": "Strong technical overlap in AWS, Terraform, DevOps, and platform engineering with good location fit, but the role is Snowflake Data Architect (less aligned to the candidate’s Azure-heavy profile) and the salary range is far below the target ₹80 LPA.",
+    "status": "Applied ✓",
+    "search_query": "Azure DevOps Engineer in hyderabad"
+  },
+  {
+    "id": 48,
+    "title": "Platform Service Engineer (10-18 yrs)",
+    "company": "Sampoorna Consultants",
+    "location": "Hyderabad",
+    "salary": "Not disclosed",
+    "experience": "10-18 Yrs",
+    "skills": "ITIL, IT Roadmap, Middleware, IT Strategy, IT Automation, Change Management, RPA, IT Risk, Workflows, DevSecOps, IT Governance",
+    "key_skills": "ITIL, IT Roadmap, Middleware, IT Strategy, IT Automation, Change Management, RPA, IT Risk, Workflows, DevSecOps, IT Governance",
+    "url": "https://www.naukri.com/job-listings-platform-service-engineer-10-18-yrs-sampoorna-consultants-pvt-ltd-hyderabad-10-to-18-years-300626037362",
+    "job_description": "Job Description\nEssential Duties and Responsibilities:\n1. Define and lead the strategic vision and roadmap for platform services, aligning with organizational objectives, technology strategy, and compliance requirements.\n2. Drive continuous innovation and improvement through adoption of modern technologies, best practices, and emerging trends.\n3. Build and maintain strong stakeholder relationships across business, technology, and external partners to ensure alignment and collaboration.\n4. Lead enterprise-wide change management initiatives to enable adoption of new platforms, tools, and agile ways of working.\n5. Establish and monitor KPIs and performance metrics to evaluate platform effectiveness and drive data-driven optimization.\n6. Define and execute strategy for middleware and messaging platforms, ensuring scalability, reliability, security, and seamless integration.\n7. Oversee design, development, and lifecycle management of platform solutions, ensuring interoperability and high performance.\n8. Lead observability and monitoring strategy to enhance system visibility, availability, and operational resilience.\n9. Drive automation and RPA initiatives to streamline processes, improve efficiency, and reduce manual intervention.\n10. Oversee enterprise platform solutions including ServiceNow, ensuring effective development, integration, customization, and optimization.\n11. Lead testing automation and quality engineering initiatives, embedding continuous testing practices throughout the development lifecycle.\n12. Partner with business-aligned technology teams to ensure platform adoption, scalability, and alignment with business objectives.\n13. Promote DevSecOps and shift-left practices, integrating security, compliance, and quality early in the development lifecycle.\n14. Enhance developer experience through improved tooling, workflows, and productivity-driven platform capabilities.\n15. Ensure strong governance, risk management, and regulatory compliance across platform services in collaboration with audit and risk teams.\nRequired Qualifications:\n1. Bachelors degree in Information Technology, Computer Science, or a related field, or equivalent experience.\n2. Extensive leadership experience in enterprise IT environments, with a focus on platform engineering, middleware, automation, and workflow technologies.\n3. Proven expertise in designing and managing enterprise platform services across complex technology landscapes.\n4. Strong knowledge of ITIL practices and service delivery models.\n5. Demonstrated success in driving technology adoption, transformation, and change management in large organizations.\n6. Deep technical knowledge across middleware, observability, automation platforms, and enterprise systems.\n7. Strong leadership, communication, and stakeholder management skills with the ability to influence at all levels.\n8. Strategic mindset with a focus on innovation, operational excellence, and customer-centric outcomes.\nPreferred Qualifications:\n1. Advanced degree in a relevant field.\n2. Experience in training, coaching, and driving capability development within teams.\n3. Relevant certifications or exposure to ITIL, DevSecOps, or enterprise platform frameworks.\n4. Strong executive-level communication and presentation capabilities.\n5. Experience working in environments integrating Service Management and SRE practices.\n6. Exposure to complex, multi-platform enterprise technology ecosystems.\nView more\nApply on hirist.com\nApply attempted",
+    "questions_answers": [],
+    "match_score": 84,
+    "match_reason": "Strong match on platform/cloud/DevOps skills and Hyderabad location; experience is close to target, but salary is undisclosed so compensation fit is uncertain and the role leans more strategic/enterprise platform than pure hands-on DevOps.",
+    "status": "Applied ✓",
+    "search_query": "Azure DevOps Engineer in hyderabad"
+  },
+  {
+    "id": 50,
+    "title": "Cloud Automation Architect",
+    "company": "Qikrecruit",
+    "location": "Hyderabad",
+    "salary": "27.5-42.5 Lacs PA",
+    "experience": "8-12 Yrs",
+    "skills": "Infrastructure Automation, Terraform, Kubernetes, AWS",
+    "key_skills": "Infrastructure Automation, Terraform, Kubernetes, AWS",
+    "url": "https://www.naukri.com/job-listings-cloud-automation-architect-qikrecruit-hyderabad-8-to-12-years-120626003057",
+    "job_description": "Job Description\nDesign and maintain enterprise-grade playbooks, roles, and collections.\nArchitect serverless and event-driven automation using Lambda\nDevelop and own custom Helm charts for multi-environment Kubernetes deployments\nCompensation\nCTC range₹27.5L - ₹42.5L/year\nQuick apply\nApplied",
+    "questions_answers": [
+      {
+        "question": "How many years of experience do you have in Infrastructure Automation?",
+        "answer": "10"
+      },
+      {
+        "question": "How many years have you worked exclusively in infrastructure automation roles?",
+        "answer": "10"
+      }
+    ],
+    "match_score": 72,
+    "match_reason": "Strong technical and role fit for Cloud/DevOps/Platform work with excellent Azure/AWS/Kubernetes/Terraform overlap and Hyderabad location match, but compensation is far below the candidate’s ₹80 LPA target, which significantly reduces overall fit.",
+    "status": "Applied ✓",
+    "search_query": "Azure DevOps Engineer in hyderabad"
+  },
+  {
+    "id": 52,
+    "title": "Head - Platform Services (10-18 yrs)",
+    "company": "Sampoorna Consultants",
+    "location": "Hyderabad",
+    "salary": "Not disclosed",
+    "experience": "10-18 Yrs",
+    "skills": "IT Change Management, IT Program Management, IT Transformation, ITIL, IT Project Management, IT Infrastructure",
+    "key_skills": "IT Change Management, IT Program Management, IT Transformation, ITIL, IT Project Management, IT Infrastructure",
+    "url": "https://www.naukri.com/job-listings-head-platform-services-10-18-yrs-sampoorna-consultants-pvt-ltd-hyderabad-10-to-18-years-010726007229",
+    "job_description": "Job Description\nEssential Duties and Responsibilities :\n1. Define and lead the strategic vision and roadmap for platform services, aligning with organizational objectives, technology strategy, and compliance requirements.\n2. Drive continuous innovation and improvement through adoption of modern technologies, best practices, and emerging trends.\n3. Build and maintain strong stakeholder relationships across business, technology, and external partners to ensure alignment and collaboration.\n4. Lead enterprise-wide change management initiatives to enable adoption of new platforms, tools, and agile ways of working.\n5. Establish and monitor KPIs and performance metrics to evaluate platform effectiveness and drive data-driven optimization.\n6. Define and execute strategy for middleware and messaging platforms, ensuring scalability, reliability, security, and seamless integration.\n7. Oversee design, development, and lifecycle management of platform solutions, ensuring interoperability and high performance.\n8. Lead observability and monitoring strategy to enhance system visibility, availability, and operational resilience.\n9. Drive automation and RPA initiatives to streamline processes, improve efficiency, and reduce manual intervention.\n10. Oversee enterprise platform solutions including ServiceNow, ensuring effective development, integration, customization, and optimization.\n11. Lead testing automation and quality engineering initiatives, embedding continuous testing practices throughout the development lifecycle.\n12. Partner with business-aligned technology teams to ensure platform adoption, scalability, and alignment with business objectives.\n13. Promote DevSecOps and shift-left practices, integrating security, compliance, and quality early in the development lifecycle.\n14. Enhance developer experience through improved tooling, workflows, and productivity-driven platform capabilities.\n15. Ensure strong governance, risk management, and regulatory compliance across platform services in collaboration with audit and risk teams.\nRequired Qualifications :\n1. Bachelors degree in Information Technology, Computer Science, or a related field, or equivalent experience.\n2. Extensive leadership experience in enterprise IT environments, with a focus on platform engineering, middleware, automation, and workflow technologies.\n3. Proven expertise in designing and managing enterprise platform services across complex technology landscapes.\n4. Strong knowledge of ITIL practices and service delivery models.\n5. Demonstrated success in driving technology adoption, transformation, and change management in large organizations.\n6. Deep technical knowledge across middleware, observability, automation platforms, and enterprise systems.\n7. Strong leadership, communication, and stakeholder management skills with the ability to influence at all levels.\n8. Strategic mindset with a focus on innovation, operational excellence, and customer-centric outcomes.\nPreferred Qualifications :\n1. Advanced degree in a relevant field.\n2. Experience in training, coaching, and driving capability development within teams.\n3. Relevant certifications or exposure to ITIL, DevSecOps, or enterprise platform frameworks.\n4. Strong executive-level communication and presentation capabilities.\n5. Experience working in environments integrating Service Management and SRE practices.\n6. Exposure to complex, multi-platform enterprise technology ecosystems.\nView more\nApply on iimjobs.com\nApply attempted",
+    "questions_answers": [],
+    "match_score": 84,
+    "match_reason": "Strong match on experience, location, and platform/cloud skills; role is highly relevant to DevOps/Platform/SRE, but compensation is undisclosed and the job leans more toward senior leadership/change management than hands-on technical execution.",
+    "status": "Applied ✓",
+    "search_query": "Azure DevOps Engineer in hyderabad"
   }
 ]

@@ -1,10 +1,12 @@
 import os
 import logging
 import re
+import json
 from openai import AzureOpenAI
 from config import Config
 
 logger = logging.getLogger(__name__)
+GENERIC_FALLBACK_PATH = os.path.join(os.path.dirname(__file__), "job_application_generic_fallbacks.json")
 
 
 def _load_search_criteria() -> str:
@@ -52,6 +54,92 @@ class QuestionAnswerer:
         low = (text or "").lower()
         return any(n in low for n in needles)
 
+    @staticmethod
+    def _clean_value(value: str) -> str:
+        return str(value or "").strip()
+
+    @staticmethod
+    def _has_home_skills() -> bool:
+        return bool(str(Config.YOUR_SKILLS or "").strip())
+
+    def _generic_positive_answer(self, question: str) -> str:
+        q = (question or "").lower()
+        years_text = self._profile_value_for_question(q) or self._clean_value(Config.YOUR_EXPERIENCE) or "11"
+        years_match = re.search(r"\b(\d{1,2})\b", years_text)
+        years_value = years_match.group(1) if years_match else "11"
+
+        if self._contains_any(q, ["how many years", "years of experience", "experience do you have", "yrs", "yr", "how much experience", "number of years"]):
+            return years_value
+
+        if self._contains_any(q, ["notice", "join", "joining", "how soon", "when can you start", "available to join"]):
+            notice = self._clean_value(Config.YOUR_NOTICE_PERIOD)
+            return notice or "60 days"
+
+        if self._contains_any(q, ["current ctc", "expected ctc", "salary", "compensation", "ctc", "pay"]):
+            expected_ctc = self._clean_value(Config.YOUR_EXPECTED_CTC)
+            current_ctc = self._clean_value(Config.YOUR_CURRENT_CTC)
+            if expected_ctc:
+                return expected_ctc
+            if current_ctc:
+                return current_ctc
+            return "80 LPA"
+
+        if self._contains_any(q, ["location", "city", "where are you located", "willing to relocate", "work location"]):
+            preferred_location = self._clean_value(Config.JOB_LOCATION)
+            return preferred_location or "Hyderabad"
+
+        return f"Yes, I know the required technologies and I have {years_value} years of relevant experience."
+
+    def _record_generic_fallback(self, question: str, answer: str, reason: str):
+        entry = {
+            "question": self._clean_value(question),
+            "answer": self._clean_value(answer),
+            "reason": self._clean_value(reason),
+            "experience": self._clean_value(Config.YOUR_EXPERIENCE),
+            "notice_period": self._clean_value(Config.YOUR_NOTICE_PERIOD),
+            "skills_present_in_home": self._has_home_skills(),
+        }
+
+        try:
+            existing = []
+            if os.path.exists(GENERIC_FALLBACK_PATH):
+                with open(GENERIC_FALLBACK_PATH, "r", encoding="utf-8") as f:
+                    loaded = json.load(f)
+                    if isinstance(loaded, list):
+                        existing = loaded
+            existing.append(entry)
+            with open(GENERIC_FALLBACK_PATH, "w", encoding="utf-8") as f:
+                json.dump(existing, f, indent=2, ensure_ascii=False)
+        except Exception as exc:
+            logger.warning(f"Failed to write generic fallback audit: {exc}")
+
+    def _profile_value_for_question(self, question: str) -> str:
+        q = (question or "").lower()
+
+        if self._contains_any(q, ["how many years", "years of experience", "experience do you have", "yrs", "yr", "how much experience", "number of years"]):
+            years = self._clean_value(Config.YOUR_EXPERIENCE)
+            match = re.search(r"\b(\d{1,2})\b", years)
+            return match.group(1) if match else (years or "11")
+
+        if self._contains_any(q, ["notice", "join", "joining", "how soon", "when can you start", "available to join"]):
+            notice = self._clean_value(Config.YOUR_NOTICE_PERIOD)
+            return notice or "60 days"
+
+        if self._contains_any(q, ["current ctc", "expected ctc", "salary", "compensation", "ctc", "pay"]):
+            expected_ctc = self._clean_value(Config.YOUR_EXPECTED_CTC)
+            current_ctc = self._clean_value(Config.YOUR_CURRENT_CTC)
+            if expected_ctc:
+                return expected_ctc
+            if current_ctc:
+                return current_ctc
+            return "80 LPA"
+
+        if self._contains_any(q, ["location", "city", "where are you located", "willing to relocate", "work location"]):
+            preferred_location = self._clean_value(Config.JOB_LOCATION)
+            return preferred_location or "Hyderabad"
+
+        return ""
+
     def _apply_positive_overrides(self, question: str, answer: str, options: list[str] | None) -> str:
         """Force positive, profile-aligned answers for common recruiter questions."""
         q = (question or "").strip()
@@ -84,17 +172,17 @@ class QuestionAnswerer:
             ["experience", "hands-on", "hands on", "expert", "expertise", "worked on", "proficient"],
         )
 
+        profile_value = self._profile_value_for_question(q)
+
         if years_question:
-            match = re.search(r"\b(\d{1,2})\b", a)
-            if match:
-                return match.group(1)
-            profile_years = str(Config.YOUR_EXPERIENCE or self.profile.get("overall_experience_years", "") or "").strip()
-            match = re.search(r"\b(\d{1,2})\b", profile_years)
+            match = re.search(r"\b(\d{1,2})\b", profile_value or a)
             if match:
                 return match.group(1)
             return "11"
 
         if any(term in a.lower() for term in ["not specified", "unspecified", "unknown", "n/a", "na"]):
+            if profile_value:
+                return profile_value
             if notice_question:
                 return "60 days"
             if yes_no_question:
@@ -102,6 +190,9 @@ class QuestionAnswerer:
             if experience_question:
                 return "Yes, I have relevant experience and expertise."
             return "Yes, I have relevant experience and expertise."
+
+        if profile_value:
+            return profile_value
 
         # If option-based and it's a yes/no style question, always choose Yes when available.
         if opts and yes_no_question:
@@ -143,6 +234,12 @@ class QuestionAnswerer:
     def answer_question(self, question: str, options: list[str] | None = None) -> str:
         """Answer a job application question using AI."""
 
+        generic_mode = not self._has_home_skills()
+        if generic_mode:
+            generic_answer = self._generic_positive_answer(question)
+            self._record_generic_fallback(question, generic_answer, "missing_home_skills")
+            return self._apply_positive_overrides(question, generic_answer, options)
+
         if options:
             options_text = "\n".join(f"- {opt}" for opt in options)
             prompt = f"""You are helping someone apply for a job. Answer the following question based on their profile.
@@ -159,6 +256,7 @@ Rules:
 - Keep answers positive and confidence-forward.
 - If options include an affirmative choice (e.g., Yes), prefer it for availability/willingness questions.
 - For joining/notice-period style questions, prefer 60 days (or equivalent 2 months option) when present.
+- If the profile is missing skills or the answer is not obvious, answer from the generic positive section and stay confident.
 - We need the job, hence try to answer in a way that increases chances of getting the job. dont say i dont have experience or i dont know. Always answer positively and confidently.
 - Reply with ONLY the exact text of one option. Do not add explanation."""
         else:
@@ -180,6 +278,7 @@ IMPORTANT RULES:
 - For any question that asks "how many years" or "years of experience", answer with a single integer only.
 - Never reply with "Not specified", "unknown", or similar placeholders.
 - If the answer is not obvious from the profile, choose the most interview-friendly positive response.
+- If the profile has no skills listed, use the generic positive section and answer as an experienced candidate.
 - For other questions, reply with a concise 1-2 sentence professional answer.
 - Never add preamble like "I have" or "My experience is" for numeric questions."""
 

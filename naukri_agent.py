@@ -145,6 +145,62 @@ class JobApplicant:
         if q and a:
             self.last_qa_pairs.append({"question": q, "answer": a})
 
+    @staticmethod
+    def _extract_number_tokens(text: str) -> list[float]:
+        cleaned = (text or "").replace(",", "")
+        vals = []
+        for token in re.findall(r"\d+(?:\.\d+)?", cleaned):
+            try:
+                vals.append(float(token))
+            except Exception:
+                continue
+        return vals
+
+    def _parse_salary_range_lpa(self, salary_text: str) -> tuple[float | None, float | None]:
+        txt = (salary_text or "").strip().lower()
+        if not txt:
+            return (None, None)
+
+        nums = self._extract_number_tokens(txt)
+        if not nums:
+            return (None, None)
+
+        # Heuristic: values > 100 are likely annual rupee figures; convert to LPA.
+        if any(n > 100 for n in nums):
+            nums = [round(n / 100000.0, 2) for n in nums]
+
+        if len(nums) == 1:
+            return (nums[0], nums[0])
+        return (min(nums), max(nums))
+
+    def _candidate_min_salary_lpa(self) -> float | None:
+        min_sal, _ = self._parse_salary_range_lpa(getattr(Config, "YOUR_EXPECTED_CTC", ""))
+        return min_sal
+
+    def _parse_experience_range_years(self, exp_text: str) -> tuple[float | None, float | None]:
+        txt = (exp_text or "").strip().lower()
+        if not txt:
+            return (None, None)
+        nums = self._extract_number_tokens(txt)
+        if not nums:
+            return (None, None)
+        if len(nums) == 1:
+            return (nums[0], nums[0])
+        return (min(nums), max(nums))
+
+    def _candidate_experience_years(self) -> float | None:
+        min_exp, _ = self._parse_experience_range_years(getattr(Config, "YOUR_EXPERIENCE", ""))
+        return min_exp
+
+    def _is_experience_match(self, job_exp_text: str) -> bool:
+        candidate_years = self._candidate_experience_years()
+        job_min, job_max = self._parse_experience_range_years(job_exp_text)
+        if candidate_years is None or job_min is None:
+            return False
+        if job_max is None:
+            return candidate_years >= job_min
+        return job_min <= candidate_years <= job_max
+
     async def _extract_full_jd(self) -> str:
         """Extract the complete job description from the current job page."""
         try:
@@ -406,6 +462,32 @@ class JobApplicant:
             combined_skills = job.get("skills", "")
             if page_details.get("page_skills"):
                 combined_skills += ", " + page_details["page_skills"]
+
+            # Hard gating before match scoring:
+            # 1) If job salary is below candidate minimum expectation, skip.
+            # 2) If salary is not mentioned, apply only when experience matches.
+            job_salary_text = str(job.get("salary", "") or "").strip()
+            job_exp_text = str(job.get("experience", "") or "").strip()
+            candidate_min_salary = self._candidate_min_salary_lpa()
+            job_sal_min, job_sal_max = self._parse_salary_range_lpa(job_salary_text)
+
+            if job_salary_text and candidate_min_salary is not None and job_sal_max is not None:
+                if job_sal_max < candidate_min_salary:
+                    logger.info(
+                        f"Skipping salary mismatch: job max {job_sal_max} LPA < candidate min {candidate_min_salary} LPA"
+                    )
+                    self.last_skip_reason = "salary_below_min"
+                    self.last_match_reason = (
+                        f"Salary mismatch: job max {job_sal_max} LPA is below minimum expected {candidate_min_salary} LPA"
+                    )
+                    return False
+
+            if not job_salary_text:
+                if not self._is_experience_match(job_exp_text):
+                    logger.info("Skipping: salary not mentioned and experience not matching")
+                    self.last_skip_reason = "salary_missing_experience_mismatch"
+                    self.last_match_reason = "Salary not mentioned and experience does not match profile"
+                    return False
 
             # Always score against JD + key skills.
             if not combined_jd.strip():
