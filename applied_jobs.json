@@ -81,52 +81,28 @@
     "search_query": "Azure DevOps Engineer in hyderabad"
   },
   {
-    "id": 33,
-    "title": "Databricks Platform Admin",
-    "company": "Wipro",
-    "location": "Bengaluru, Hyderabad, Pune",
-    "salary": "25-35 Lacs PA",
-    "experience": "7-11 Yrs",
-    "skills": "Databricks Admin, Microsoft Azure, Azure Data Lake, SQL, Terraform, Powershell, Databricks CLI",
-    "key_skills": "Databricks Admin, Microsoft Azure, Azure Data Lake, SQL, Terraform, Powershell, Databricks CLI",
-    "url": "https://www.naukri.com/job-listings-databricks-platform-admin-wipro-hyderabad-pune-bengaluru-7-to-11-years-300626030672",
-    "job_description": "Job Description\nExperience: 7-10 Years\nMust Have:\nMinimum 3 years in Databricks Admin\nScripting languages and command-line (CLI) tools such as Ansible, SQL, Terraform, Azure CLI, Databricks CLI, PowerShell and/or Bash.\nKey Skills Required:\nRequired hands-on experience in architecting, deploying, managing, and supporting Azure Databricks Platform, Azure Datalake and related solutions.\nRequired hands-on experience working with Cloud provider tools and architecture (Azure) .\nRequired hands-on experience using scripting languages and command-line (CLI) tools such as Ansible, SQL, Terraform, Azure CLI, Databricks CLI, PowerShell and/or Bash.\nPreferred experience in management and tuning of data platforms like Azure ADLS storage and Databricks.\nKnowledge working with and maintaining CI/CD pipelines and versioning tools such as Git preferred.\nKnowledge with a broad set of data ingestion and data pipeline patterns, and associated tools like (Qlik Replicate, Qlik Compose, Databricks, Kafka, Matillion ELT and Snowflake Services)\nExperience with working in an agile product development team\nExcellent communication skills and ability to articulate system designs and patterns to varying levels of leadership.\nWhat you'll do\nDesign, implement, and manage scalable and secure Databricks platforms to ensure optimal performance and reliability.\nCreate and manage Databricks workspaces and clusters, including right-sizing and lifecycle management of resources.\nAutomate infrastructure provisioning and deployment using Infrastructure-as-Code tools like Terraform, GitLab CI/CD, and scripting languages (Python, Bash, PowerShell).\nMonitor platform health, performance, and cost by building dashboards and integrating with monitoring tools.\nTroubleshoot and resolve issues related to cluster configuration, job failures, and performance bottlenecks within Databricks environments.\nCollaborate with cross-functional teams including data scientists, ML engineers, and product teams to deploy and maintain data pipelines and services on Databricks.\nImplement security and governance policies, including user management, access controls, and compliance adherence using Unity Catalog and other Databricks security features.\nOptimize compute and storage resources for cost efficiency without compromising performance, leveraging features like Delta Lake and Photon.\nStay updated with new Databricks features and coordinate with product teams to evaluate and adopt them.\nM Document platform architecture, best practices, troubleshooting guides, and provide mentorship to junior engineers on platform usage and optimizationM\nView more\nCompensation\nCTC range₹25L - ₹35L/year\nQuick apply\nApplied",
+    "id": 60,
+    "title": "AWS Full-Stack Developer",
+    "company": "Shrofile Technologies",
+    "location": "Hybrid - Bengaluru, Hyderabad, Pune",
+    "salary": "Not disclosed",
+    "experience": "6-11 Yrs",
+    "skills": "Angular, Node.js, AWS, Fullstack Development, AWS Serverless, TypeScript, Terraform",
+    "key_skills": "Angular, Node.js, AWS, Fullstack Development, AWS Serverless, TypeScript, Terraform",
+    "url": "https://www.naukri.com/job-listings-aws-full-stack-developer-shrofile-technologies-hyderabad-pune-bengaluru-6-to-11-years-010726031903",
+    "job_description": "Job Description\nRole & responsibilities\n• Develop and maintain fullstack applications using Node.js (backend) and Angular (frontend)\n• Design and build serverless applications on AWS\n• Collaborate with product and engineering teams in an Agile environment\n• Write clean, scalable, and maintainable code\n• Participate in code reviews, testing, and debugging\n• Support CI/CD pipelines and deployment processes\nRequired Skills\n• Strong experience in Node.js and Angular\n• Hands-on experience with AWS services (Lambda,API Gateway, S3, etc.)\n• Good understanding of serverless architecture\n• Experience with REST APIs and microservices\n• Familiarity with Git and CI/CD tools\nQuick apply\nApplied",
     "questions_answers": [
       {
-        "question": "What is your notice period? If serving notice period - mention LWD",
-        "answer": "60 days"
-      },
-      {
-        "question": "How many years of experience do you have in Databricks Admin?",
+        "question": "How many years of experience do you have in Angular?",
         "answer": "0"
-      },
-      {
-        "question": "Are you currently working as Databricks Admin?",
-        "answer": "No, I am not currently working as a Databricks Admin."
       },
       {
         "question": "Please select the city you are currently residing or willing to relocate to",
         "answer": "Hyderabad, Telangana"
-      },
-      {
-        "question": "What is your Total Years of experience?",
-        "answer": "10"
-      },
-      {
-        "question": "Are you Wipro Ex-Employee? If Yes, please mention Wipro EMP ID",
-        "answer": "No, I am not a Wipro ex-employee."
-      },
-      {
-        "question": "Highest Fulltime Education",
-        "answer": "Not provided in the profile."
-      },
-      {
-        "question": "What is your current location?",
-        "answer": "Bangalore"
       }
     ],
     "match_score": 72,
-    "match_reason": "Strong Azure/Terraform/SQL/CI-CD and cloud platform overlap with good location fit, but the role is Databricks-focused, salary is far below target ₹80 LPA, and it lacks the core DevOps/SRE title alignment.",
+    "match_reason": "Strong cloud/DevOps and AWS/Terraform/Kubernetes overlap with good location fit in Hyderabad/Bengaluru/Pune, but the role is a full-stack Node.js/Angular developer position and salary is undisclosed, so experience and title alignment are only moderate.",
     "status": "Applied ✓",
     "search_query": "Azure DevOps Engineer in hyderabad"
   }

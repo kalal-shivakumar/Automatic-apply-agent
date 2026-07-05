@@ -34,6 +34,41 @@ function splitCsv(value) {
     .filter(Boolean);
 }
 
+function normalizeText(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function parseMatchScore(value) {
+  if (value === null || value === undefined || value === "") return -1;
+  const num = Number(String(value).replace(/[^\d.]/g, ""));
+  return Number.isFinite(num) ? num : -1;
+}
+
+function formatStatusLines(job) {
+  const statusText = String(job?.status || "").trim();
+  const reasonText = String(job?.match_reason || "").trim();
+  const scoreText = job?.match_score == null ? "" : `${job.match_score}%`;
+
+  if (!statusText) return ["Pending", "Awaiting evaluation"];
+
+  const selected = /applied|good match|selected|proceeding to apply/i.test(statusText);
+  const skipped = /skip|skipped/i.test(statusText);
+  const error = /error|failed/i.test(statusText);
+
+  if (selected) {
+    const reason = reasonText || (scoreText ? `Matched at ${scoreText}` : "Proceeding to apply");
+    return ["Selected", reason];
+  }
+  if (skipped) {
+    const reason = reasonText || (scoreText ? `Skipped at ${scoreText}` : "Below threshold or requirements mismatch");
+    return ["Skipped", reason];
+  }
+  if (error) {
+    return ["Error", reasonText || "Job evaluation failed"]; 
+  }
+  return ["Info", reasonText || statusText];
+}
+
 function arrayBufferToBase64(buffer) {
   let binary = "";
   const bytes = new Uint8Array(buffer);
@@ -65,6 +100,11 @@ function App() {
   const [profileSaved, setProfileSaved] = useState(false);
   const [homeMessage, setHomeMessage] = useState("");
   const [homeError, setHomeError] = useState("");
+  const [jobSearchText, setJobSearchText] = useState("");
+  const [jobStatusFilter, setJobStatusFilter] = useState("all");
+  const [jobCompanyFilter, setJobCompanyFilter] = useState("");
+  const [jobSortKey, setJobSortKey] = useState("id");
+  const [jobSortDir, setJobSortDir] = useState("desc");
 
   const wsRef = useRef(null);
   const reconnectRef = useRef(null);
@@ -74,6 +114,56 @@ function App() {
   const jobTitlesText = useMemo(() => (profile.job_titles || []).join(", "), [profile.job_titles]);
   const keywordText = useMemo(() => (profile.key_search_keywords || []).join(", "), [profile.key_search_keywords]);
   const locationText = useMemo(() => (profile.search_locations || []).join(", "), [profile.search_locations]);
+
+  const filteredAndSortedJobs = useMemo(() => {
+    const search = normalizeText(jobSearchText);
+    const companyFilter = normalizeText(jobCompanyFilter);
+
+    const matches = (job) => {
+      const haystack = [job.company, job.title, job.location, job.salary, job.experience, job.status, job.search_query]
+        .map(normalizeText)
+        .join(" ");
+      if (search && !haystack.includes(search)) return false;
+      if (companyFilter && !normalizeText(job.company).includes(companyFilter)) return false;
+      if (jobStatusFilter !== "all") {
+        const statusText = normalizeText(job.status);
+        if (jobStatusFilter === "selected" && !/applied|good match|selected|proceeding to apply/.test(statusText)) return false;
+        if (jobStatusFilter === "skipped" && !/skip|skipped/.test(statusText)) return false;
+        if (jobStatusFilter === "error" && !/error|failed/.test(statusText)) return false;
+      }
+      return true;
+    };
+
+    const sortFactor = jobSortDir === "asc" ? 1 : -1;
+    const sorted = [...jobs].filter(matches).sort((a, b) => {
+      if (jobSortKey === "score") {
+        return (parseMatchScore(a.match_score) - parseMatchScore(b.match_score)) * sortFactor;
+      }
+      if (jobSortKey === "company") {
+        return normalizeText(a.company).localeCompare(normalizeText(b.company)) * sortFactor;
+      }
+      if (jobSortKey === "title") {
+        return normalizeText(a.title).localeCompare(normalizeText(b.title)) * sortFactor;
+      }
+      if (jobSortKey === "salary") {
+        return normalizeText(a.salary).localeCompare(normalizeText(b.salary)) * sortFactor;
+      }
+      if (jobSortKey === "status") {
+        return normalizeText(a.status).localeCompare(normalizeText(b.status)) * sortFactor;
+      }
+      return ((Number(a.id) || 0) - (Number(b.id) || 0)) * sortFactor;
+    });
+    return sorted;
+  }, [jobs, jobSearchText, jobStatusFilter, jobCompanyFilter, jobSortKey, jobSortDir]);
+
+  const toggleSortDir = (key) => {
+    if (jobSortKey === key) {
+      setJobSortDir((prev) => (prev === "asc" ? "desc" : "asc"));
+      return;
+    }
+    setJobSortKey(key);
+    setJobSortDir(key === "id" ? "desc" : "asc");
+  };
 
   const addLog = (message) => {
     const time = new Date().toLocaleTimeString("en-US", { hour12: false });
@@ -138,6 +228,11 @@ function App() {
       case "agent_started":
         setIsRunning(true);
         setJobs([]);
+        setJobSearchText("");
+        setJobStatusFilter("all");
+        setJobCompanyFilter("");
+        setJobSortKey("id");
+        setJobSortDir("desc");
         setStats({ applied: 0, skipped: 0, already_applied: 0, evaluated: 0, current_query: "" });
         addLog(data.message || "Agent started.");
         break;
@@ -531,37 +626,78 @@ function App() {
 
           <div className="section">
             <h3>Job Results</h3>
+            <div className="table-controls">
+              <input
+                className="table-search"
+                value={jobSearchText}
+                onChange={(e) => setJobSearchText(e.target.value)}
+                placeholder="Search company, title, location, salary, status..."
+              />
+              <input
+                className="table-search"
+                value={jobCompanyFilter}
+                onChange={(e) => setJobCompanyFilter(e.target.value)}
+                placeholder="Filter by company"
+              />
+              <select value={jobStatusFilter} onChange={(e) => setJobStatusFilter(e.target.value)}>
+                <option value="all">All statuses</option>
+                <option value="selected">Selected / Applied</option>
+                <option value="skipped">Skipped</option>
+                <option value="error">Error</option>
+              </select>
+              <div className="sort-group">
+                <span>Sort by</span>
+                <button className={`sort-btn ${jobSortKey === "id" ? "active" : ""}`} onClick={() => toggleSortDir("id")}>#</button>
+                <button className={`sort-btn ${jobSortKey === "score" ? "active" : ""}`} onClick={() => toggleSortDir("score")}>Match</button>
+                <button className={`sort-btn ${jobSortKey === "company" ? "active" : ""}`} onClick={() => toggleSortDir("company")}>Company</button>
+                <button className={`sort-btn ${jobSortKey === "title" ? "active" : ""}`} onClick={() => toggleSortDir("title")}>Title</button>
+                <button className={`sort-btn ${jobSortKey === "salary" ? "active" : ""}`} onClick={() => toggleSortDir("salary")}>Salary</button>
+                <button className={`sort-btn ${jobSortKey === "status" ? "active" : ""}`} onClick={() => toggleSortDir("status")}>Status</button>
+              </div>
+            </div>
             <div className="table-wrap">
               <table>
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>Company</th>
-                    <th>Job Title</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleSortDir("id")}>#</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleSortDir("company")}>Company</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleSortDir("title")}>Job Title</th>
                     <th>Location</th>
-                    <th>Salary</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleSortDir("salary")}>Salary</th>
                     <th>Experience</th>
-                    <th>Match</th>
-                    <th>Status</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleSortDir("score")}>Match</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleSortDir("status")}>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {jobs.map((job) => (
+                  {filteredAndSortedJobs.map((job) => {
+                    const [statusTitle, statusReason] = formatStatusLines(job);
+                    return (
                     <tr key={job.id}>
                       <td>{job.id}</td>
                       <td>{job.company}</td>
-                      <td>{job.title}</td>
+                      <td>
+                        <a className="job-link" href={job.url || "#"} target="_blank" rel="noreferrer">
+                          {job.title}
+                        </a>
+                      </td>
                       <td>{job.location}</td>
                       <td>{job.salary}</td>
                       <td>{job.experience}</td>
                       <td>{job.match_score == null ? "..." : `${job.match_score}%`}</td>
-                      <td>{job.status}</td>
+                      <td>
+                        <div className="status-cell">
+                          <div className="status-main">{statusTitle}</div>
+                          <div className="status-sub">{statusReason}</div>
+                        </div>
+                      </td>
                     </tr>
-                  ))}
-                  {!jobs.length && (
+                    );
+                  })}
+                  {!filteredAndSortedJobs.length && (
                     <tr>
                       <td colSpan="8" style={{ textAlign: "center", color: "#777" }}>
-                        No jobs evaluated yet.
+                        No jobs match the current filters.
                       </td>
                     </tr>
                   )}

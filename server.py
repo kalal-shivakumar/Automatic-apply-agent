@@ -9,6 +9,7 @@ import os
 import random
 import re
 import sys
+import tempfile
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
@@ -580,47 +581,61 @@ def _write_applied_job_exports(applied_jobs: list[dict]):
     if not applied_jobs:
         return
 
-    with open("applied_jobs.json", "w", encoding="utf-8") as f:
-        json.dump(applied_jobs, f, indent=2, ensure_ascii=False)
+    json_tmp = None
+    csv_tmp = None
+    try:
+        with tempfile.NamedTemporaryFile("w", delete=False, encoding="utf-8", dir=".", prefix="applied_jobs_", suffix=".json") as f:
+            json.dump(applied_jobs, f, indent=2, ensure_ascii=False)
+            json_tmp = f.name
+        os.replace(json_tmp, "applied_jobs.json")
 
-    csv_fields = [
-        "company_name",
-        "role_name",
-        "job_link",
-        "job_description",
-        "key_skills_company_looking_for",
-        "salary",
-        "experience",
-        "match_score",
-        "match_reason",
-        "questions_asked_and_answers_provided",
-        "search_query",
-        "status",
-    ]
-    with open("applied_jobs_detailed.csv", "w", newline="", encoding="utf-8-sig") as f:
-        writer = csv.DictWriter(f, fieldnames=csv_fields)
-        writer.writeheader()
-        for item in applied_jobs:
-            qa_pairs = item.get("questions_answers") or []
-            qa_text = " | ".join(
-                f"Q: {qa.get('question', '').strip()} -> A: {qa.get('answer', '').strip()}"
-                for qa in qa_pairs
-                if qa.get("question") and qa.get("answer")
-            )
-            writer.writerow({
-                "company_name": item.get("company", ""),
-                "role_name": item.get("title", ""),
-                "job_link": item.get("url", ""),
-                "job_description": item.get("job_description", ""),
-                "key_skills_company_looking_for": item.get("key_skills", ""),
-                "salary": item.get("salary", ""),
-                "experience": item.get("experience", ""),
-                "match_score": item.get("match_score", ""),
-                "match_reason": item.get("match_reason", ""),
-                "questions_asked_and_answers_provided": qa_text,
-                "search_query": item.get("search_query", ""),
-                "status": item.get("status", ""),
-            })
+        csv_fields = [
+            "company_name",
+            "role_name",
+            "job_link",
+            "job_description",
+            "key_skills_company_looking_for",
+            "salary",
+            "experience",
+            "match_score",
+            "match_reason",
+            "questions_asked_and_answers_provided",
+            "search_query",
+            "status",
+        ]
+        with tempfile.NamedTemporaryFile("w", delete=False, newline="", encoding="utf-8-sig", dir=".", prefix="applied_jobs_", suffix=".csv") as f:
+            csv_tmp = f.name
+            writer = csv.DictWriter(f, fieldnames=csv_fields)
+            writer.writeheader()
+            for item in applied_jobs:
+                qa_pairs = item.get("questions_answers") or []
+                qa_text = " | ".join(
+                    f"Q: {qa.get('question', '').strip()} -> A: {qa.get('answer', '').strip()}"
+                    for qa in qa_pairs
+                    if qa.get("question") and qa.get("answer")
+                )
+                writer.writerow({
+                    "company_name": item.get("company", ""),
+                    "role_name": item.get("title", ""),
+                    "job_link": item.get("url", ""),
+                    "job_description": item.get("job_description", ""),
+                    "key_skills_company_looking_for": item.get("key_skills", ""),
+                    "salary": item.get("salary", ""),
+                    "experience": item.get("experience", ""),
+                    "match_score": item.get("match_score", ""),
+                    "match_reason": item.get("match_reason", ""),
+                    "questions_asked_and_answers_provided": qa_text,
+                    "search_query": item.get("search_query", ""),
+                    "status": item.get("status", ""),
+                })
+        os.replace(csv_tmp, "applied_jobs_detailed.csv")
+    finally:
+        for tmp_path in (json_tmp, csv_tmp):
+            if tmp_path and os.path.exists(tmp_path):
+                try:
+                    os.remove(tmp_path)
+                except Exception:
+                    pass
 
 
 def _get_search_queries() -> list[tuple[str, str]]:
@@ -1030,7 +1045,10 @@ async def run_agent():
                             if success:
                                 state.stats["applied"] += 1
                                 job_entry["status"] = "Applied ✓"
-                                _write_applied_job_exports([j for j in state.jobs if "Applied" in j.get("status", "")])
+                                try:
+                                    _write_applied_job_exports([j for j in state.jobs if "Applied" in j.get("status", "")])
+                                except Exception as export_error:
+                                    logger.warning(f"Applied-job export failed after success: {export_error}")
                             else:
                                 skip_reason = applicant.last_skip_reason
                                 if skip_reason == "already_applied":
@@ -1067,7 +1085,10 @@ async def run_agent():
 
     # Save results
     applied = [j for j in state.jobs if "Applied" in j.get("status", "")]
-    _write_applied_job_exports(applied)
+    try:
+        _write_applied_job_exports(applied)
+    except Exception as export_error:
+        logger.warning(f"Final applied-job export failed: {export_error}")
 
     quota_reached = state.stats["applied"] >= Config.MAX_APPLICATIONS
     if quota_reached:
