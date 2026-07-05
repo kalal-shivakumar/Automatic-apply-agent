@@ -1,0 +1,149 @@
+{
+  "job_url": "https://www.naukri.com/job-listings-azure-devops-engineer-globant-hyderabad-pune-bengaluru-6-to-11-years-030726012322",
+  "page_title": "Naukri TopTier",
+  "final_url": "https://www.naukri.com/job-listings-azure-devops-engineer-globant-hyderabad-pune-bengaluru-6-to-11-years-030726012322",
+  "results": [
+    {
+      "label": "1_json_ld_direct",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "2_json_ld_graph",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "3_meta_description",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "4_job_desc_section",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "5_job_desc_div",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "6_styles_jdc_div",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "7_jdc_section",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "8_dang_inner_html",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "9_job_description_id",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "10_job_description_class",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "11_article_main",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "12_heading_following_block",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": "",
+      "error": "Page.evaluate: SyntaxError: Invalid or unexpected token\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:234:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    },
+    {
+      "label": "13_largest_semantic_block",
+      "success": true,
+      "length": 1945,
+      "preview": "Globant 3.4 IT Services & Consulting 10001-50000 employees Azure Devops Engineer Bengaluru, Hyderabad, Pune ₹25L - ₹40L/year Azure DevOps, Azure Cloud, Terraform, Docker 6-11 Yrs 2d ago Quick apply Expertise Azure DevOps Terraform Docker Az",
+      "text": "Globant 3.4 IT Services & Consulting 10001-50000 employees Azure Devops Engineer Bengaluru, Hyderabad, Pune ₹25L - ₹40L/year Azure DevOps, Azure Cloud, Terraform, Docker 6-11 Yrs 2d ago Quick apply Expertise Azure DevOps Terraform Docker Azure Cloud Job Description Role & responsibilities : Who We Are:- We are a digitally native company that helps organizations reinvent themselves and unleash their potential. We are the place where innovation, design and engineering meet scale. With more than 29,000+ employees and present in 33 countries across 5 continents, were partnering with companies like Google, Electronic Arts, and Santander, among others. www.globant.com About CloudOps Studio: CloudOps Studio leverages Globant's Enterprise Cloud Transformation framework to develop a roadmap that factors in the key pillars of a successful journey to cloud: business, people, process and technology. We are combining the best in cloud technologies, DevOps practices, and innovative capabilities to facilitate new and more efficient ways of doing business. We're looking for a hands-on Azure DevOps Engineer to design, build, and operate cloud-native infrastructure and delivery pipelines at scale. What we need 5+ years in DevOps/Platform/Cloud Engineering; 4+ years hands-on Azure Strong Terraform (modules, remote state, workspaces) not just basic usage Solid AKS and Kubernetes fundamentals Scripting in Python, Bash, or PowerShell Good networking basics: VNet, NSG, Private Endpoints, Load Balancers For quick updates share your resume to vivek.singh03@globant.com with below mention details. Total Exp, Relevent exp in Azure, Notice Period, mention last working day of serving, Current CTC, Expected CTC, Current & Preferred Location. View more Compensation CTC range₹25L - ₹40L/year Quick apply Applied All about us Globant 3.4 1315 Reviews Globant India Private Limited Founded: 2003 Headquarters: Pune, Maharashtra 10001-50000 employees"
+    },
+    {
+      "label": "14_dom_text_near_skills",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "15_script_jobdescription_regex",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "16_script_description_regex",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "17_next_data_search",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "18_window_data_search",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "19_accessibility_regions",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": ""
+    },
+    {
+      "label": "20_body_text_filtered",
+      "success": false,
+      "length": 0,
+      "preview": "",
+      "text": "",
+      "error": "Page.evaluate: SyntaxError: Invalid or unexpected token\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:234:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import asyncio
 import logging
 import json
 import random
+import re
 from playwright.async_api import Page, Response
 from config import Config
 from ai_answerer import QuestionAnswerer
@@ -22,50 +23,78 @@ class JobSearcher:
         self.page = page
         self.job_data = None
 
-    async def search_jobs(self, page_no: int = 1, keywords: str = None,
-                          location: str = None) -> list[dict]:
-        """Search for jobs and capture API response with job details."""
+    async def _fetch_job_data(self, url: str) -> dict | None:
+        """Navigate to a search URL and capture Naukri's internal job API response."""
         self.job_data = None
 
-        async def capture_response(response: Response):
-            if "jobapi/v3/search" in response.url and response.status == 200:
-                try:
-                    body = await response.json()
-                    if "jobDetails" in body:
-                        self.job_data = body
-                except Exception:
-                    pass
+        def is_job_search_response(response: Response) -> bool:
+            return "jobapi/v3/search" in response.url and response.status == 200
 
-        self.page.on("response", capture_response)
+        try:
+            async with self.page.expect_response(is_job_search_response, timeout=15000) as response_info:
+                await self.page.goto(url)
+                await self.page.wait_for_load_state("networkidle")
+        except Exception:
+            await self.page.goto(url)
+            await self.page.wait_for_load_state("networkidle")
+            await human_delay(3.0, 6.0)
 
-        kw = keywords or Config.JOB_KEYWORDS
-        loc = (location or Config.JOB_LOCATION).lower()
-        experience = Config.EXPERIENCE_YEARS
+            for i in range(3):
+                await self.page.evaluate(f"window.scrollTo(0, {(i + 1) * 600})")
+                await human_delay(0.8, 2.0)
 
-        # Use Naukri's keyword search URL format
-        keyword_slug = kw.replace(" ", "-").lower()
-        url = (
-            f"https://www.naukri.com/{keyword_slug}-jobs-in-{loc}"
-            f"?k={kw.replace(' ', '%20')}&experience={experience}"
-            f"&jobAge=1"  # Posted in last 1 day only
-        )
-        if page_no > 1:
-            url += f"&pageNo={page_no}"
+            return None
 
-        logger.info(f"Searching: {url}")
-        await self.page.goto(url)
-        await self.page.wait_for_load_state("networkidle")
         await human_delay(3.0, 6.0)
 
-        # Scroll to trigger lazy loading
         for i in range(3):
             await self.page.evaluate(f"window.scrollTo(0, {(i + 1) * 600})")
             await human_delay(0.8, 2.0)
 
-        self.page.remove_listener("response", capture_response)
+        try:
+            response = await response_info.value
+            body = await response.json()
+            if "jobDetails" in body:
+                return body
+        except Exception:
+            return None
+
+        return None
+
+    async def search_jobs(self, page_no: int = 1, keywords: str = None,
+                          location: str = None) -> list[dict]:
+        """Search for jobs and capture API response with job details."""
+        kw = keywords or Config.JOB_KEYWORDS
+        loc = (location or Config.JOB_LOCATION).lower()
+        experience = Config.EXPERIENCE_YEARS
+        job_age_days = str(getattr(Config, "JOB_AGE_DAYS", "7") or "").strip()
+
+        def build_url(include_job_age: bool) -> str:
+            keyword_slug = kw.replace(" ", "-").lower()
+            built_url = (
+                f"https://www.naukri.com/{keyword_slug}-jobs-in-{loc}"
+                f"?k={kw.replace(' ', '%20')}&experience={experience}"
+            )
+            if include_job_age and job_age_days and job_age_days != "0":
+                built_url += f"&jobAge={job_age_days}"
+            if page_no > 1:
+                built_url += f"&pageNo={page_no}"
+            return built_url
+
+        url = build_url(include_job_age=True)
+        logger.info(f"Searching: {url}")
+        self.job_data = await self._fetch_job_data(url)
+
+        if not self.job_data and job_age_days and job_age_days != "0":
+            retry_url = build_url(include_job_age=False)
+            logger.warning(
+                f"No job API response captured with jobAge={job_age_days}; retrying without jobAge filter"
+            )
+            logger.info(f"Retrying search: {retry_url}")
+            self.job_data = await self._fetch_job_data(retry_url)
 
         if not self.job_data:
-            logger.warning("No job API response captured")
+            logger.warning("No job API response captured even after retry")
             return []
 
         jobs = []
@@ -107,10 +136,68 @@ class JobApplicant:
         self.last_match_score = 0
         self.last_match_reason = ""
         self.last_skip_reason = ""
+        self.last_full_jd = ""
+        self.last_qa_pairs = []
+
+    def _record_qa(self, question: str, answer: str):
+        q = (question or "").strip()
+        a = (answer or "").strip()
+        if q and a:
+            self.last_qa_pairs.append({"question": q, "answer": a})
 
     async def _extract_full_jd(self) -> str:
         """Extract the complete job description from the current job page."""
         try:
+            def normalize_jd_text(raw_text: str) -> str:
+                text = re.sub(r'<[^>]+>', ' ', raw_text or '')
+                text = text.replace('\r', '\n')
+                text = text.replace('\u00a0', ' ')
+
+                lines = []
+                for line in text.split('\n'):
+                    cleaned = re.sub(r'[ \t]+', ' ', line).strip()
+                    if cleaned:
+                        lines.append(cleaned)
+
+                if not lines:
+                    return ""
+
+                start_markers = [
+                    'Job Description',
+                    'Role & responsibilities',
+                    'Roles and responsibilities',
+                    'About the job',
+                ]
+
+                start_index = 0
+                for i, line in enumerate(lines):
+                    ll = line.lower()
+                    if any(marker.lower() in ll for marker in start_markers):
+                        start_index = i
+                        break
+                lines = lines[start_index:]
+
+                end_markers = [
+                    'Quick applyApplied',
+                    'Quick apply Applied',
+                    'All about us',
+                    'Company reviews',
+                    'Report this job',
+                    'Recommended Jobs',
+                ]
+
+                end_index = len(lines)
+                for i, line in enumerate(lines):
+                    ll = line.lower()
+                    if any(marker.lower() in ll for marker in end_markers):
+                        end_index = i
+                        break
+                lines = lines[:end_index]
+
+                text = '\n'.join(lines).strip()
+
+                return text[:6000]
+
             # Scroll down to ensure lazy-loaded content is rendered
             for scroll_y in [500, 1000, 1500, 2000]:
                 await self.page.evaluate(f"window.scrollTo(0, {scroll_y})")
@@ -137,10 +224,7 @@ class JobApplicant:
                     return '';
                 }""")
                 if jd_text and len(jd_text.strip()) > 100:
-                    # Strip HTML tags if present
-                    import re
-                    clean = re.sub(r'<[^>]+>', ' ', jd_text)
-                    clean = re.sub(r'\s+', ' ', clean).strip()
+                    clean = normalize_jd_text(jd_text)
                     logger.info(f"JD extracted from JSON-LD: {len(clean)} chars")
                     return clean
             except Exception:
@@ -168,12 +252,54 @@ class JobApplicant:
                     if await el.is_visible(timeout=800):
                         text = await el.inner_text()
                         if text and len(text.strip()) > 50:
-                            logger.info(f"JD extracted via '{sel}': {len(text.strip())} chars")
-                            return text.strip()
+                            clean = normalize_jd_text(text)
+                            logger.info(f"JD extracted via '{sel}': {len(clean)} chars")
+                            return clean
                 except Exception:
                     continue
 
-            # Method 3: JavaScript — find the largest text block that looks like a JD
+            # Method 3: Semantic content block tuned for Naukri TopTier JD pages.
+            try:
+                jd_text = await self.page.evaluate("""() => {
+                    const candidates = document.querySelectorAll('section, div, article');
+                    let best = '';
+                    let bestScore = -1;
+                    for (const el of candidates) {
+                        const text = (el.innerText || '').trim();
+                        if (text.length < 500 || text.length > 15000) continue;
+                        const lc = text.toLowerCase();
+                        const cls = (el.className || '').toLowerCase();
+                        if (cls.includes('footer') || cls.includes('header') || cls.includes('sidebar') ||
+                            cls.includes('recommend') || cls.includes('chatbot')) {
+                            continue;
+                        }
+
+                        let score = 0;
+                        if (lc.includes('job description')) score += 5;
+                        if (lc.includes('role & responsibilities') || lc.includes('roles and responsibilities')) score += 4;
+                        if (lc.includes('what we need') || lc.includes('requirements')) score += 3;
+                        if (lc.includes('skills')) score += 2;
+                        if (lc.includes('experience')) score += 2;
+                        if (lc.includes('all about us')) score -= 2;
+                        if (lc.includes('recommended jobs')) score -= 3;
+                        score += Math.min(text.length / 500, 6);
+
+                        if (score > bestScore) {
+                            best = text;
+                            bestScore = score;
+                        }
+                    }
+                    return best;
+                }""")
+                if jd_text and len(jd_text.strip()) > 200:
+                    clean = normalize_jd_text(jd_text)
+                    if len(clean) > 150:
+                        logger.info(f"JD extracted via semantic block: {len(clean)} chars")
+                        return clean
+            except Exception:
+                pass
+
+            # Method 4: JavaScript — find the largest text block that looks like a JD
             try:
                 jd_text = await self.page.evaluate("""() => {
                     // Find all sections/divs that might contain JD text
@@ -206,8 +332,9 @@ class JobApplicant:
                     return best;
                 }""")
                 if jd_text and len(jd_text.strip()) > 100:
-                    logger.info(f"JD extracted via JS heuristic: {len(jd_text.strip())} chars")
-                    return jd_text.strip()[:6000]
+                    clean = normalize_jd_text(jd_text)
+                    logger.info(f"JD extracted via JS heuristic: {len(clean)} chars")
+                    return clean
             except Exception:
                 pass
 
@@ -251,6 +378,8 @@ class JobApplicant:
         self.last_match_score = 0
         self.last_match_reason = ""
         self.last_skip_reason = ""
+        self.last_full_jd = ""
+        self.last_qa_pairs = []
         try:
             logger.info(f"Opening: {job['title']} at {job['company']}")
 
@@ -264,7 +393,13 @@ class JobApplicant:
 
             # Extract full job description from the page
             full_jd = await self._extract_full_jd()
+            self.last_full_jd = full_jd
             page_details = await self._extract_job_details_from_page()
+
+            if full_jd:
+                print("\n  ===== EXTRACTED JOB DESCRIPTION START =====")
+                print(full_jd)
+                print("  ===== EXTRACTED JOB DESCRIPTION END =====\n")
 
             # Combine API description with page-scraped JD
             combined_jd = full_jd or job.get("description", "")
@@ -272,7 +407,18 @@ class JobApplicant:
             if page_details.get("page_skills"):
                 combined_skills += ", " + page_details["page_skills"]
 
+            # Always score against JD + key skills.
+            if not combined_jd.strip():
+                logger.info("Skipping score: no job description available")
+                self.last_skip_reason = "missing_jd"
+                return False
+            if not combined_skills.strip():
+                logger.info("Skipping score: no key skills available")
+                self.last_skip_reason = "missing_skills"
+                return False
+
             # Score the job match
+            # Always score using extracted JD plus key skills.
             match_score, match_reason = self.ai.match_job_score(
                 job_title=job.get("title", ""),
                 company=job.get("company", ""),
@@ -491,6 +637,7 @@ class JobApplicant:
                         answer = self.ai.answer_question(question_text.strip())
                         print(f"  └─ AI ANSWER: {answer}")
                         logger.info(f"AI typed: {answer}")
+                        self._record_qa(question_text, answer)
 
                         await inp.click()
                         await human_delay(0.3, 0.8)
@@ -559,6 +706,7 @@ class JobApplicant:
                     answer = self.ai.answer_question(question_text.strip(), opts)
                     print(f"  └─ AI ANSWER: {answer}")
                     logger.info(f"AI picked radio: {answer}")
+                    self._record_qa(question_text, answer)
 
                     # Click matching label
                     clicked = False
@@ -627,6 +775,7 @@ class JobApplicant:
                     answer = self.ai.answer_question(question_text.strip(), opts)
                     print(f"  └─ AI ANSWER: {answer}")
                     logger.info(f"AI picked checkbox: {answer}")
+                    self._record_qa(question_text, answer)
 
                     # Click the matching checkbox - try label first, then input
                     clicked = False
@@ -709,6 +858,7 @@ class JobApplicant:
                             answer = self.ai.answer_question(question_text.strip(), opts)
                             print(f"  └─ AI ANSWER: {answer}")
                             logger.info(f"AI picked dropdown: {answer}")
+                            self._record_qa(question_text, answer)
                             try:
                                 await select.select_option(label=answer)
                             except Exception:
@@ -743,6 +893,7 @@ class JobApplicant:
                             print(f"  │  Choice options: {opts}")
                             answer = self.ai.answer_question(question_text.strip(), opts)
                             print(f"  └─ AI ANSWER: {answer}")
+                            self._record_qa(question_text, answer)
                             for i in range(click_count):
                                 t = (await clickables.nth(i).text_content() or "").strip()
                                 if t.lower() == answer.lower():
@@ -773,6 +924,7 @@ class JobApplicant:
                             print(f"  │  Quick reply: {options}")
                             answer = self.ai.answer_question(question_text.strip(), options)
                             print(f"  └─ AI ANSWER: {answer}")
+                            self._record_qa(question_text, answer)
                             for i in range(count):
                                 text = (await option_els.nth(i).text_content() or "").strip()
                                 if text.lower() == answer.lower():
@@ -886,6 +1038,7 @@ class JobApplicant:
                                 print(f"  │  Options: {opts}")
                                 print(f"  └─ AI ANSWER: {answer}")
                                 logger.info(f"Form select: {q_text.strip()[:50]} -> {answer}")
+                                self._record_qa(q_text, answer)
                                 await select.first.select_option(label=answer)
                                 handled_any = True
                             continue
@@ -899,6 +1052,7 @@ class JobApplicant:
                                 print(f"  \n  ┌─ QUESTION: {q_text.strip()[:120]}")
                                 print(f"  └─ AI ANSWER: {answer}")
                                 logger.info(f"Form input: {q_text.strip()[:50]} -> {answer}")
+                                self._record_qa(q_text, answer)
                                 await inp.first.fill(answer)
                                 handled_any = True
                             continue
@@ -915,6 +1069,7 @@ class JobApplicant:
                                 print(f"  │  Options: {opts}")
                                 print(f"  └─ AI ANSWER: {answer}")
                                 logger.info(f"Form radio: {q_text.strip()[:50]} -> {answer}")
+                                self._record_qa(q_text, answer)
                                 for j in range(await radio_labels.count()):
                                     text = await radio_labels.nth(j).text_content()
                                     if text and text.strip().lower() == answer.lower():

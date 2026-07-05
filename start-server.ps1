@@ -197,6 +197,8 @@ if ($prereqFailed) {
     exit 1
 }
 
+$pythonExe = $pythonInfo.Path
+
 # ----------------------------------------------------------
 # STEP 1 - Validate Azure login
 # ----------------------------------------------------------
@@ -341,6 +343,7 @@ $merged = [ordered]@{
     JOB_KEYWORDS       = if ($existingEnv.ContainsKey("JOB_KEYWORDS"))       { $existingEnv["JOB_KEYWORDS"] }       else { "Python Developer" }
     JOB_LOCATION       = if ($existingEnv.ContainsKey("JOB_LOCATION"))       { $existingEnv["JOB_LOCATION"] }       else { "Bangalore" }
     EXPERIENCE_YEARS   = if ($existingEnv.ContainsKey("EXPERIENCE_YEARS"))   { $existingEnv["EXPERIENCE_YEARS"] }   else { "3" }
+    JOB_AGE_DAYS       = if ($existingEnv.ContainsKey("JOB_AGE_DAYS"))       { $existingEnv["JOB_AGE_DAYS"] }       else { "7" }
     MAX_APPLICATIONS   = if ($existingEnv.ContainsKey("MAX_APPLICATIONS"))   { $existingEnv["MAX_APPLICATIONS"] }   else { "50" }
 
     # Profile - keep existing values (user must edit .env to personalise)
@@ -408,10 +411,22 @@ Write-Step "Setting up Python virtual environment..."
 $venvDir      = Join-Path $root ".venv"
 $venvActivate = Join-Path $venvDir "Scripts\Activate.ps1"
 $venvPython   = Join-Path $venvDir "Scripts\python.exe"
+$venvCfg      = Join-Path $venvDir "pyvenv.cfg"
 
 # Clear any stale PYTHONHOME / PYTHONPATH that would break venv creation
 $env:PYTHONHOME = ""
 $env:PYTHONPATH = ""
+
+if ((Test-Path $venvPython) -and (Test-Path $venvCfg)) {
+    $venvCfgContent = Get-Content $venvCfg -Raw
+    if ($venvCfgContent -match '^executable\s*=\s*(.+)$') {
+        $venvBasePython = $matches[1].Trim()
+        if (-not (Test-Path $venvBasePython)) {
+            Write-Warn ".venv references missing base interpreter: $venvBasePython"
+            Remove-Item $venvDir -Recurse -Force
+        }
+    }
+}
 
 if (-not (Test-Path $venvPython)) {
     Write-Warn ".venv not found - creating..."

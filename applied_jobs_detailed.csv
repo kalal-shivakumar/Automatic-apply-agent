@@ -1,0 +1,108 @@
+﻿company_name,role_name,job_link,job_description,key_skills_company_looking_for,salary,experience,match_score,match_reason,questions_asked_and_answers_provided,search_query,status
+Kantar,Cloud Engineer,https://www.naukri.com/job-listings-cloud-engineer-kantar-imrb-hyderabad-8-to-13-years-020726921132,"Job Description
+About the job
+As a Cloud Engineer, you will be at the forefront of shaping our cloud infrastructure, a cornerstone for delivering innovative solutions and insights to clients globally. This role is crucial, as it ensures the seamless implementation and optimization of cloud services, directly contributing to the success of our projects and the brands we support. Your work will empower teams to operate with greater efficiency and scalability, reinforcing our commitment to excellence.
+In this position, you will design, implement, and maintain robust cloud systems, collaborating with cross-functional teams to enhance our cloud strategies. You''ll be an integral part of a dynamic group of professionals, uniting expertise and creativity to drive impactful results. Your contributions will be instrumental in shaping the future of global brands while fostering innovation and resilience.
+Job Goals
+Implement robust and scalable cloud infrastructure solutions that support Kantars cloud infrastructure.
+Ensure the seamless integration and optimization of cloud services to enhance data accessibility and processing efficiency.
+Collaborate effectively with cross-functional teams to align cloud strategies with business objectives and innovative projects.
+Maintain and improve cloud security protocols to protect sensitive data and comply with industry standards.
+Provide technical guidance and support to other engineers, fostering a culture of continuous learning and improvement in cloud technologies.
+Work with Enterprise, solution and technical architects to translate technical designs in to deployable services.
+Ideal Skills & Capabilities
+Expertise in designing and deploying scalable cloud infrastructure, particularly within Azure environments.
+Hands-on experience with Infrastructure as Code (IaC) practices, specifically using tools like Terraform.
+Comprehensive understanding of cloud foundational services, including networking, identity and access management (IAM), and monitoring.
+Ability to effectively manage complex cloud migrations, such as transitioning from on-premises systems to cloud-based solutions.
+Knowledge of structured cloud adoption models, including Azure landing zones, to ensure seamless integration and optimization of services.
+Whats in it for you
+On top of all your normal benefits like holiday, meal cards and life assurance, we also offer:
+Five days of Life Leave per year; for those days when life justgets in the way.
+Birthday leave one extra day of holiday taken on the nearest workday to your birthday
+Two days a year to give back and volunteer with an organisation of your choice.
+Enhanced primary and secondary carer leave for however you choose to grow your family.
+The chance to hit the beach on your lunch break (yes, we have somewhere you can store your surfboard!
+View more
+Compensation
+CTC range₹25L - ₹35L/year
+Quick apply
+Applied","azure, cloud security, cloud infrastructure, Cloud Engineer, identity and access management, iam, infrastructure as code, iac, terraform, cloud technologies",25-35 Lacs PA,8-13 Yrs,84,"Strong match on Azure/IaC/cloud security/landing zones and Hyderabad location with solid 8-13 year fit, but compensation is far below target ₹80 LPA and role is more Cloud Engineer than pure DevOps/SRE.",,Azure DevOps Engineer in hyderabad,Applied ✓
+Spigot Software,Kafka Administrator,https://www.naukri.com/job-listings-kafka-administrator-spigot-software-hyderabad-bengaluru-4-to-15-years-020726007956,"Job Description
+Roles and Responsibilities :
+Design, deploy, and manage Kafka clusters across multiple data centers to ensure high availability and scalability.
+Troubleshoot issues with Kafka brokers, topics, partitions, and consumer/producer applications.
+Collaborate with development teams to design and implement messaging solutions using Apache Kafka.
+Monitor Kafka cluster performance metrics such as throughput, latency, and resource utilization.
+Job Requirements :
+4-15 years of experience in managing large-scale distributed systems like Apache Kafka.
+Strong understanding of cloud-based infrastructure management using Terraform or similar tools.
+Experience with monitoring tools like Prometheus/Grafana for real-time visibility into system performance.
+Quick apply
+Applied","Kafka, Terraform, confluent cloud",Not disclosed,4-15 Yrs,78,"Strong technical overlap with Terraform, Prometheus/Grafana, distributed systems and cloud infrastructure, plus Hyderabad location fit and suitable experience range; however the role is Kafka Administrator rather than DevOps/Platform/SRE, and salary is undisclosed so compensation fit is uncertain.",Q: How many years of experience do you have in confluent cloud ? -> A: 4 | Q: How many years of experience do you have in confluent kafka ? -> A: 10 | Q: How many years of experience do you have in Terraform ? -> A: 7,Azure DevOps Engineer in hyderabad,Applied ✓
+Nisum,DevOps Engineers,https://www.naukri.com/job-listings-devops-engineers-nisum-technologies-hyderabad-10-to-15-years-300626501240,"Job Description
+What Youll Do
+Design, build, and manage scalable, secure, and highly available cloud infrastructure on Google Cloud Platform (GCP).
+Deploy, configure, and manage Kubernetes clusters using Google Kubernetes Engine (GKE).
+Build, maintain, and optimize CI/CD pipelines using Jenkins, GitHub Actions, GitLab CI, or Google Cloud Build.
+Automate infrastructure provisioning and configuration using Terraform and other Infrastructure as Code (IaC) tools.
+Implement monitoring, logging, alerting, and observability solutions to ensure system health and platform reliability.
+Ensure infrastructure scalability, availability, security, and performance across production environments.
+Lead incident management, perform Root Cause Analysis (RCA), and develop disaster recovery strategies to improve system resilience.
+Collaborate with development teams to streamline deployment processes and enhance application reliability using DevOps and SRE best practices.
+Optimize cloud infrastructure for performance, cost efficiency, automation, and operational excellence.
+Develop automation scripts and continuously improve infrastructure management and deployment processes.
+What You Know
+Must have 10+ years of experience in Site Reliability Engineering (SRE), DevOps, or Cloud Engineering.
+Should have strong hands-on experience designing and managing cloud infrastructure on Google Cloud Platform (GCP).
+Must have expertise in GCP services, including:
+Compute Engine
+Google Kubernetes Engine (GKE)
+Cloud Functions / Cloud Run
+Cloud Storage
+BigQuery
+Pub/Sub
+IAM and Networking
+Should possess strong hands-on experience with Kubernetes, Docker, Terraform, Helm, and Ansible.
+Must have experience designing, implementing, and maintaining CI/CD pipelines using Jenkins, GitHub Actions, GitLab CI, or Google Cloud Build.
+Should have strong scripting skills using Python, Bash, Go, or Java.
+Must have a solid understanding of Linux administration, networking, cloud architecture, and cloud security best practices.
+Should have experience implementing monitoring and observability solutions using Prometheus, Grafana, ELK Stack, and Google Cloud Monitoring.
+Must possess excellent troubleshooting, analytical, and problem-solving skills.
+Experience working with Agile methodologies and cross-functional engineering teams is preferred.
+Education
+Bachelors or master s degree in computer science, Information Technology, Engineering, or a related field is required.
+Benefits
+5 L Medical Insurance + 21 K OPD Wallet.
+Optional parental cover with 50% reimbursement on a pro-rata basis.
+15 L Term Insurance.
+Free lunch snacks | Dinner Shift allowances | Cr che.
+Disclaimer : This job posting has been aggregated from external source. Role details, content, and availability are subject to change. Applicants are advised to confirm the latest information directly on the company website before applying.
+View more
+Apply on company site
+Apply attempted","Automation, Analytical, Troubleshooting, Monitoring, Python, Networking, Computer science, GCP, Agile, Information technology",Not disclosed,10-15 Yrs,84,"Strong match on experience, DevOps/SRE role relevance, location (Hyderabad), and extensive overlap in Kubernetes/Terraform/CI-CD/cloud skills; main gap is GCP-specific depth and salary is undisclosed, so compensation fit is uncertain.",,Azure DevOps Engineer in hyderabad,Applied ✓
+Coforge,LLMOps/MLOps Engineer (Immediate Joiners/Currently Serving),https://www.naukri.com/job-listings-llmops-mlops-engineer-immediate-joiners-currently-serving-coforge-hyderabad-pune-5-to-10-years-300626016171,"Job Description
+We are looking for IMMEDIATE JOINERS or Serving Notice period candidates only, interested and eligible candidates can apply with their updated resume.
+Experience 5+ Years
+Location Pune, Hyerabad
+Detailed JD
+MLOps/LLMOps Engineer with a strong background in continual learning, cloud infrastructure, Azure, GCP, and AWS. The ideal candidate will have extensive hands-on experience in Python and ML libraries (Scikit-learn, TensorFlow, PyTorch), and a proven track record in deploying, monitoring, and optimizing machine learning and large language model pipelines.
+Core Responsibilities & Skills:
+1. MLOps & LLMOps Pipeline Development
+Design, implement, and automate end-to-end ML/LLM pipelines with a focus on continual learning, model retraining, and A/B testing.
+2. Cloud & Infrastructure Expertise
+Strong hands-on experience with Azure, GCP, and AWS cloud platforms, including managed services for ML (Azure ML, Sagemaker, Vertex AI).
+Proficiency in Docker, Kubernetes, and cloud-native architectures for scalable, containerized deployments.
+3. ML & LLM Tools & Frameworks
+Expertise in ML pipeline tools: MLflow, Airflow, Kubeflow, Sagemaker, Azure ML.
+Experience with LLM tools and frameworks: LangChain, LlamaIndex, Hugging Face, OpenAI/Azure OpenAI APIs.
+Hands-on experience with vector databases: Pinecone, Weaviate, Chroma, Qdrant.
+4. Monitoring, Optimization & Scalability
+Implement monitoring and observability using tools like Prometheus, Grafana, ELK, and Datadog.
+Optimize GPU compute, inference latency, and model serving for high-performance, scalable architectures.
+5. Programming & Collaboration
+Strong Python skills and familiarity with ML libraries (Scikit-learn, TensorFlow, PyTorch).
+Collaborate with data scientists, engineers, and product teams to deliver robust, production-grade ML/LLM solutions.
+View more
+Quick apply
+Applied","RAG, Agentic AI, MLOps/LLOps, Agentic AI Orchestration, LLM, MCP, Python, Cloud",Not disclosed,5-10 Yrs,68,"Strong cloud/DevOps and Azure-AWS-Kubernetes-Terraform overlap with good location fit (Hyderabad/Pune), but the role is more MLOps/LLMOps than the candidate’s core profile and salary is undisclosed, so experience fit becomes the main positive signal.",,Azure DevOps Engineer in hyderabad,Applied ✓

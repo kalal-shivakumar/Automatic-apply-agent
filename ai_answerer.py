@@ -1,5 +1,6 @@
 import os
 import logging
+import re
 from openai import AzureOpenAI
 from config import Config
 
@@ -38,6 +39,107 @@ class QuestionAnswerer:
         import httpx
         return httpx.Client(verify=False)
 
+    @staticmethod
+    def _pick_preferred_option(options: list[str], preferred_values: list[str]) -> str | None:
+        for pref in preferred_values:
+            for opt in options:
+                if opt.strip().lower() == pref.lower():
+                    return opt
+        return None
+
+    @staticmethod
+    def _contains_any(text: str, needles: list[str]) -> bool:
+        low = (text or "").lower()
+        return any(n in low for n in needles)
+
+    def _apply_positive_overrides(self, question: str, answer: str, options: list[str] | None) -> str:
+        """Force positive, profile-aligned answers for common recruiter questions."""
+        q = (question or "").strip()
+        a = (answer or "").strip()
+        opts = options or []
+
+        years_question = self._contains_any(
+            q,
+            [
+                "how many years", "years of experience", "experience do you have", "yrs", "yr",
+                "how much experience", "number of years",
+            ],
+        )
+
+        yes_no_question = self._contains_any(
+            q,
+            [
+                "available", "willing", "can you", "are you", "interview", "relocate",
+                "work from office", "work from home", "ready to join", "comfortable",
+            ],
+        )
+
+        notice_question = self._contains_any(
+            q,
+            ["notice", "join", "joining", "how soon", "when can you start", "available to join"],
+        )
+
+        experience_question = self._contains_any(
+            q,
+            ["experience", "hands-on", "hands on", "expert", "expertise", "worked on", "proficient"],
+        )
+
+        if years_question:
+            match = re.search(r"\b(\d{1,2})\b", a)
+            if match:
+                return match.group(1)
+            profile_years = str(Config.YOUR_EXPERIENCE or self.profile.get("overall_experience_years", "") or "").strip()
+            match = re.search(r"\b(\d{1,2})\b", profile_years)
+            if match:
+                return match.group(1)
+            return "11"
+
+        if any(term in a.lower() for term in ["not specified", "unspecified", "unknown", "n/a", "na"]):
+            if notice_question:
+                return "60 days"
+            if yes_no_question:
+                return "Yes"
+            if experience_question:
+                return "Yes, I have relevant experience and expertise."
+            return "Yes, I have relevant experience and expertise."
+
+        # If option-based and it's a yes/no style question, always choose Yes when available.
+        if opts and yes_no_question:
+            yes_pick = self._pick_preferred_option(opts, ["Yes", "Y", "Available", "Immediate"])
+            if yes_pick:
+                return yes_pick
+
+        # If notice/joining question has options, prefer 60-day style options.
+        if opts and notice_question:
+            sixty_pick = self._pick_preferred_option(
+                opts,
+                [
+                    "60 days", "60 Days", "2 months", "Two months", "Within 60 days",
+                    "In 60 days", "After 60 days",
+                ],
+            )
+            if sixty_pick:
+                return sixty_pick
+
+        # For free-text notice period questions, force 60 days response.
+        if notice_question and not opts:
+            return "60 days"
+
+        # For free-text experience/expertise prompts, keep tone positive.
+        if experience_question and not opts:
+            if re.search(r"\b(yes|have|expert|experienced|proficient)\b", a.lower()):
+                return a
+            return "Yes, I have relevant experience and expertise."
+
+        # For general yes/no free-text questions, default to positive.
+        if yes_no_question and not opts:
+            if a.lower() in {"yes", "y"}:
+                return "Yes"
+            if a.lower() in {"no", "n"}:
+                return "Yes"
+
+        return a
+
     def answer_question(self, question: str, options: list[str] | None = None) -> str:
         """Answer a job application question using AI."""
 
@@ -53,7 +155,12 @@ Question: {question}
 Available options:
 {options_text}
 
-Reply with ONLY the exact text of the best matching option. Do not add explanation."""
+Rules:
+- Keep answers positive and confidence-forward.
+- If options include an affirmative choice (e.g., Yes), prefer it for availability/willingness questions.
+- For joining/notice-period style questions, prefer 60 days (or equivalent 2 months option) when present.
+- We need the job, hence try to answer in a way that increases chances of getting the job. dont say i dont have experience or i dont know. Always answer positively and confidently.
+- Reply with ONLY the exact text of one option. Do not add explanation."""
         else:
             prompt = f"""You are helping someone apply for a job. Answer the following question based on their profile.
             
@@ -66,8 +173,13 @@ IMPORTANT RULES:
 - If the question asks "how many years" or about years of experience, reply with ONLY a number (e.g. "11" or "8"). Never write a sentence for experience questions.
 - If the question asks for a city/location, reply with just the city name (e.g. "Bangalore").
 - If the question asks for a name, reply with just the name.
-- If the question asks for notice period, reply with just the period (e.g. "2 months").
+- If the question asks for notice period or joining timeline, reply with just: "60 days".
 - If the question asks for current CTC or expected CTC, reply with just the number in LPA (e.g. "80 LPA").
+- For yes/no or willingness questions, answer positively (prefer "Yes").
+- For experience/expertise wording, answer positively and confidently.
+- For any question that asks "how many years" or "years of experience", answer with a single integer only.
+- Never reply with "Not specified", "unknown", or similar placeholders.
+- If the answer is not obvious from the profile, choose the most interview-friendly positive response.
 - For other questions, reply with a concise 1-2 sentence professional answer.
 - Never add preamble like "I have" or "My experience is" for numeric questions."""
 
@@ -81,7 +193,8 @@ IMPORTANT RULES:
             max_completion_tokens=200
         )
 
-        return response.choices[0].message.content.strip()
+        raw_answer = response.choices[0].message.content.strip()
+        return self._apply_positive_overrides(question, raw_answer, options)
 
     def match_job_score(self, job_title: str, company: str, location: str,
                          salary: str, experience: str, skills: str,
@@ -110,12 +223,15 @@ Full Job Description:
 {full_description[:4000]}
 
 Evaluate the match based on:
-1. Skills overlap (Azure, AWS, Kubernetes, Terraform, CI/CD, Docker, etc.) - weight 35%
-2. Role/title relevance (DevOps, Platform, SRE, Cloud, Infrastructure) - weight 20%
-3. Experience level fit (11 years) - weight 15%
-4. Salary potential (target ₹80 LPA) - weight 10%
-5. Location preference (Remote/Hyderabad/Bangalore/Pune/Chennai/Noida) - weight 10%
-6. Company quality & role type (avoid support/L1/L2/legacy) - weight 10%
+    1. Salary range / compensation fit (target ₹80 LPA) - weight 30%
+    2. Experience level fit (11 years) - weight 20%
+    3. Skills overlap (Azure, AWS, Kubernetes, Terraform, CI/CD, Docker, etc.) - weight 20%
+    4. Role/title relevance (DevOps, Platform, SRE, Cloud, Infrastructure) - weight 10%
+    5. Location preference (Remote/Hyderabad/Bangalore/Pune/Chennai/Noida) - weight 10%
+    6. Company quality & role type (avoid support/L1/L2/legacy) - weight 10%
+
+    Important rule:
+    - If salary is not mentioned in the job details, use experience fit as the primary ranking signal before other factors.
 
 Reply in EXACTLY this format (no other text):
 SCORE: <number 0-100>

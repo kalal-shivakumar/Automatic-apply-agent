@@ -20,6 +20,7 @@ class Config:
     JOB_KEYWORDS = os.getenv("JOB_KEYWORDS", "Python Developer")
     JOB_LOCATION = os.getenv("JOB_LOCATION", "Bangalore")
     EXPERIENCE_YEARS = os.getenv("EXPERIENCE_YEARS", "3")
+    JOB_AGE_DAYS = os.getenv("JOB_AGE_DAYS", "7")
 
     # Profile
     YOUR_NAME = os.getenv("YOUR_NAME", "")
