@@ -1,108 +1,130 @@
 [
   {
-    "id": 13,
-    "title": "Cloud Engineer",
-    "company": "Kantar",
-    "location": "Hyderabad",
-    "salary": "25-35 Lacs PA",
-    "experience": "8-13 Yrs",
-    "skills": "azure, cloud security, cloud infrastructure, Cloud Engineer, identity and access management, iam, infrastructure as code, iac, terraform, cloud techno",
-    "key_skills": "azure, cloud security, cloud infrastructure, Cloud Engineer, identity and access management, iam, infrastructure as code, iac, terraform, cloud technologies",
-    "url": "https://www.naukri.com/job-listings-cloud-engineer-kantar-imrb-hyderabad-8-to-13-years-020726921132",
-    "job_description": "Job Description\nAbout the job\nAs a Cloud Engineer, you will be at the forefront of shaping our cloud infrastructure, a cornerstone for delivering innovative solutions and insights to clients globally. This role is crucial, as it ensures the seamless implementation and optimization of cloud services, directly contributing to the success of our projects and the brands we support. Your work will empower teams to operate with greater efficiency and scalability, reinforcing our commitment to excellence.\nIn this position, you will design, implement, and maintain robust cloud systems, collaborating with cross-functional teams to enhance our cloud strategies. You''ll be an integral part of a dynamic group of professionals, uniting expertise and creativity to drive impactful results. Your contributions will be instrumental in shaping the future of global brands while fostering innovation and resilience.\nJob Goals\nImplement robust and scalable cloud infrastructure solutions that support Kantars cloud infrastructure.\nEnsure the seamless integration and optimization of cloud services to enhance data accessibility and processing efficiency.\nCollaborate effectively with cross-functional teams to align cloud strategies with business objectives and innovative projects.\nMaintain and improve cloud security protocols to protect sensitive data and comply with industry standards.\nProvide technical guidance and support to other engineers, fostering a culture of continuous learning and improvement in cloud technologies.\nWork with Enterprise, solution and technical architects to translate technical designs in to deployable services.\nIdeal Skills & Capabilities\nExpertise in designing and deploying scalable cloud infrastructure, particularly within Azure environments.\nHands-on experience with Infrastructure as Code (IaC) practices, specifically using tools like Terraform.\nComprehensive understanding of cloud foundational services, including networking, identity and access management (IAM), and monitoring.\nAbility to effectively manage complex cloud migrations, such as transitioning from on-premises systems to cloud-based solutions.\nKnowledge of structured cloud adoption models, including Azure landing zones, to ensure seamless integration and optimization of services.\nWhats in it for you\nOn top of all your normal benefits like holiday, meal cards and life assurance, we also offer:\nFive days of Life Leave per year; for those days when life justgets in the way.\nBirthday leave one extra day of holiday taken on the nearest workday to your birthday\nTwo days a year to give back and volunteer with an organisation of your choice.\nEnhanced primary and secondary carer leave for however you choose to grow your family.\nThe chance to hit the beach on your lunch break (yes, we have somewhere you can store your surfboard!\nView more\nCompensation\nCTC range₹25L - ₹35L/year\nQuick apply\nApplied",
-    "questions_answers": [],
-    "match_score": 84,
-    "match_reason": "Strong match on Azure/IaC/cloud security/landing zones and Hyderabad location with solid 8-13 year fit, but compensation is far below target ₹80 LPA and role is more Cloud Engineer than pure DevOps/SRE.",
-    "status": "Applied ✓",
-    "search_query": "Azure DevOps Engineer in hyderabad"
-  },
-  {
-    "id": 15,
-    "title": "Kafka Administrator",
-    "company": "Spigot Software",
-    "location": "Bengaluru, Hyderabad",
-    "salary": "Not disclosed",
-    "experience": "4-15 Yrs",
-    "skills": "Kafka, Terraform, confluent cloud",
-    "key_skills": "Kafka, Terraform, confluent cloud",
-    "url": "https://www.naukri.com/job-listings-kafka-administrator-spigot-software-hyderabad-bengaluru-4-to-15-years-020726007956",
-    "job_description": "Job Description\nRoles and Responsibilities :\nDesign, deploy, and manage Kafka clusters across multiple data centers to ensure high availability and scalability.\nTroubleshoot issues with Kafka brokers, topics, partitions, and consumer/producer applications.\nCollaborate with development teams to design and implement messaging solutions using Apache Kafka.\nMonitor Kafka cluster performance metrics such as throughput, latency, and resource utilization.\nJob Requirements :\n4-15 years of experience in managing large-scale distributed systems like Apache Kafka.\nStrong understanding of cloud-based infrastructure management using Terraform or similar tools.\nExperience with monitoring tools like Prometheus/Grafana for real-time visibility into system performance.\nQuick apply\nApplied",
-    "questions_answers": [
-      {
-        "question": "How many years of experience do you have in confluent cloud ?",
-        "answer": "4"
-      },
-      {
-        "question": "How many years of experience do you have in confluent kafka ?",
-        "answer": "10"
-      },
-      {
-        "question": "How many years of experience do you have in Terraform ?",
-        "answer": "7"
-      }
-    ],
-    "match_score": 78,
-    "match_reason": "Strong technical overlap with Terraform, Prometheus/Grafana, distributed systems and cloud infrastructure, plus Hyderabad location fit and suitable experience range; however the role is Kafka Administrator rather than DevOps/Platform/SRE, and salary is undisclosed so compensation fit is uncertain.",
-    "status": "Applied ✓",
-    "search_query": "Azure DevOps Engineer in hyderabad"
-  },
-  {
-    "id": 17,
-    "title": "DevOps Engineers",
-    "company": "Nisum",
+    "id": 14,
+    "title": "Senior .NET Lead / Full Stack (SE II)",
+    "company": "Globallogic",
     "location": "Hyderabad",
     "salary": "Not disclosed",
     "experience": "10-15 Yrs",
-    "skills": "Automation, Analytical, Troubleshooting, Monitoring, Python, Networking, Computer science, GCP, Agile, Information technology",
-    "key_skills": "Automation, Analytical, Troubleshooting, Monitoring, Python, Networking, Computer science, GCP, Agile, Information technology",
-    "url": "https://www.naukri.com/job-listings-devops-engineers-nisum-technologies-hyderabad-10-to-15-years-300626501240",
-    "job_description": "Job Description\nWhat Youll Do\nDesign, build, and manage scalable, secure, and highly available cloud infrastructure on Google Cloud Platform (GCP).\nDeploy, configure, and manage Kubernetes clusters using Google Kubernetes Engine (GKE).\nBuild, maintain, and optimize CI/CD pipelines using Jenkins, GitHub Actions, GitLab CI, or Google Cloud Build.\nAutomate infrastructure provisioning and configuration using Terraform and other Infrastructure as Code (IaC) tools.\nImplement monitoring, logging, alerting, and observability solutions to ensure system health and platform reliability.\nEnsure infrastructure scalability, availability, security, and performance across production environments.\nLead incident management, perform Root Cause Analysis (RCA), and develop disaster recovery strategies to improve system resilience.\nCollaborate with development teams to streamline deployment processes and enhance application reliability using DevOps and SRE best practices.\nOptimize cloud infrastructure for performance, cost efficiency, automation, and operational excellence.\nDevelop automation scripts and continuously improve infrastructure management and deployment processes.\nWhat You Know\nMust have 10+ years of experience in Site Reliability Engineering (SRE), DevOps, or Cloud Engineering.\nShould have strong hands-on experience designing and managing cloud infrastructure on Google Cloud Platform (GCP).\nMust have expertise in GCP services, including:\nCompute Engine\nGoogle Kubernetes Engine (GKE)\nCloud Functions / Cloud Run\nCloud Storage\nBigQuery\nPub/Sub\nIAM and Networking\nShould possess strong hands-on experience with Kubernetes, Docker, Terraform, Helm, and Ansible.\nMust have experience designing, implementing, and maintaining CI/CD pipelines using Jenkins, GitHub Actions, GitLab CI, or Google Cloud Build.\nShould have strong scripting skills using Python, Bash, Go, or Java.\nMust have a solid understanding of Linux administration, networking, cloud architecture, and cloud security best practices.\nShould have experience implementing monitoring and observability solutions using Prometheus, Grafana, ELK Stack, and Google Cloud Monitoring.\nMust possess excellent troubleshooting, analytical, and problem-solving skills.\nExperience working with Agile methodologies and cross-functional engineering teams is preferred.\nEducation\nBachelors or master s degree in computer science, Information Technology, Engineering, or a related field is required.\nBenefits\n5 L Medical Insurance + 21 K OPD Wallet.\nOptional parental cover with 50% reimbursement on a pro-rata basis.\n15 L Term Insurance.\nFree lunch snacks | Dinner Shift allowances | Cr che.\nDisclaimer : This job posting has been aggregated from external source. Role details, content, and availability are subject to change. Applicants are advised to confirm the latest information directly on the company website before applying.\nView more\nApply on company site\nApply attempted",
+    "skills": "C#, Rest, Commercial, Software Development, Microsoft Azure, Engineering, React Native, Tracking, SQL Server, Azure Cloud, Microservices, Application ",
+    "key_skills": "C#, Rest, Commercial, Software Development, Microsoft Azure, Engineering, React Native, Tracking, SQL Server, Azure Cloud, Microservices, Application Development, SQL, Cloud, Angular, React.js, Cloud Applications, .NET Core, Web Technologies, Writing, .NET, TypeScript, Communication Skills",
+    "url": "https://www.naukri.com/job-listings-senior-net-lead-full-stack-se-ii-globallogic-hyderabad-10-to-15-years-020726006626",
+    "job_description": "Job Description\nDescription:\nwe are looking for :\nSomeone who can do system designs\nSomeone who has some drive. We don't want to have to tell them what to do all the time.\nFully versed in tracking and controlling software relating to changes to your source code.\nProven history across the Microsoft stack and cloud related technologies.\nExperience in delivering end-to-end outcomes based and able to articulate these into meaningful business outcomes.\nOther custom SaaS / multitenant / enterprise type software\nRequirements:\nA senior/lead developer with 8-15 years of experience across both web and application development with a focus on the below technologies and frameworks.\n- .NET Core, C#, EF, SQL\n- Azure\n- Microservices\n- Angular, TypeScript OR React.js\nJob Responsibilities:\nAt least 8-15 years experience developing commercial and cloud applications\nProven ability to lead the resolution of technical problems with an ability to breakdown large requirements into manageable pieces of work\nA keen desire working in a collaborative Agile engineering team, sharing your knowledge, experience and providing technical assistance to the rest of the team\nIn depth knowledge of developing software using technologies such as .NET, C#, SQL Server\nExperience in designing and implementing REST API using .NET WebAPIs\nSolid knowledge and experience of OO principles, software development and engineering best practices\nAn inquisitive mind with an excellent attention to quality and detail\nExcellent written and verbal communication skills to both technical and non-technical audiences\nDesire to learn new technologies such as React.js, React Native, Azure Cloud\nWhat We Offer:\nExciting Projects: We focus on industries like High-Tech, communication, media, healthcare, retail and telecom. Our customer list is full of fantastic global brands and leaders who love what we build for them.\nCollaborative Environment: You Can expand your skills by collaborating with a diverse team of highly talented people in an open, laidback environment — or even abroad in one of our global centers or client facilities!\nWork-Life Balance: GlobalLogic prioritizes work-life balance, which is why we offer flexible work schedules, opportunities to work from home, and paid time off and holidays.\nProfessional Development: Our dedicated Learning & Development team regularly organizes Communication skills training(GL Vantage, Toast Master),Stress Management program, professional certifications, and technical and soft skill trainings.\nExcellent Benefits: We provide our employees with competitive salaries, family medical insurance, Group Term Life Insurance, Group Personal Accident Insurance , NPS(National Pension Scheme ), Periodic health awareness program, extended maternity leave, annual performance bonuses, and referral bonuses.\nFun Perks: We want you to love where you work, which is why we host sports events, cultural activities, offer food on subsidies rates, Corporate parties. Our vibrant offices also include dedicated GL Zones, rooftop decks and GL Club where you can drink coffee or tea with your colleagues over a game of table and offer discounts for popular stores and restaurants!\nView more\nQuick apply\nApplied",
     "questions_answers": [],
-    "match_score": 84,
-    "match_reason": "Strong match on experience, DevOps/SRE role relevance, location (Hyderabad), and extensive overlap in Kubernetes/Terraform/CI-CD/cloud skills; main gap is GCP-specific depth and salary is undisclosed, so compensation fit is uncertain.",
+    "match_score": 68,
+    "match_reason": "Strong experience and location fit with excellent Azure/cloud/DevOps overlap, but the role is primarily .NET/Full Stack rather than DevOps/SRE, and salary is undisclosed so compensation fit cannot be confirmed.",
     "status": "Applied ✓",
     "search_query": "Azure DevOps Engineer in hyderabad"
   },
   {
     "id": 19,
-    "title": "LLMOps/MLOps Engineer (Immediate Joiners/Currently Serving)",
-    "company": "Coforge",
-    "location": "Hyderabad, Pune",
-    "salary": "Not disclosed",
-    "experience": "5-10 Yrs",
-    "skills": "RAG, Agentic AI, MLOps/LLOps, Agentic AI Orchestration, LLM, MCP, Python, Cloud",
-    "key_skills": "RAG, Agentic AI, MLOps/LLOps, Agentic AI Orchestration, LLM, MCP, Python, Cloud",
-    "url": "https://www.naukri.com/job-listings-llmops-mlops-engineer-immediate-joiners-currently-serving-coforge-hyderabad-pune-5-to-10-years-300626016171",
-    "job_description": "Job Description\nWe are looking for IMMEDIATE JOINERS or Serving Notice period candidates only, interested and eligible candidates can apply with their updated resume.\nExperience 5+ Years\nLocation Pune, Hyerabad\nDetailed JD\nMLOps/LLMOps Engineer with a strong background in continual learning, cloud infrastructure, Azure, GCP, and AWS. The ideal candidate will have extensive hands-on experience in Python and ML libraries (Scikit-learn, TensorFlow, PyTorch), and a proven track record in deploying, monitoring, and optimizing machine learning and large language model pipelines.\nCore Responsibilities & Skills:\n1. MLOps & LLMOps Pipeline Development\nDesign, implement, and automate end-to-end ML/LLM pipelines with a focus on continual learning, model retraining, and A/B testing.\n2. Cloud & Infrastructure Expertise\nStrong hands-on experience with Azure, GCP, and AWS cloud platforms, including managed services for ML (Azure ML, Sagemaker, Vertex AI).\nProficiency in Docker, Kubernetes, and cloud-native architectures for scalable, containerized deployments.\n3. ML & LLM Tools & Frameworks\nExpertise in ML pipeline tools: MLflow, Airflow, Kubeflow, Sagemaker, Azure ML.\nExperience with LLM tools and frameworks: LangChain, LlamaIndex, Hugging Face, OpenAI/Azure OpenAI APIs.\nHands-on experience with vector databases: Pinecone, Weaviate, Chroma, Qdrant.\n4. Monitoring, Optimization & Scalability\nImplement monitoring and observability using tools like Prometheus, Grafana, ELK, and Datadog.\nOptimize GPU compute, inference latency, and model serving for high-performance, scalable architectures.\n5. Programming & Collaboration\nStrong Python skills and familiarity with ML libraries (Scikit-learn, TensorFlow, PyTorch).\nCollaborate with data scientists, engineers, and product teams to deliver robust, production-grade ML/LLM solutions.\nView more\nQuick apply\nApplied",
-    "questions_answers": [],
-    "match_score": 68,
-    "match_reason": "Strong cloud/DevOps and Azure-AWS-Kubernetes-Terraform overlap with good location fit (Hyderabad/Pune), but the role is more MLOps/LLMOps than the candidate’s core profile and salary is undisclosed, so experience fit becomes the main positive signal.",
+    "title": "AWS - Devops Engineer",
+    "company": "Sonata Software",
+    "location": "Hybrid - Bengaluru, Hyderabad, Chennai",
+    "salary": "15-30 Lacs PA",
+    "experience": "7-12 Yrs",
+    "skills": "AWS DevOps, Terraform, AWS Infrastructure, AWS Lambda Function, IAM, Ansible, Docker, Github, Kubernetes, CI CD Pipeline",
+    "key_skills": "AWS DevOps, Terraform, AWS Infrastructure, AWS Lambda Function, IAM, Ansible, Docker, Github, Kubernetes, CI CD Pipeline",
+    "url": "https://www.naukri.com/job-listings-aws-devops-engineer-sonata-software-hyderabad-chennai-bengaluru-7-to-12-years-300626022201",
+    "job_description": "Job Description\nJob Title: DevOps Engineer AWS & CI/CD\nJob Summary\nWe are looking for a skilled DevOps Engineer with strong expertise in AWS infrastructure and CI/CD pipelines. The role focuses on building, packaging, and deploying a document service using modern DevOps practices and cloud-native technologies.\nKey Responsibilities\nDesign, develop, and maintain scalable AWS infrastructure using Infrastructure as Code (IaC).\nBuild and manage CI/CD pipelines for automated build, test, and deployment processes.\nCreate and maintain modular Terraform code across multiple environments (Dev, SIT, Pre-Prod, Prod).\nDevelop and manage Docker images, including Lambda Layer image creation with required system libraries and fonts.\nPackage and deploy AWS Lambda functions using optimized layer archives.\nImplement and enforce least-privilege IAM policies for secure cloud environments.\nManage GitLab CI/CD pipelines, including multi-stage pipelines and ephemeral per-branch environment setup.\nCore Skills (Mandatory)\nStrong experience in Terraform (modular architecture, multi-environment deployments)\nHands-on experience with Docker (containerization and image building)\nExpertise in AWS Lambda packaging and deployment\nProficiency in GitLab CI/CD pipeline development\nStrong knowledge of AWS IAM (policy creation and security best practices)\nSupporting Skills (Good to Have)\nAWS API Gateway REST APIs and Lambda proxy integration\nAWS Cognito user pools and Lambda triggers (pre-token generation)\nAWS EventBridge scheduling and event-driven architecture\nAWS KMS encryption key management across services\nTerraform State Management remote backends, locking, environment isolation\nExperience with tflint, tfsec, or similar tools for infrastructure validation and security scanning\nPreferred Experience\nExperience in cloud-native application deployment and microservices architecture\nStrong understanding of DevOps best practices, automation, and monitoring\nExposure to secure, scalable, and high-availability system design\nView more\nCompensation\nCTC range₹15L - ₹30L/year\nQuick apply\nApplied",
+    "questions_answers": [
+      {
+        "question": "How many years of experience do you have in Aws Infrastructure?",
+        "answer": "10"
+      },
+      {
+        "question": "How many years of experience do you have in AWS Lambda",
+        "answer": "5"
+      },
+      {
+        "question": "How many years of Experience do you have in GitLab CI/CD pipelines?",
+        "answer": "10"
+      }
+    ],
+    "match_score": 72,
+    "match_reason": "Strong technical and location fit for an AWS DevOps role with excellent overlap in Terraform, Docker, Kubernetes, CI/CD, and cloud infrastructure, but compensation is far below target and the role is AWS/GitLab-focused rather than Azure-heavy.",
     "status": "Applied ✓",
     "search_query": "Azure DevOps Engineer in hyderabad"
   },
   {
-    "id": 60,
-    "title": "AWS Full-Stack Developer",
-    "company": "Shrofile Technologies",
-    "location": "Hybrid - Bengaluru, Hyderabad, Pune",
+    "id": 20,
+    "title": "Lead Information Security Engineer",
+    "company": "Principal Global Services",
+    "location": "Hyderabad",
     "salary": "Not disclosed",
-    "experience": "6-11 Yrs",
-    "skills": "Angular, Node.js, AWS, Fullstack Development, AWS Serverless, TypeScript, Terraform",
-    "key_skills": "Angular, Node.js, AWS, Fullstack Development, AWS Serverless, TypeScript, Terraform",
-    "url": "https://www.naukri.com/job-listings-aws-full-stack-developer-shrofile-technologies-hyderabad-pune-bengaluru-6-to-11-years-010726031903",
-    "job_description": "Job Description\nRole & responsibilities\n• Develop and maintain fullstack applications using Node.js (backend) and Angular (frontend)\n• Design and build serverless applications on AWS\n• Collaborate with product and engineering teams in an Agile environment\n• Write clean, scalable, and maintainable code\n• Participate in code reviews, testing, and debugging\n• Support CI/CD pipelines and deployment processes\nRequired Skills\n• Strong experience in Node.js and Angular\n• Hands-on experience with AWS services (Lambda,API Gateway, S3, etc.)\n• Good understanding of serverless architecture\n• Experience with REST APIs and microservices\n• Familiarity with Git and CI/CD tools\nQuick apply\nApplied",
+    "experience": "10-14 Yrs",
+    "skills": "Security Compliance, Continuous Integration, Kubernetes, Ci/Cd, Tools, Docker, Ansible, Cloud, Scripting, Coding, GraphQL, Scripting Languages, Progra",
+    "key_skills": "Security Compliance, Continuous Integration, Kubernetes, Ci/Cd, Tools, Docker, Ansible, Cloud, Scripting, Coding, GraphQL, Scripting Languages, Programming, CD, Python, Github, Cloud Security, Microsoft Azure, Amazon Ec2, As, Framework, Lambda Expressions, Management, Infrastructure, Terraform, AWS",
+    "url": "https://www.naukri.com/job-listings-lead-information-security-engineer-principal-global-services-hyderabad-10-to-14-years-010726027095",
+    "job_description": "Job Description\nAdditional Information\nQualifications\nAt least 8 Years of practical experience in developing customized rules for Cloud Security Posture Management.\nProven experience with Wiz.\nStrong proficiency in scripting languages including Python and PowerShell.\nProficiency with GitHub and CI/CD processes.\nStrong understanding of security compliance frameworks and cloud security services.\nResponsibilities\nWhat Makes This Opportunity Unique\nAt Principal Financial Group, we prioritize creating an extraordinary environment where our employees can excel. As a Lead Information Security Engineer based in HYDERABAD, you'll be a key figure in cloud security, ensuring smooth performance and high-reaching expansion. You'll become part of our “Network Vulnerability Management & Configuration Management” Team, charged with writing custom CSPM misconfiguration rules and providing support/ guidance to our stakeholders in addressing misconfigurations/CSPM within our public cloud infrastructure. This is your opportunity to give significantly to the security foundation of our worldwide operations!\nCloud Security Posture Management\nMust have Cloud Security Posture Management (CSPM) - Use tools to discover assets in cloud infrastructure to identify and continuously monitor for security vulnerabilities and misconfigurations\nMust have Experience in scripting languages such as Python (required), PowerShell etc.\nMust have Programming/Scripting competency with Infrastructure-as-Code (IaC) using Terraform (Preferred) or Ansible\nMust have hands-on experience on using Rego Policy and/ or GraphQL\nMust have Proficiency with GitHub, as well as Continuous Integration/ Continuous Deployment (CI/CD) processes.\nCollaborate with developers across the organization to manage Cloud Security Posture Management to reduce threats.\nHands-on experience with CSPM tools like Wiz (preferred) or Prisma Cloud (good to have) and the ability to create custom rules as per business requirements.\nUnderstanding of native cloud solutions like EC2’s, Containers, Lambda’s, Docker, containers, Kubernetes, VDIs, cloud storage, cloud infrastructure, etc. And other cloud security services like Load Balancer, VPC Flow Logs, EKS, Lambda, and WAFs.\nGood to have hands on experience on SSPM (SaaS Security Posture Management) tools\nHands-on experience in AWS (preferred) and Azure (good to have)\nCandidate should have AWS Cloud Practioner certification (CCP). AWS Cloud Security Specialty certification is a plus.\nQualifications\nRequired Skills & Experience\nStrong hands-on experience with Cloud Security Posture Management (CSPM).\nProficiency in Python (required); experience in PowerShell is a plus.\nExperience with Terraform (preferred) or Ansible\nPractical experience creating rules using Rego and/or working with GraphQL.\nStrong knowledge of GitHub and CI/CD processes.\nHands-on expertise with CSPM tools such as Wiz (preferred) or Prisma Cloud (good to have).\nSolid understanding of cloud-native services (AWS preferred; Azure good to have).\nView more\nQuick apply\nApplied",
     "questions_answers": [
       {
-        "question": "How many years of experience do you have in Angular?",
-        "answer": "0"
+        "question": "I consent to the Data Privacy policy as hosted on",
+        "answer": "Yes"
       },
       {
-        "question": "Please select the city you are currently residing or willing to relocate to",
-        "answer": "Hyderabad, Telangana"
+        "question": "I consent to the Data Privacy policy as hosted on",
+        "answer": "Yes"
+      },
+      {
+        "question": "I consent to the Data Privacy policy as hosted on",
+        "answer": "Yes"
       }
     ],
-    "match_score": 72,
-    "match_reason": "Strong cloud/DevOps and AWS/Terraform/Kubernetes overlap with good location fit in Hyderabad/Bengaluru/Pune, but the role is a full-stack Node.js/Angular developer position and salary is undisclosed, so experience and title alignment are only moderate.",
+    "match_score": 78,
+    "match_reason": "Strong location and experience fit with excellent Azure/AWS/Terraform/Kubernetes/CI-CD overlap, but the role is security/CSPM-focused rather than DevOps/Platform, and salary is undisclosed so compensation fit is uncertain.",
+    "status": "Applied ✓",
+    "search_query": "Azure DevOps Engineer in hyderabad"
+  },
+  {
+    "id": 29,
+    "title": "Senior Technical Release Manager",
+    "company": "Sureify",
+    "location": "Hybrid - Hyderabad",
+    "salary": "Not disclosed",
+    "experience": "10-18 Yrs",
+    "skills": "AWS, EKS, TypeScript, Node.js, PHP, MySQL, Postgresql, Kafka, Docker, Kubernetes, DevOps",
+    "key_skills": "AWS, EKS, TypeScript, Node.js, PHP, MySQL, Postgresql, Kafka, Docker, Kubernetes, DevOps",
+    "url": "https://www.naukri.com/job-listings-senior-technical-release-manager-sureify-hyderabad-10-to-18-years-240326032454",
+    "job_description": "Job Description\nAbout Sureify:\nSureify is dedicated to modernizing the life insurance and annuity industry. We provide cutting-edge digital solutions that empower insurers to easily engage with, sell to, and service their customers. Our mission is to drive meaningful digital transformation by offering scalable technology that enhances customer engagement and streamlines carrier operations. Sureify's products deliver the advanced digital experiences that life insurance carriers, agents, employees, and consumers now expect in this rapidly evolving technological landscape. At Sureify, we cultivate a culture that prioritizes innovation, collaboration, and continuous learning.\nRole Overview:\nWe are looking for a Senior Technical Release Manager to join our Hyderabad office. This role will be responsible for managing all production releases across our enterprise platform and customer-specific solutions. Unlike traditional release roles, this position serves as a Technical Release Governor in a complex hybrid environment consisting of both multi-tenant products and multi-instance siloed environments.As we scale our carrier customer base, we are looking to adopt best of the breed release practices. You will be the single point of accountability for replacing high-intensity manual interventions in releases with a systematic, technically rigorous process. You will ensure releases are delivered with quality, predictability, and efficiency while bridging the gap between engineering, QA, product, and client support teams.\nKey Responsibilities:\nRelease Lifecycle Leadership: Own and manage the end-to-end release lifecycle for all production deployments, including core platform production updates and customer-specific customizations. Define, document, and enforce release management processes and standards. Create and maintain the release calendar, ensuring transparency and alignment across teams.\nTechnical Gatekeeping: Conduct deep-dive release readiness reviews. You will audit \"Release Manifests\" by validating steps such as SQL migrations or PDF template migrations, Temporal workflow versioning, Kafka schemas, and AWS resource configurations.\nA good overall understanding of deployment architecture in AWS is essential for this role.\nEnvironment Governance: Manage \"Instance Parity\" across our AWS multi-instance architecture to prevent \"Environmental Drift\" and ensure customer-specific secrets and variables match our global standards.\nCross-Functional Orchestration: Facilitate formal \"Go/No-Go\" decisions by tracking a global checklist that includes technical and non-technical readiness.\nRisk Mitigation: Identify, document, and mitigate technical sequencing risks (e.g., database locks or stateful workflow conflicts) associated with production releases.Continuous Improvement: Monitor release performance, generate and provide metrics and reports and drive the transition from manual coordination to Automated Production Quality Gates within our release pipelines.\nRequired Qualifications & Experience:\n10+ years of overall technical experience, with a background in software engineering, SRE, or backend operations.\n5+ years of direct release management experience in a complex, enterprise hybrid SaaS environment (Multi-tenant & Multi-instance).C\nloud-Native Expertise: Expert-level knowledge of AWS (EKS, RDS, Secrets Manager, IAM, S3, MSK) and the ability to audit infrastructure-level configurations.\nStack Fluency: Demonstrated familiarity with Typescript, PHP, Go-lang, and Node.js ecosystems. You must understand the deployment nuances of each.\nModern Orchestration: Hands-on experience or strong knowledge of Temporal (stateful workflows) and Kafka (event streaming). You understand the risks of deploying to \"in-flight\" asynchronous processes.\nDatabase Proficiency: Strong proficiency in MySQL and Postgres, specifically in auditing complex migration scripts and data sequencing.\nContainerization Mastery: Deep understanding of Kubernetes (K8s) manifest auditing and deployment patterns (Canary, Blue-Green, or Rolling Updates).\nCommunication & Gravitas: Excellent stakeholder management skills with the professional authority to enforce discipline and halt releases if technical or business criteria are not met.\nPreferred / Nice-to-Have Skills:\nExperience in the insurance or financial services domain (or other regulated industries).Knowledge of security, compliance (SOC2/ISO), or audit processes as they relate to release operations.Experience with Infrastructure as Code (IaC) tools like Terraform or CloudFormation.Familiarity with Site Reliability Engineering (SRE) principles such as Error Budgets and SLIs/SLOs.\nWhy Join Sureify?At Sureify, youll be part of a collaborative, innovation-driven culture where your expertise will directly influence the quality and success of products, transforming the life insurance landscape. Youll work alongside passionate technologists and industry experts, tackling complex challenges with cutting-edge technologies while helping shape the future of digital insurance.\nOur Guiding PrinciplesOur products are for nothing if their creators are not fulfilled in their work. We want our employees to flourish at Sureify. We do not fawn over status or titles; instead, we honour effort and intelligence. The best idea wins, no matter which colleague proposed it. We do not shortcut our mission with overblown claims or false promises. Sticking to the truth is both a strategy and a principle for us. Sureify is an Equal Opportunity Employer committed to diversity. Qualified applicants will receive consideration for employment without regard to race, color, national origin, citizenship, ancestry, religion, sex, sexual orientation, gender perception or identity, age, disability, veteran or military status, or any other basis prohibited by law.\nView more\nQuick apply\nApplied",
+    "questions_answers": [
+      {
+        "question": "How many years of experience do you have in AWS?",
+        "answer": "10"
+      },
+      {
+        "question": "How many years of experience do you have in Typescript?",
+        "answer": "5"
+      }
+    ],
+    "match_score": 84,
+    "match_reason": "Strong match on experience, cloud/DevOps/Kubernetes/Terraform skills, and Hyderabad location; role is more release-management/technical governance than pure DevOps, and salary is undisclosed so experience fit is the primary positive signal.",
+    "status": "Applied ✓",
+    "search_query": "Azure DevOps Engineer in hyderabad"
+  },
+  {
+    "id": 30,
+    "title": "Azure Cloud Architect",
+    "company": "Valuelabs",
+    "location": "Hyderabad",
+    "salary": "30-45 Lacs PA",
+    "experience": "10-20 Yrs",
+    "skills": "Azure Cloud, Azure DevOps, Ci/Cd, Terraform, Iac",
+    "key_skills": "Azure Cloud, Azure DevOps, Ci/Cd, Terraform, Iac",
+    "url": "https://www.naukri.com/job-listings-azure-cloud-architect-valuelabs-hyderabad-10-to-20-years-210526014258",
+    "job_description": "Job Description\nRole & responsibilities\nLooking for a strong Azure DevOps Lead with 812+ years of experience in cloud and DevOps practices Must have hands-on expertise in Azure services, CI/CD (Azure DevOps/GitHub Actions), and IaC (Bicep/Terraform) Experience deploying and managing API and UI applications with zero-downtime release strategies. Strong knowledge of monitoring, logging, and security (Azure AD, Key Vault, RBAC) required Should be capable of leading DevOps initiatives and mentoring teams Looking for someone with strong ownership, problem-solving, and enterprise delivery mindset\nCompensation\nCTC range₹30L - ₹45L/year\nQuick apply\nApplied",
+    "questions_answers": [
+      {
+        "question": "When is your LWD?",
+        "answer": "60 days"
+      },
+      {
+        "question": "Are you currently residing in Hyderabad or willing to relocate to Hyderabad?",
+        "answer": "Yes"
+      }
+    ],
+    "match_score": 78,
+    "match_reason": "Excellent skills and location fit for an Azure DevOps/Cloud Architect role with strong overlap in Azure, Terraform, CI/CD, Kubernetes, and security; experience is close but slightly below the 11-year target, and the offered salary (30-45 LPA) is far below the candidate’s stated target of 80 LPA.",
     "status": "Applied ✓",
     "search_query": "Azure DevOps Engineer in hyderabad"
   }

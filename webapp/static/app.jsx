@@ -9,6 +9,7 @@ const defaultProfile = {
   salary_min_lpa: "",
   salary_max_lpa: "",
   overall_experience_years: "",
+  notice_period: "",
   key_search_keywords: [],
   preferred_location: "Hyderabad",
   ready_to_relocate: true,
@@ -114,6 +115,19 @@ function App() {
   const jobTitlesText = useMemo(() => (profile.job_titles || []).join(", "), [profile.job_titles]);
   const keywordText = useMemo(() => (profile.key_search_keywords || []).join(", "), [profile.key_search_keywords]);
   const locationText = useMemo(() => (profile.search_locations || []).join(", "), [profile.search_locations]);
+  const noticePeriodValue = profile.notice_period || "";
+  const profileSummaryItems = useMemo(() => ([
+    { label: "Name", value: profile.full_name || "N/A" },
+    { label: "Experience", value: profile.overall_experience_years ? `${profile.overall_experience_years} years` : "N/A" },
+    { label: "Notice period", value: profile.notice_period || "N/A" },
+    { label: "Salary range", value: profile.salary_min_lpa || profile.salary_max_lpa ? `${profile.salary_min_lpa || "?"}-${profile.salary_max_lpa || "?"} LPA` : "N/A" },
+    { label: "Preferred location", value: profile.preferred_location || "N/A" },
+    { label: "Ready to relocate", value: profile.ready_to_relocate ? "Yes" : "No" },
+    { label: "Skills", value: skillsText || "N/A" },
+    { label: "Job titles", value: jobTitlesText || "N/A" },
+    { label: "Search keywords", value: keywordText || "N/A" },
+    { label: "Search cities", value: locationText || "N/A" },
+  ]), [profile, skillsText, jobTitlesText, keywordText, locationText]);
 
   const filteredAndSortedJobs = useMemo(() => {
     const search = normalizeText(jobSearchText);
@@ -407,6 +421,7 @@ function App() {
       search_locations: splitCsv(locationText).slice(0, 15),
       preferred_location: String(profile.preferred_location || "").trim() || "Hyderabad",
       ready_to_relocate: Boolean(profile.ready_to_relocate),
+      notice_period: String(profile.notice_period || "").trim(),
     };
 
     if (!normalized.skills.length || normalized.skills.length < 10) {
@@ -518,6 +533,28 @@ function App() {
             </div>
           </div>
 
+          <div className="grid-2" style={{ marginTop: "12px" }}>
+            <div className="field">
+              <label>Notice period</label>
+              <select
+                value={noticePeriodValue}
+                onChange={(e) => updateProfile("notice_period", e.target.value)}
+              >
+                <option value="">Select notice period</option>
+                <option value="Immediate">Immediate</option>
+                <option value="15 days">15 days</option>
+                <option value="30 days">30 days</option>
+                <option value="45 days">45 days</option>
+                <option value="60 days">60 days</option>
+                <option value="90 days">90 days</option>
+              </select>
+            </div>
+            <div className="field">
+              <label>Notice period guidance</label>
+              <div className="helper">Pick the closest option so the recruiter Q&A can answer consistently.</div>
+            </div>
+          </div>
+
           <div className="field" style={{ marginTop: "12px" }}>
             <label>Search cities (major cities in priority order)</label>
             <textarea
@@ -581,6 +618,18 @@ function App() {
               Profile loaded: {profile.full_name || "Candidate"} | Experience: {profile.overall_experience_years || "N/A"} years | Salary: {profile.salary_min_lpa || "?"}-{profile.salary_max_lpa || "?"} LPA
             </div>
           )}
+
+          <div className="summary-box profile-summary" style={{ marginBottom: "12px" }}>
+            <h3>HOME values considered in this tab</h3>
+            <div className="profile-summary-grid">
+              {profileSummaryItems.map((item) => (
+                <div className="profile-summary-item" key={item.label}>
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="control-strip">
             <div className="ctrl">

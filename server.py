@@ -71,6 +71,7 @@ def _default_profile() -> dict:
         "salary_min_lpa": "",
         "salary_max_lpa": "",
         "overall_experience_years": "",
+        "notice_period": "",
         "key_search_keywords": [],
         "preferred_location": "Hyderabad",
         "ready_to_relocate": True,
@@ -370,6 +371,7 @@ def _build_resume_summary_fallback(profile: dict, resume_text: str) -> list[str]
     top_keywords = ", ".join(keywords[:5]) if keywords else "DevOps Engineer, Cloud Engineer, Platform Engineer"
     salary_min = profile.get("salary_min_lpa") or ""
     salary_max = profile.get("salary_max_lpa") or ""
+    notice_period = profile.get("notice_period") or ""
 
     salary_text = ""
     if salary_min and salary_max:
@@ -377,13 +379,17 @@ def _build_resume_summary_fallback(profile: dict, resume_text: str) -> list[str]
     elif salary_min:
         salary_text = f" The candidate salary expectation is around {salary_min} LPA."
 
+    notice_text = ""
+    if notice_period:
+        notice_text = f" The candidate notice period is {notice_period}."
+
     p1 = (
         f"{name} appears to have around {exp} years of experience with a strong focus on modern engineering practices. "
         f"Core strengths identified from the resume include {top_skills}."
     )
     p2 = (
         f"Based on the resume, suitable job search directions include roles around {top_keywords}."
-        f" These keywords can be used to target better-matching opportunities in the Automatic Job Apply workflow.{salary_text}"
+        f" These keywords can be used to target better-matching opportunities in the Automatic Job Apply workflow.{salary_text}{notice_text}"
     )
     return [p1, p2]
 
@@ -550,6 +556,9 @@ def _apply_profile_to_runtime(profile: dict):
     exp = str(profile.get("overall_experience_years", "") or "")
     if exp:
         Config.EXPERIENCE_YEARS = exp
+    notice_period = str(profile.get("notice_period", "") or "").strip()
+    if notice_period:
+        Config.YOUR_NOTICE_PERIOD = notice_period
     preferred = str(profile.get("preferred_location", "") or "").strip()
     if preferred:
         Config.JOB_LOCATION = preferred
@@ -831,6 +840,7 @@ async def websocket_endpoint(ws: WebSocket):
                 profile["job_titles"] = merged_titles[:20]
                 profile["preferred_location"] = str(profile.get("preferred_location", "") or "").strip() or "Hyderabad"
                 profile["ready_to_relocate"] = bool(profile.get("ready_to_relocate", False))
+                profile["notice_period"] = str(profile.get("notice_period", "") or "").strip()
                 locations = _normalize_location_list(profile.get("search_locations") or [])
                 if not locations:
                     locations = _default_profile()["search_locations"]
