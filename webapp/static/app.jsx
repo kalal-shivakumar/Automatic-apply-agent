@@ -87,10 +87,15 @@ function App() {
   const [browserLaunched, setBrowserLaunched] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
+  const [linkedinBrowserLaunched, setLinkedinBrowserLaunched] = useState(false);
+  const [linkedinLoggedIn, setLinkedinLoggedIn] = useState(false);
+  const [linkedinIsRunning, setLinkedinIsRunning] = useState(false);
 
   const [jobs, setJobs] = useState([]);
+  const [linkedinJobs, setLinkedinJobs] = useState([]);
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState({ applied: 0, skipped: 0, already_applied: 0, evaluated: 0, current_query: "" });
+  const [linkedinStats, setLinkedinStats] = useState({ applied: 0, skipped: 0, already_applied: 0, evaluated: 0, current_query: "" });
 
   const [resumeFile, setResumeFile] = useState(null);
   const [uploadPayload, setUploadPayload] = useState({ resumeText: "", fileBase64: "", mimeType: "" });
@@ -106,6 +111,18 @@ function App() {
   const [jobCompanyFilter, setJobCompanyFilter] = useState("");
   const [jobSortKey, setJobSortKey] = useState("id");
   const [jobSortDir, setJobSortDir] = useState("desc");
+  const [linkedinSearchText, setLinkedinSearchText] = useState("");
+  const [linkedinStatusFilter, setLinkedinStatusFilter] = useState("all");
+  const [linkedinCompanyFilter, setLinkedinCompanyFilter] = useState("");
+  const [linkedinSortKey, setLinkedinSortKey] = useState("id");
+  const [linkedinSortDir, setLinkedinSortDir] = useState("desc");
+  const [linkedinDebugLoading, setLinkedinDebugLoading] = useState(false);
+  const [linkedinDebugError, setLinkedinDebugError] = useState("");
+  const [linkedinDebugCapturedAt, setLinkedinDebugCapturedAt] = useState("");
+  const [linkedinDebugReadiness, setLinkedinDebugReadiness] = useState({});
+  const [linkedinDeepLoading, setLinkedinDeepLoading] = useState(false);
+  const [linkedinDeepError, setLinkedinDeepError] = useState("");
+  const [linkedinDeepReport, setLinkedinDeepReport] = useState(null);
 
   const wsRef = useRef(null);
   const reconnectRef = useRef(null);
@@ -170,6 +187,47 @@ function App() {
     return sorted;
   }, [jobs, jobSearchText, jobStatusFilter, jobCompanyFilter, jobSortKey, jobSortDir]);
 
+  const filteredAndSortedLinkedinJobs = useMemo(() => {
+    const search = normalizeText(linkedinSearchText);
+    const companyFilter = normalizeText(linkedinCompanyFilter);
+
+    const matches = (job) => {
+      const haystack = [job.company, job.title, job.location, job.salary, job.experience, job.status, job.search_query]
+        .map(normalizeText)
+        .join(" ");
+      if (search && !haystack.includes(search)) return false;
+      if (companyFilter && !normalizeText(job.company).includes(companyFilter)) return false;
+      if (linkedinStatusFilter !== "all") {
+        const statusText = normalizeText(job.status);
+        if (linkedinStatusFilter === "selected" && !/applied|good match|selected|proceeding to apply/.test(statusText)) return false;
+        if (linkedinStatusFilter === "skipped" && !/skip|skipped/.test(statusText)) return false;
+        if (linkedinStatusFilter === "error" && !/error|failed/.test(statusText)) return false;
+      }
+      return true;
+    };
+
+    const sortFactor = linkedinSortDir === "asc" ? 1 : -1;
+    const sorted = [...linkedinJobs].filter(matches).sort((a, b) => {
+      if (linkedinSortKey === "score") {
+        return (parseMatchScore(a.match_score) - parseMatchScore(b.match_score)) * sortFactor;
+      }
+      if (linkedinSortKey === "company") {
+        return normalizeText(a.company).localeCompare(normalizeText(b.company)) * sortFactor;
+      }
+      if (linkedinSortKey === "title") {
+        return normalizeText(a.title).localeCompare(normalizeText(b.title)) * sortFactor;
+      }
+      if (linkedinSortKey === "salary") {
+        return normalizeText(a.salary).localeCompare(normalizeText(b.salary)) * sortFactor;
+      }
+      if (linkedinSortKey === "status") {
+        return normalizeText(a.status).localeCompare(normalizeText(b.status)) * sortFactor;
+      }
+      return ((Number(a.id) || 0) - (Number(b.id) || 0)) * sortFactor;
+    });
+    return sorted;
+  }, [linkedinJobs, linkedinSearchText, linkedinStatusFilter, linkedinCompanyFilter, linkedinSortKey, linkedinSortDir]);
+
   const toggleSortDir = (key) => {
     if (jobSortKey === key) {
       setJobSortDir((prev) => (prev === "asc" ? "desc" : "asc"));
@@ -177,6 +235,15 @@ function App() {
     }
     setJobSortKey(key);
     setJobSortDir(key === "id" ? "desc" : "asc");
+  };
+
+  const toggleLinkedinSortDir = (key) => {
+    if (linkedinSortKey === key) {
+      setLinkedinSortDir((prev) => (prev === "asc" ? "desc" : "asc"));
+      return;
+    }
+    setLinkedinSortKey(key);
+    setLinkedinSortDir(key === "id" ? "desc" : "asc");
   };
 
   const addLog = (message) => {
@@ -198,8 +265,13 @@ function App() {
         setBrowserLaunched(Boolean(data.browser_launched));
         setLoggedIn(Boolean(data.logged_in));
         setIsRunning(Boolean(data.is_running));
+        setLinkedinBrowserLaunched(Boolean(data.linkedin_browser_launched));
+        setLinkedinLoggedIn(Boolean(data.linkedin_logged_in));
+        setLinkedinIsRunning(Boolean(data.linkedin_is_running));
         if (Array.isArray(data.jobs)) setJobs(data.jobs);
         if (data.stats) setStats(data.stats);
+        if (Array.isArray(data.linkedin_jobs)) setLinkedinJobs(data.linkedin_jobs);
+        if (data.linkedin_stats) setLinkedinStats(data.linkedin_stats);
         if (data.saved_profile) {
           setProfile({ ...defaultProfile, ...data.saved_profile });
           const hasProfile =
@@ -251,12 +323,32 @@ function App() {
         addLog(data.message || "Agent started.");
         break;
 
+      case "linkedin_agent_started":
+        setLinkedinIsRunning(true);
+        setLinkedinJobs([]);
+        setLinkedinSearchText("");
+        setLinkedinStatusFilter("all");
+        setLinkedinCompanyFilter("");
+        setLinkedinSortKey("id");
+        setLinkedinSortDir("desc");
+        setLinkedinStats({ applied: 0, skipped: 0, already_applied: 0, evaluated: 0, current_query: "" });
+        addLog(data.message || "LinkedIn agent started.");
+        break;
+
       case "search_query":
         setStats((s) => ({
           ...s,
           current_query: `${data.keywords} in ${data.location} [${data.query_number}/${data.total_queries}]`,
         }));
         addLog(`Search ${data.query_number}/${data.total_queries}: ${data.keywords} in ${data.location}`);
+        break;
+
+      case "linkedin_search_query":
+        setLinkedinStats((s) => ({
+          ...s,
+          current_query: `${data.keywords} in ${data.location} [${data.query_number}/${data.total_queries}]`,
+        }));
+        addLog(`LinkedIn ${data.query_number}/${data.total_queries}: ${data.keywords} in ${data.location}`);
         break;
 
       case "job_update":
@@ -272,11 +364,41 @@ function App() {
         if (data.stats) setStats(data.stats);
         break;
 
+      case "linkedin_job_update":
+        setLinkedinJobs((prev) => {
+          const index = prev.findIndex((j) => j.id === data.job.id);
+          if (index >= 0) {
+            const next = [...prev];
+            next[index] = data.job;
+            return next;
+          }
+          return [...prev, data.job];
+        });
+        if (data.stats) setLinkedinStats(data.stats);
+        break;
+
       case "agent_completed":
       case "agent_stopped":
         setIsRunning(false);
         if (data.stats) setStats(data.stats);
         addLog(data.message || "Agent stopped.");
+        break;
+
+      case "linkedin_agent_completed":
+      case "linkedin_agent_stopped":
+        setLinkedinIsRunning(false);
+        if (data.stats) setLinkedinStats(data.stats);
+        addLog(data.message || "LinkedIn agent stopped.");
+        break;
+
+      case "linkedin_browser_status":
+        setLinkedinBrowserLaunched(Boolean(data.launched));
+        addLog(data.message || "LinkedIn browser status updated.");
+        break;
+
+      case "linkedin_login_status":
+        setLinkedinLoggedIn(Boolean(data.logged_in));
+        addLog(data.message || "LinkedIn login status updated.");
         break;
 
       case "log":
@@ -334,6 +456,56 @@ function App() {
       logBoxRef.current.scrollTop = logBoxRef.current.scrollHeight;
     }
   }, [logs]);
+
+  const loadLinkedinDebugReadiness = async () => {
+    setLinkedinDebugLoading(true);
+    setLinkedinDebugError("");
+    try {
+      const res = await fetch("/linkedin/debug-readiness", { cache: "no-store" });
+      const data = await res.json();
+      if (!data.ok) {
+        setLinkedinDebugReadiness({});
+        setLinkedinDebugCapturedAt("");
+        setLinkedinDebugError(data.message || "LinkedIn debug summary not available.");
+        return;
+      }
+      setLinkedinDebugReadiness(data.automation_readiness || {});
+      setLinkedinDebugCapturedAt(data.captured_at || "");
+    } catch (_err) {
+      setLinkedinDebugReadiness({});
+      setLinkedinDebugCapturedAt("");
+      setLinkedinDebugError("Failed to load LinkedIn debug summary.");
+    } finally {
+      setLinkedinDebugLoading(false);
+    }
+  };
+
+  const loadLinkedinDeepInspection = async () => {
+    setLinkedinDeepLoading(true);
+    setLinkedinDeepError("");
+    try {
+      const res = await fetch("/linkedin/deep-inspection", { cache: "no-store" });
+      const data = await res.json();
+      if (!data.ok) {
+        setLinkedinDeepReport(null);
+        setLinkedinDeepError(data.message || "LinkedIn deep inspection not available.");
+        return;
+      }
+      setLinkedinDeepReport(data.report || null);
+    } catch (_err) {
+      setLinkedinDeepReport(null);
+      setLinkedinDeepError("Failed to load LinkedIn deep inspection report.");
+    } finally {
+      setLinkedinDeepLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "linkedin") {
+      loadLinkedinDebugReadiness();
+      loadLinkedinDeepInspection();
+    }
+  }, [activeTab]);
 
   const onUploadResume = async (event) => {
     setHomeError("");
@@ -453,7 +625,7 @@ function App() {
     <div className="app-shell">
       <header className="hero">
         <h1>Naukri AI Job Agent</h1>
-        <p>Two-step flow: analyze your resume on HOME, then run Automatic Job Apply with saved profile data.</p>
+        <p>Three-step flow: analyze HOME profile once, then run Naukri and LinkedIn auto-apply in parallel.</p>
         <div className="conn">
           <span className={`conn-dot ${connected ? "on" : ""}`} />
           {connected ? "Connected" : "Disconnected"}
@@ -461,6 +633,7 @@ function App() {
         <div className="tabs">
           <button className={`tab-btn ${activeTab === "home" ? "active" : ""}`} onClick={() => setActiveTab("home")}>HOME</button>
           <button className={`tab-btn ${activeTab === "apply" ? "active" : ""}`} onClick={() => setActiveTab("apply")}>Automatic Job Apply</button>
+          <button className={`tab-btn ${activeTab === "linkedin" ? "active" : ""}`} onClick={() => setActiveTab("linkedin")}>LinkedIn Auto Apply</button>
         </div>
       </header>
 
@@ -763,6 +936,250 @@ function App() {
                   [{log.time}] {log.message}
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {activeTab === "linkedin" && (
+        <section className="panel">
+          <h2 className="card-title">LinkedIn Auto Apply</h2>
+
+          <div className="summary-box" style={{ marginBottom: "12px" }}>
+            <h3>Identify & Resolve First (LinkedIn)</h3>
+            <div className="row" style={{ marginBottom: "8px" }}>
+              <button className="btn btn-light" onClick={loadLinkedinDebugReadiness} disabled={linkedinDebugLoading}>
+                {linkedinDebugLoading ? "Refreshing..." : "Refresh Debug Readiness"}
+              </button>
+              <button className="btn btn-light" onClick={loadLinkedinDeepInspection} disabled={linkedinDeepLoading}>
+                {linkedinDeepLoading ? "Refreshing..." : "Refresh Deep Inspection"}
+              </button>
+              <div className="helper">
+                {linkedinDebugCapturedAt ? `Last debug snapshot: ${linkedinDebugCapturedAt}` : "No debug snapshot loaded"}
+              </div>
+            </div>
+            {linkedinDebugError && <div className="alert alert-warn">{linkedinDebugError}</div>}
+
+            <div className="readiness-grid">
+              {[
+                ["linkedin_login", "1. LinkedIn login"],
+                ["job_search", "2. Job search"],
+                ["fields_detection", "3. Fields detection"],
+                ["field_answering_strategy", "4. How to answer fields"],
+                ["job_submission", "5. How to submit jobs"],
+              ].map(([key, label]) => {
+                const item = linkedinDebugReadiness[key] || {};
+                const ok = Boolean(item.resolved);
+                return (
+                  <div className={`readiness-item ${ok ? "ok" : "pending"}`} key={key}>
+                    <strong>{label}</strong>
+                    <span>{ok ? "Resolved" : "Pending"}</span>
+                    <p>{item.details || "Run debug_extract_linkedin_structure.py and refresh."}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="summary-box" style={{ marginBottom: "12px" }}>
+            <h3>Deep Inspection (Search -> Fields -> AI Answers -> Submit)</h3>
+            {linkedinDeepError && <div className="alert alert-warn">{linkedinDeepError}</div>}
+            {!linkedinDeepError && linkedinDeepReport && (
+              <>
+                <p>
+                  Status: <strong>{linkedinDeepReport.ok ? "Ready" : "Blocked"}</strong> | Message: {linkedinDeepReport.message || "N/A"}
+                </p>
+                <p>
+                  Jobs detected: <strong>{linkedinDeepReport?.job_search?.found_jobs ?? 0}</strong>
+                  {" "} | Extracted fields: <strong>{linkedinDeepReport?.apply_flow?.extracted_field_count ?? 0}</strong>
+                  {" "} | Submit controls: <strong>{linkedinDeepReport?.apply_flow?.submit_controls_detected ? "Detected" : "Not detected"}</strong>
+                </p>
+                {linkedinDeepReport?.apply_flow?.target_job && (
+                  <p>
+                    Target job: <strong>{linkedinDeepReport.apply_flow.target_job.title}</strong> at {linkedinDeepReport.apply_flow.target_job.company}
+                  </p>
+                )}
+                {!!(linkedinDeepReport?.ai_answer_preview || []).length && (
+                  <div className="table-wrap" style={{ maxHeight: "220px" }}>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Field Type</th>
+                          <th>Question</th>
+                          <th>AI Answer</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {linkedinDeepReport.ai_answer_preview.slice(0, 10).map((row, idx) => (
+                          <tr key={`qa-preview-${idx}`}>
+                            <td>{row.kind}</td>
+                            <td>{row.question}</td>
+                            <td>{row.ai_answer}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </>
+            )}
+            {!linkedinDeepError && !linkedinDeepReport && (
+              <div className="helper">Run debug_linkedin_apply_flow.py and refresh this section.</div>
+            )}
+          </div>
+
+          {!profileSaved ? (
+            <div className="alert alert-warn">
+              Please complete HOME tab and click Save Profile first. LinkedIn tab uses the same HOME values.
+            </div>
+          ) : (
+            <div className="alert alert-ok">
+              HOME profile loaded for LinkedIn: {profile.full_name || "Candidate"} | Experience: {profile.overall_experience_years || "N/A"} years | Salary: {profile.salary_min_lpa || "?"}-{profile.salary_max_lpa || "?"} LPA
+            </div>
+          )}
+
+          <div className="summary-box profile-summary" style={{ marginBottom: "12px" }}>
+            <h3>HOME values considered in this tab</h3>
+            <div className="profile-summary-grid">
+              {profileSummaryItems.map((item) => (
+                <div className="profile-summary-item" key={`linkedin-${item.label}`}>
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="control-strip">
+            <div className="ctrl">
+              <h4>1. Launch LinkedIn Browser</h4>
+              <p>Open dedicated LinkedIn login session.</p>
+              <div className="row" style={{ marginTop: "10px" }}>
+                <button
+                  className="btn btn-light"
+                  onClick={() => send({ action: "launch_browser_linkedin" })}
+                  disabled={linkedinBrowserLaunched || linkedinIsRunning}
+                >
+                  {linkedinBrowserLaunched ? "Launched" : "Launch"}
+                </button>
+              </div>
+            </div>
+            <div className="ctrl">
+              <h4>2. Verify LinkedIn Login</h4>
+              <p>Confirm your manual login in browser.</p>
+              <div className="row" style={{ marginTop: "10px" }}>
+                <button
+                  className="btn btn-light"
+                  onClick={() => send({ action: "verify_login_linkedin" })}
+                  disabled={!linkedinBrowserLaunched || linkedinLoggedIn || linkedinIsRunning}
+                >
+                  {linkedinLoggedIn ? "Verified" : "Verify"}
+                </button>
+              </div>
+            </div>
+            <div className="ctrl">
+              <h4>3. Start / Stop LinkedIn Apply</h4>
+              <p>Runs LinkedIn search and Easy Apply with AI answers.</p>
+              <div className="row" style={{ marginTop: "10px" }}>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => send({ action: linkedinIsRunning ? "stop_linkedin" : "start_linkedin" })}
+                  disabled={(!linkedinLoggedIn && !linkedinIsRunning) || (!profileSaved && !linkedinIsRunning)}
+                >
+                  {linkedinIsRunning ? "Stop LinkedIn Agent" : "Start LinkedIn Applying"}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="stats-row">
+            <div className="stat"><strong>{linkedinStats.evaluated}</strong>Evaluated</div>
+            <div className="stat"><strong>{linkedinStats.applied}</strong>Applied</div>
+            <div className="stat"><strong>{linkedinStats.skipped}</strong>Skipped</div>
+            <div className="stat"><strong>{linkedinStats.already_applied}</strong>Already Applied</div>
+            <div className="stat"><strong>{linkedinStats.current_query ? "Active" : "Idle"}</strong>{linkedinStats.current_query || "No query yet"}</div>
+          </div>
+
+          <div className="section">
+            <h3>LinkedIn Job Results</h3>
+            <div className="table-controls">
+              <input
+                className="table-search"
+                value={linkedinSearchText}
+                onChange={(e) => setLinkedinSearchText(e.target.value)}
+                placeholder="Search company, title, location, salary, status..."
+              />
+              <input
+                className="table-search"
+                value={linkedinCompanyFilter}
+                onChange={(e) => setLinkedinCompanyFilter(e.target.value)}
+                placeholder="Filter by company"
+              />
+              <select value={linkedinStatusFilter} onChange={(e) => setLinkedinStatusFilter(e.target.value)}>
+                <option value="all">All statuses</option>
+                <option value="selected">Selected / Applied</option>
+                <option value="skipped">Skipped</option>
+                <option value="error">Error</option>
+              </select>
+              <div className="sort-group">
+                <span>Sort by</span>
+                <button className={`sort-btn ${linkedinSortKey === "id" ? "active" : ""}`} onClick={() => toggleLinkedinSortDir("id")}>#</button>
+                <button className={`sort-btn ${linkedinSortKey === "score" ? "active" : ""}`} onClick={() => toggleLinkedinSortDir("score")}>Match</button>
+                <button className={`sort-btn ${linkedinSortKey === "company" ? "active" : ""}`} onClick={() => toggleLinkedinSortDir("company")}>Company</button>
+                <button className={`sort-btn ${linkedinSortKey === "title" ? "active" : ""}`} onClick={() => toggleLinkedinSortDir("title")}>Title</button>
+                <button className={`sort-btn ${linkedinSortKey === "salary" ? "active" : ""}`} onClick={() => toggleLinkedinSortDir("salary")}>Salary</button>
+                <button className={`sort-btn ${linkedinSortKey === "status" ? "active" : ""}`} onClick={() => toggleLinkedinSortDir("status")}>Status</button>
+              </div>
+            </div>
+
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th role="button" tabIndex="0" onClick={() => toggleLinkedinSortDir("id")}>#</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleLinkedinSortDir("company")}>Company</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleLinkedinSortDir("title")}>Job Title</th>
+                    <th>Location</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleLinkedinSortDir("salary")}>Salary</th>
+                    <th>Experience</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleLinkedinSortDir("score")}>Match</th>
+                    <th role="button" tabIndex="0" onClick={() => toggleLinkedinSortDir("status")}>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredAndSortedLinkedinJobs.map((job) => {
+                    const [statusTitle, statusReason] = formatStatusLines(job);
+                    return (
+                      <tr key={`linkedin-${job.id}`}>
+                        <td>{job.id}</td>
+                        <td>{job.company}</td>
+                        <td>
+                          <a className="job-link" href={job.url || "#"} target="_blank" rel="noreferrer">
+                            {job.title}
+                          </a>
+                        </td>
+                        <td>{job.location}</td>
+                        <td>{job.salary}</td>
+                        <td>{job.experience}</td>
+                        <td>{job.match_score == null ? "..." : `${job.match_score}%`}</td>
+                        <td>
+                          <div className="status-cell">
+                            <div className="status-main">{statusTitle}</div>
+                            <div className="status-sub">{statusReason}</div>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {!filteredAndSortedLinkedinJobs.length && (
+                    <tr>
+                      <td colSpan="8" style={{ textAlign: "center", color: "#777" }}>
+                        No LinkedIn jobs match the current filters.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>

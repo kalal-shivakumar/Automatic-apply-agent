@@ -19,6 +19,8 @@ from openai import AzureOpenAI
 from pypdf import PdfReader
 from browser import NaukriBrowser
 from naukri_agent import JobSearcher, JobApplicant, human_delay
+from linkedin_browser import LinkedInBrowser
+from linkedin_agent import LinkedInJobSearcher, LinkedInJobApplicant, linkedin_human_delay
 from config import Config
 
 logging.basicConfig(
@@ -61,6 +63,18 @@ SEARCH_QUERIES = [
 
 PROFILE_PATH = os.path.join(os.path.dirname(__file__), "resume_profile.json")
 CRITERIA_PATH = os.path.join(os.path.dirname(__file__), "job_search_criteria.txt")
+LINKEDIN_DEBUG_RESULTS_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "debug_extract_linkedin_structure_results.json",
+)
+LINKEDIN_DEEP_INSPECTION_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "debug_linkedin_apply_flow_results.json",
+)
+
+
+def _default_stats() -> dict:
+    return {"applied": 0, "skipped": 0, "already_applied": 0, "evaluated": 0, "current_query": ""}
 
 
 def _default_profile() -> dict:
@@ -647,6 +661,67 @@ def _write_applied_job_exports(applied_jobs: list[dict]):
                     pass
 
 
+def _write_linkedin_applied_job_exports(applied_jobs: list[dict]):
+    if not applied_jobs:
+        return
+
+    json_tmp = None
+    csv_tmp = None
+    try:
+        with tempfile.NamedTemporaryFile("w", delete=False, encoding="utf-8", dir=".", prefix="linkedin_applied_jobs_", suffix=".json") as f:
+            json.dump(applied_jobs, f, indent=2, ensure_ascii=False)
+            json_tmp = f.name
+        os.replace(json_tmp, "linkedin_applied_jobs.json")
+
+        csv_fields = [
+            "company_name",
+            "role_name",
+            "job_link",
+            "job_description",
+            "key_skills_company_looking_for",
+            "salary",
+            "experience",
+            "match_score",
+            "match_reason",
+            "questions_asked_and_answers_provided",
+            "search_query",
+            "status",
+        ]
+        with tempfile.NamedTemporaryFile("w", delete=False, newline="", encoding="utf-8-sig", dir=".", prefix="linkedin_applied_jobs_", suffix=".csv") as f:
+            csv_tmp = f.name
+            writer = csv.DictWriter(f, fieldnames=csv_fields)
+            writer.writeheader()
+            for item in applied_jobs:
+                qa_pairs = item.get("questions_answers") or []
+                qa_text = " | ".join(
+                    f"Q: {qa.get('question', '').strip()} -> A: {qa.get('answer', '').strip()}"
+                    for qa in qa_pairs
+                    if qa.get("question") and qa.get("answer")
+                )
+                writer.writerow({
+                    "company_name": item.get("company", ""),
+                    "role_name": item.get("title", ""),
+                    "job_link": item.get("url", ""),
+                    "job_description": item.get("job_description", ""),
+                    "key_skills_company_looking_for": item.get("key_skills", ""),
+                    "salary": item.get("salary", ""),
+                    "experience": item.get("experience", ""),
+                    "match_score": item.get("match_score", ""),
+                    "match_reason": item.get("match_reason", ""),
+                    "questions_asked_and_answers_provided": qa_text,
+                    "search_query": item.get("search_query", ""),
+                    "status": item.get("status", ""),
+                })
+        os.replace(csv_tmp, "linkedin_applied_jobs_detailed.csv")
+    finally:
+        for tmp_path in (json_tmp, csv_tmp):
+            if tmp_path and os.path.exists(tmp_path):
+                try:
+                    os.remove(tmp_path)
+                except Exception:
+                    pass
+
+
 def _get_search_queries() -> list[tuple[str, str]]:
     profile = state.saved_profile or _default_profile()
     titles = [str(t).strip() for t in (profile.get("job_titles") or []) if str(t).strip()]
@@ -687,9 +762,15 @@ class AgentState:
         self.is_running = False
         self.is_logged_in = False
         self.should_stop = False
+        self.linkedin_browser = None
+        self.linkedin_is_running = False
+        self.linkedin_is_logged_in = False
+        self.linkedin_should_stop = False
         self.clients: set[WebSocket] = set()
         self.jobs: list[dict] = []
-        self.stats = {"applied": 0, "skipped": 0, "already_applied": 0, "evaluated": 0, "current_query": ""}
+        self.linkedin_jobs: list[dict] = []
+        self.stats = _default_stats()
+        self.linkedin_stats = _default_stats()
         self.saved_profile = _read_saved_profile()
 
 
@@ -703,6 +784,11 @@ async def lifespan(app: FastAPI):
     if state.browser:
         try:
             await state.browser.close()
+        except Exception:
+            pass
+    if state.linkedin_browser:
+        try:
+            await state.linkedin_browser.close()
         except Exception:
             pass
 
@@ -726,6 +812,58 @@ if os.path.isdir(_static_dir):
 async def serve_index():
     index = os.path.join(_webapp_dir, "index.html")
     return FileResponse(index, media_type="text/html")
+
+
+@app.get("/linkedin/debug-readiness")
+async def linkedin_debug_readiness():
+    if not os.path.exists(LINKEDIN_DEBUG_RESULTS_PATH):
+        return {
+            "ok": False,
+            "message": "LinkedIn debug results file not found. Run debug_extract_linkedin_structure.py first.",
+            "automation_readiness": {},
+        }
+
+    try:
+        with open(LINKEDIN_DEBUG_RESULTS_PATH, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+
+        return {
+            "ok": True,
+            "captured_at": payload.get("captured_at", ""),
+            "seed_url": payload.get("seed_url", ""),
+            "automation_readiness": payload.get("automation_readiness", {}),
+            "notes": payload.get("notes", []),
+        }
+    except Exception as exc:
+        return {
+            "ok": False,
+            "message": f"Failed to read LinkedIn debug results: {exc}",
+            "automation_readiness": {},
+        }
+
+
+@app.get("/linkedin/deep-inspection")
+async def linkedin_deep_inspection():
+    if not os.path.exists(LINKEDIN_DEEP_INSPECTION_PATH):
+        return {
+            "ok": False,
+            "message": "Deep inspection file not found. Run debug_linkedin_apply_flow.py first.",
+            "report": {},
+        }
+
+    try:
+        with open(LINKEDIN_DEEP_INSPECTION_PATH, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+        return {
+            "ok": True,
+            "report": payload,
+        }
+    except Exception as exc:
+        return {
+            "ok": False,
+            "message": f"Failed to read deep inspection report: {exc}",
+            "report": {},
+        }
 
 
 async def broadcast(data: dict):
@@ -752,6 +890,11 @@ async def websocket_endpoint(ws: WebSocket):
         "is_running": state.is_running,
         "jobs": state.jobs,
         "stats": state.stats,
+        "linkedin_browser_launched": state.linkedin_browser is not None,
+        "linkedin_logged_in": state.linkedin_is_logged_in,
+        "linkedin_is_running": state.linkedin_is_running,
+        "linkedin_jobs": state.linkedin_jobs,
+        "linkedin_stats": state.linkedin_stats,
         "saved_profile": state.saved_profile,
     }, default=str))
 
@@ -763,17 +906,33 @@ async def websocket_endpoint(ws: WebSocket):
 
             if action == "launch_browser":
                 asyncio.create_task(launch_browser())
+            elif action == "launch_browser_linkedin":
+                asyncio.create_task(launch_linkedin_browser())
             elif action == "verify_login":
                 asyncio.create_task(verify_login())
+            elif action == "verify_login_linkedin":
+                asyncio.create_task(verify_linkedin_login())
             elif action == "start":
                 if not state.is_running:
                     state.should_stop = False
                     asyncio.create_task(run_agent())
+            elif action == "start_linkedin":
+                if not state.linkedin_is_running:
+                    state.linkedin_should_stop = False
+                    asyncio.create_task(run_linkedin_agent())
             elif action == "stop":
                 state.should_stop = True
                 state.is_running = False
                 await broadcast({"type": "agent_stopped", "stats": state.stats,
                                  "message": "Agent stopped by user."})
+            elif action == "stop_linkedin":
+                state.linkedin_should_stop = True
+                state.linkedin_is_running = False
+                await broadcast({
+                    "type": "linkedin_agent_stopped",
+                    "stats": state.linkedin_stats,
+                    "message": "LinkedIn agent stopped by user.",
+                })
             elif action == "analyze_resume":
                 resume_text = msg.get("resume_text", "")
                 file_name = msg.get("file_name", "resume")
@@ -900,6 +1059,278 @@ async def verify_login():
         state.is_logged_in = False
         await broadcast({"type": "login_status", "logged_in": False,
                          "message": "Login not detected. Please login in the browser window and try again."})
+
+
+async def launch_linkedin_browser():
+    try:
+        if state.linkedin_browser:
+            try:
+                await state.linkedin_browser.close()
+            except Exception:
+                pass
+        state.linkedin_browser = LinkedInBrowser()
+        await state.linkedin_browser.launch()
+        logged_in = await state.linkedin_browser.wait_for_login()
+        state.linkedin_is_logged_in = bool(logged_in)
+        await broadcast({
+            "type": "linkedin_browser_status",
+            "launched": True,
+            "message": (
+                "LinkedIn browser launched. Please login manually in this browser window, "
+                "then click Verify Login."
+            ),
+        })
+        logger.info("LinkedIn browser launched for webapp")
+    except Exception as e:
+        logger.error(f"LinkedIn browser launch error: {e}")
+        await broadcast({
+            "type": "linkedin_browser_status",
+            "launched": False,
+            "message": f"Failed to launch LinkedIn browser: {e}",
+        })
+
+
+async def verify_linkedin_login():
+    if not state.linkedin_browser or not state.linkedin_browser.page:
+        await broadcast({
+            "type": "linkedin_login_status",
+            "logged_in": False,
+            "message": "Launch LinkedIn browser first.",
+        })
+        return
+
+    try:
+        state.linkedin_is_logged_in = await state.linkedin_browser.wait_for_login()
+        if not state.linkedin_is_logged_in:
+            await broadcast({
+                "type": "linkedin_login_status",
+                "logged_in": False,
+                "message": "Login not detected. Please sign in to LinkedIn in the browser window and verify again.",
+            })
+            return
+        await broadcast({
+            "type": "linkedin_login_status",
+            "logged_in": True,
+            "message": "LinkedIn login verified. You can start LinkedIn Auto Apply.",
+        })
+        logger.info("LinkedIn login verified")
+    except Exception:
+        state.linkedin_is_logged_in = False
+        await broadcast({
+            "type": "linkedin_login_status",
+            "logged_in": False,
+            "message": "LinkedIn login not detected. Please login in browser and verify again.",
+        })
+
+
+async def run_linkedin_agent():
+    state.linkedin_is_running = True
+    state.linkedin_jobs = []
+    state.linkedin_stats = _default_stats()
+
+    try:
+        if state.linkedin_browser and state.linkedin_browser.page:
+            await state.linkedin_browser.page.evaluate("1")
+    except Exception:
+        logger.warning("LinkedIn browser connection stale, re-launching...")
+        await broadcast({"type": "log", "message": "LinkedIn browser lost. Re-launching..."})
+        try:
+            if state.linkedin_browser:
+                try:
+                    await state.linkedin_browser.close()
+                except Exception:
+                    pass
+            state.linkedin_browser = LinkedInBrowser()
+            await state.linkedin_browser.launch()
+            await state.linkedin_browser.page.goto("https://www.linkedin.com/jobs/")
+            await state.linkedin_browser.page.wait_for_load_state("networkidle")
+            try:
+                await state.linkedin_browser.page.wait_for_selector(
+                    'a[href*="/feed"], a[href*="/mynetwork"], button[aria-label*="Me"]',
+                    timeout=5000,
+                )
+                state.linkedin_is_logged_in = True
+            except Exception:
+                state.linkedin_is_logged_in = False
+                state.linkedin_is_running = False
+                await broadcast({"type": "error", "message": "LinkedIn browser re-launched but login expired."})
+                await broadcast({
+                    "type": "linkedin_browser_status",
+                    "launched": True,
+                    "message": "LinkedIn browser re-launched. Please login again.",
+                })
+                return
+        except Exception as e:
+            state.linkedin_is_running = False
+            await broadcast({"type": "error", "message": f"Failed to re-launch LinkedIn browser: {e}"})
+            return
+
+    page = state.linkedin_browser.page
+    searcher = LinkedInJobSearcher(page)
+    applicant = LinkedInJobApplicant(page)
+
+    seen_urls = set()
+
+    await broadcast({
+        "type": "linkedin_agent_started",
+        "message": "LinkedIn agent started. Searching and applying in parallel with Naukri if enabled.",
+    })
+
+    try:
+        search_queries = _get_search_queries()
+        if not search_queries:
+            state.linkedin_is_running = False
+            await broadcast({
+                "type": "error",
+                "message": "No saved resume-based keywords found for LinkedIn. Save profile in HOME tab first.",
+            })
+            await broadcast({
+                "type": "linkedin_agent_stopped",
+                "stats": state.linkedin_stats,
+                "message": "LinkedIn agent stopped: missing profile keywords.",
+            })
+            return
+
+        round_num = 0
+        while not state.linkedin_should_stop and state.linkedin_stats["applied"] < Config.MAX_APPLICATIONS:
+            round_num += 1
+
+            for qi, (keywords, location) in enumerate(search_queries, 1):
+                if state.linkedin_should_stop or state.linkedin_stats["applied"] >= Config.MAX_APPLICATIONS:
+                    break
+
+                state.linkedin_stats["current_query"] = (
+                    f"{keywords} in {location} [{qi}/{len(search_queries)}] (Round {round_num})"
+                )
+                await broadcast({
+                    "type": "linkedin_search_query",
+                    "query_number": qi,
+                    "total_queries": len(search_queries),
+                    "keywords": keywords,
+                    "location": location,
+                })
+
+                for page_no in range(1, 4):
+                    if state.linkedin_should_stop or state.linkedin_stats["applied"] >= Config.MAX_APPLICATIONS:
+                        break
+
+                    jobs = await searcher.search_jobs(page_no=page_no, keywords=keywords, location=location)
+                    if not jobs:
+                        break
+
+                    new_jobs = []
+                    for job in jobs:
+                        u = str(job.get("url", "")).split("?")[0]
+                        if u and u not in seen_urls:
+                            seen_urls.add(u)
+                            new_jobs.append(job)
+
+                    if not new_jobs:
+                        break
+
+                    for job in new_jobs:
+                        if state.linkedin_should_stop or state.linkedin_stats["applied"] >= Config.MAX_APPLICATIONS:
+                            break
+
+                        state.linkedin_stats["evaluated"] += 1
+                        job_entry = {
+                            "id": state.linkedin_stats["evaluated"],
+                            "title": job.get("title", ""),
+                            "company": job.get("company", ""),
+                            "location": job.get("location", "N/A"),
+                            "salary": job.get("salary", "N/A"),
+                            "experience": job.get("experience", "N/A"),
+                            "skills": job.get("skills", "N/A")[:150],
+                            "key_skills": job.get("skills", ""),
+                            "url": job.get("url", ""),
+                            "job_description": "",
+                            "questions_answers": [],
+                            "match_score": None,
+                            "match_reason": "",
+                            "status": "Evaluating...",
+                            "search_query": f"{keywords} in {location}",
+                        }
+                        state.linkedin_jobs.append(job_entry)
+                        await broadcast({
+                            "type": "linkedin_job_update",
+                            "job": job_entry,
+                            "stats": state.linkedin_stats,
+                        })
+
+                        try:
+                            success = await applicant.apply_to_job(job, min_match_pct=60)
+
+                            job_entry["match_score"] = applicant.last_match_score
+                            job_entry["match_reason"] = applicant.last_match_reason
+                            job_entry["job_description"] = applicant.last_full_jd
+                            job_entry["questions_answers"] = applicant.last_qa_pairs
+
+                            if success:
+                                state.linkedin_stats["applied"] += 1
+                                job_entry["status"] = "Applied ✓"
+                                try:
+                                    _write_linkedin_applied_job_exports(
+                                        [j for j in state.linkedin_jobs if "Applied" in j.get("status", "")]
+                                    )
+                                except Exception as export_error:
+                                    logger.warning(f"LinkedIn export failed after success: {export_error}")
+                            else:
+                                skip_reason = applicant.last_skip_reason
+                                if skip_reason == "already_applied":
+                                    state.linkedin_stats["already_applied"] += 1
+                                    job_entry["status"] = "Skipped (Already Applied)"
+                                elif skip_reason == "salary_below_min":
+                                    state.linkedin_stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (Salary Below Minimum)"
+                                elif skip_reason == "salary_missing_experience_mismatch":
+                                    state.linkedin_stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (No Salary + Experience Mismatch)"
+                                elif skip_reason == "no_easy_apply":
+                                    state.linkedin_stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (No Easy Apply)"
+                                elif skip_reason == "button_disabled":
+                                    state.linkedin_stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (Button Disabled)"
+                                elif skip_reason == "low_score" or applicant.last_match_score < 60:
+                                    state.linkedin_stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped (Low Score)"
+                                else:
+                                    state.linkedin_stats["skipped"] += 1
+                                    job_entry["status"] = "Skipped"
+                        except Exception as e:
+                            state.linkedin_stats["skipped"] += 1
+                            job_entry["match_score"] = applicant.last_match_score
+                            job_entry["match_reason"] = str(e)
+                            job_entry["status"] = "Error"
+                            logger.error(f"LinkedIn job processing error: {e}")
+
+                        await broadcast({
+                            "type": "linkedin_job_update",
+                            "job": job_entry,
+                            "stats": state.linkedin_stats,
+                        })
+                        await linkedin_human_delay(2.0, 5.0)
+
+    except Exception as e:
+        logger.error(f"LinkedIn agent error: {e}", exc_info=True)
+        await broadcast({"type": "error", "message": f"LinkedIn agent error: {e}"})
+
+    state.linkedin_is_running = False
+
+    applied = [j for j in state.linkedin_jobs if "Applied" in j.get("status", "")]
+    try:
+        _write_linkedin_applied_job_exports(applied)
+    except Exception as export_error:
+        logger.warning(f"Final LinkedIn export failed: {export_error}")
+
+    await broadcast({
+        "type": "linkedin_agent_completed",
+        "stats": state.linkedin_stats,
+        "message": (
+            f"LinkedIn completed. Applied: {state.linkedin_stats['applied']}, "
+            f"Skipped: {state.linkedin_stats['skipped']}, Evaluated: {state.linkedin_stats['evaluated']}"
+        ),
+    })
 
 
 async def run_agent():

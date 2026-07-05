@@ -1,0 +1,447 @@
+{
+  "search_url": "https://www.linkedin.com/jobs/search/?keywords=DevOps+Engineer&location=Hyderabad&f_LF=f_AL",
+  "logged_in": true,
+  "job_cards_found": 5,
+  "jobs_investigated": [
+    {
+      "title": "DevOps Engineer DevOps Engineer with verification",
+      "url": "/jobs/view/4427169547/?eBP=BUDGET_EXHAUSTED_JOB&refId=JdtYq%2Fo%2FjgxD2EH1eGmAeA%3D%3D&trackingId=i4aG5zcIrQ3eyUPAGBUUxQ%3D%3D&trk=flagship3_search_srp_jobs",
+      "all_buttons": [
+        {
+          "text": "Share",
+          "aria": "Share",
+          "cls": "social-share__dropdown-trigger artdeco-button artdeco-button--3 artdeco-button--tertiary artdeco-button--circle artdeco-button--muted artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show more options",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--3 artdeco-button--tertiary artdeco-button--muted artdeco-button--circle artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "On-site",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--secondary artdeco-button--muted",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Full-time",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--secondary artdeco-button--muted",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Easy Apply",
+          "aria": "Easy Apply to DevOps Engineer at Tata Consultancy Services",
+          "cls": "jobs-apply-button\n         artdeco-button artdeco-button--3 artdeco-button--primary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Save Save DevOps Engineer at Tata Consultancy Services",
+          "aria": "",
+          "cls": "jobs-save-button\n         artdeco-button artdeco-button--secondary artdeco-button--3",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Easy Apply",
+          "aria": "Easy Apply to DevOps Engineer at Tata Consultancy Services",
+          "cls": "jobs-apply-button\n         artdeco-button artdeco-button--2 artdeco-button--primary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Save Save DevOps Engineer at Tata Consultancy Services",
+          "aria": "",
+          "cls": "jobs-save-button\n         mr2 artdeco-button artdeco-button--2 artdeco-button--secondary",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show more options",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--2 artdeco-button--tertiary artdeco-button--muted artdeco-button--circle artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show match details",
+          "aria": "Show match details",
+          "cls": "artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary ember-view coach-shared-hscroll-button__action coach-shared-hscroll-button__action--guide-prompt\n        coach-shared-hscroll-button__action--guide-prompt-premium",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show all",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary ember-view job-details-people-who-can-help__connections-card-summary-card-action",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Message",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Following",
+          "aria": "Following",
+          "cls": "follow is-following  artdeco-button artdeco-button--secondary ml5",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "show more",
+          "aria": "",
+          "cls": "inline-show-more-text__button\n                inline-show-more-text__button--light\n                link",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "I’m interested",
+          "aria": "",
+          "cls": "org-interest-pipeline__interest-button artdeco-button artdeco-button--2 artdeco-button--secondary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Previous",
+          "aria": "Company photos Previous",
+          "cls": "artdeco-button artdeco-button--circle artdeco-button--muted artdeco-button--1 artdeco-button--tertiary artdeco-button--disabled ember-view artdeco-pagination__button artdeco-pagination__button--previous",
+          "visible": true,
+          "disabled": true
+        },
+        {
+          "text": "Next",
+          "aria": "Company photos Next",
+          "cls": "artdeco-button artdeco-button--circle artdeco-button--muted artdeco-button--icon-right artdeco-button--1 artdeco-button--tertiary ember-view artdeco-pagination__button artdeco-pagination__button--next",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "December 9, 2025",
+          "aria": "Tata Consultancy Services company photo 1 posted on December 9, 2025",
+          "cls": "org-life-company-photos-module__photo-button",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "December 9, 2025",
+          "aria": "Tata Consultancy Services company photo 2 posted on December 9, 2025",
+          "cls": "org-life-company-photos-module__photo-button",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "December 9, 2025",
+          "aria": "Tata Consultancy Services company photo 3 posted on December 9, 2025",
+          "cls": "org-life-company-photos-module__photo-button",
+          "visible": true,
+          "disabled": false
+        }
+      ],
+      "apply_btn": {
+        "text": "Easy Apply",
+        "aria": "Easy Apply to DevOps Engineer at Tata Consultancy Services",
+        "cls": "jobs-apply-button\n         artdeco-button artdeco-button--3 artdeco-button--primary ember-view",
+        "disabled": false,
+        "visible": true
+      },
+      "modal_opened": true,
+      "modal_fields": [
+        {
+          "type": "SELECT[select-one]",
+          "label": ""
+        },
+        {
+          "type": "SELECT[select-one]",
+          "label": ""
+        },
+        {
+          "type": "INPUT[text]",
+          "label": ""
+        }
+      ],
+      "modal_buttons": [
+        "Next"
+      ],
+      "url_after_apply_click": "https://www.linkedin.com/jobs/search/?currentJobId=4427169547&f_LF=f_AL&keywords=DevOps%20Engineer&location=Hyderabad"
+    },
+    {
+      "title": "DevOps Engineer | $75/hr Remote DevOps Engineer | $75/hr Remote",
+      "url": "/jobs/view/4433817311/?eBP=CwEAAAGfMmXtbw82wcMJvGD8P77MHKVuJkoG-kiRUyg64LskKW0ufsMKJ7ksIxv6bSgwQmrBaIT6JRmtdgvrZpC_VKFbAdYi14-120C12lDO6qrhszqygIGdec8oBbUkQvsXiN8Z3jqXmvH-xkM2ilVIyjxF6NjyvpfyFbZ-jWeHzRL-CUFZnZzuaj96YSBVa9szgw06FRrzdNB09fz7Mxb1z54zvLw9dseh35dO6pYa57LXDvyJMFGxwkHNiz1J7L50hrvevJRx66TyVk6OeDfnl7wAdoMwq9OtAhv9Ly8i8eo5-YkclyP6oGUPeKIpm4Y428RCXmF2quIspzCJoDQfymS5bEX9V8MZCOiDo2LhhQmTZeJdLMDoALQsJWC5QY2FipMzMv02Eva9rFBnxj4ZR6cvhwmv8E1pBOs6Tw5TQyoZ2YytiBJl7y7D7M1QPyML_YJJ3dde2dkTnhz8Xc2YpWCGFIocbbqvDqxuTpwm2adGOBqWcG4YA6IMgCHaJqYa0KHhvEQg&refId=JdtYq%2Fo%2FjgxD2EH1eGmAeA%3D%3D&trackingId=PydKbo0qF3MPW2Ij%2BQ2bsg%3D%3D&trk=flagship3_search_srp_jobs",
+      "all_buttons": [
+        {
+          "text": "Share",
+          "aria": "Share",
+          "cls": "social-share__dropdown-trigger artdeco-button artdeco-button--3 artdeco-button--tertiary artdeco-button--circle artdeco-button--muted artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show more options",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--3 artdeco-button--tertiary artdeco-button--muted artdeco-button--circle artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "$20/hr - $75/hr",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--secondary artdeco-button--muted",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Remote",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--secondary artdeco-button--muted",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Contract",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--secondary artdeco-button--muted",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Easy Apply",
+          "aria": "Easy Apply to DevOps Engineer | $75/hr Remote at Crossing Hurdles",
+          "cls": "jobs-apply-button\n         artdeco-button artdeco-button--3 artdeco-button--primary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Save Save DevOps Engineer | $75/hr Remote at Crossing Hurdles",
+          "aria": "",
+          "cls": "jobs-save-button\n         artdeco-button artdeco-button--secondary artdeco-button--3",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Easy Apply",
+          "aria": "Easy Apply to DevOps Engineer | $75/hr Remote at Crossing Hurdles",
+          "cls": "jobs-apply-button\n         artdeco-button artdeco-button--2 artdeco-button--primary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Save Save DevOps Engineer | $75/hr Remote at Crossing Hurdles",
+          "aria": "",
+          "cls": "jobs-save-button\n         mr2 artdeco-button artdeco-button--2 artdeco-button--secondary",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show more options",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--2 artdeco-button--tertiary artdeco-button--muted artdeco-button--circle artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show match details",
+          "aria": "Show match details",
+          "cls": "artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary ember-view coach-shared-hscroll-button__action coach-shared-hscroll-button__action--guide-prompt\n        coach-shared-hscroll-button__action--guide-prompt-premium",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Message",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Follow",
+          "aria": "Follow",
+          "cls": "follow   artdeco-button artdeco-button--secondary ml5",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "show more",
+          "aria": "",
+          "cls": "inline-show-more-text__button\n                inline-show-more-text__button--light\n                link",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "I’m interested",
+          "aria": "",
+          "cls": "org-interest-pipeline__interest-button artdeco-button artdeco-button--2 artdeco-button--secondary ember-view",
+          "visible": true,
+          "disabled": false
+        }
+      ],
+      "apply_btn": {
+        "text": "Easy Apply",
+        "aria": "Easy Apply to DevOps Engineer | $75/hr Remote at Crossing Hurdles",
+        "cls": "jobs-apply-button\n         artdeco-button artdeco-button--3 artdeco-button--primary ember-view",
+        "disabled": false,
+        "visible": true
+      },
+      "modal_opened": true,
+      "modal_fields": [
+        {
+          "type": "INPUT[text]",
+          "label": ""
+        },
+        {
+          "type": "INPUT[text]",
+          "label": ""
+        },
+        {
+          "type": "SELECT[select-one]",
+          "label": ""
+        },
+        {
+          "type": "INPUT[text]",
+          "label": ""
+        },
+        {
+          "type": "SELECT[select-one]",
+          "label": ""
+        }
+      ],
+      "modal_buttons": [
+        "Next"
+      ],
+      "url_after_apply_click": "https://www.linkedin.com/jobs/search/?currentJobId=4433817311&f_LF=f_AL&keywords=DevOps%20Engineer&location=Hyderabad"
+    },
+    {
+      "title": "DevOps Engineer DevOps Engineer with verification",
+      "url": "/jobs/view/4434435615/?eBP=CwEAAAGfMmXtb6TqyHIq2jpLOYmispzsae02Rlb85fzZ5sLqNOjtRfXFASIImuCwdmcWCOiHETp3TWQ7ly8YlpwusDEAlSMC_eQQ6RltPSQj9WBUkcjvxM2hqeEmEnXKULizPlZGJyriXJVVi3BAN0nPS8o27x7taMS4cz3u93dMP4iqctIhGiFmctTOfr0UKW4q2Yj3MEhtmTbzJ88vdDwAv55FFwXySrIplpNaytKFxrFUnmO__DP0gYSbK4MkO1fYFs2vl3HvhXFY6xLUmDDnGW0nB3-jYEIkvsd7BMXyApm5tYLg3f-tTLJ0vxrkv0YirZM-jiWMD1CxzIO4By-s-9YGElMje1YuntaCETB7Gyd3P1W4TELBRlZ6e9HDMpxEEivZw-4G76-CNneNE9mxnFlmKswahlN3OxDV7VOOXFDQa8NYbFlr0Ed5NzbWnn5f_kCiPlvQlFU6pyPnrmuRknywzxKJjfVlsr86PVrEp9ebZn_QbyGTMIOKvzMoQ-qXJ7Z47Q&refId=JdtYq%2Fo%2FjgxD2EH1eGmAeA%3D%3D&trackingId=ops87Lm%2FfnT57McBgFhFwQ%3D%3D&trk=flagship3_search_srp_jobs",
+      "all_buttons": [
+        {
+          "text": "Share",
+          "aria": "Share",
+          "cls": "social-share__dropdown-trigger artdeco-button artdeco-button--3 artdeco-button--tertiary artdeco-button--circle artdeco-button--muted artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show more options",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--3 artdeco-button--tertiary artdeco-button--muted artdeco-button--circle artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Remote",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--secondary artdeco-button--muted",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Full-time",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--secondary artdeco-button--muted",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Easy Apply",
+          "aria": "Easy Apply to DevOps Engineer at Lucidity",
+          "cls": "jobs-apply-button\n         artdeco-button artdeco-button--3 artdeco-button--primary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Save Save DevOps Engineer at Lucidity",
+          "aria": "",
+          "cls": "jobs-save-button\n         artdeco-button artdeco-button--secondary artdeco-button--3",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Easy Apply",
+          "aria": "Easy Apply to DevOps Engineer at Lucidity",
+          "cls": "jobs-apply-button\n         artdeco-button artdeco-button--2 artdeco-button--primary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Save Save DevOps Engineer at Lucidity",
+          "aria": "",
+          "cls": "jobs-save-button\n         mr2 artdeco-button artdeco-button--2 artdeco-button--secondary",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show more options",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--2 artdeco-button--tertiary artdeco-button--muted artdeco-button--circle artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Show match details",
+          "aria": "Show match details",
+          "cls": "artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary ember-view coach-shared-hscroll-button__action coach-shared-hscroll-button__action--guide-prompt\n        coach-shared-hscroll-button__action--guide-prompt-premium",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Message",
+          "aria": "",
+          "cls": "artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary ember-view",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "Follow",
+          "aria": "Follow",
+          "cls": "follow   artdeco-button artdeco-button--secondary ml5",
+          "visible": true,
+          "disabled": false
+        },
+        {
+          "text": "show more",
+          "aria": "",
+          "cls": "inline-show-more-text__button\n                inline-show-more-text__button--light\n                link",
+          "visible": true,
+          "disabled": false
+        }
+      ],
+      "apply_btn": {
+        "text": "Easy Apply",
+        "aria": "Easy Apply to DevOps Engineer at Lucidity",
+        "cls": "jobs-apply-button\n         artdeco-button artdeco-button--3 artdeco-button--primary ember-view",
+        "disabled": false,
+        "visible": true
+      },
+      "modal_opened": true,
+      "modal_fields": [
+        {
+          "type": "SELECT[select-one]",
+          "label": ""
+        },
+        {
+          "type": "SELECT[select-one]",
+          "label": ""
+        },
+        {
+          "type": "INPUT[text]",
+          "label": ""
+        }
+      ],
+      "modal_buttons": [
+        "Next"
+      ],
+      "url_after_apply_click": "https://www.linkedin.com/jobs/search/?currentJobId=4434435615&f_LF=f_AL&keywords=DevOps%20Engineer&location=Hyderabad"
+    }
+  ]
+}
