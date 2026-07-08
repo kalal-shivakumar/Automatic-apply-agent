@@ -33,8 +33,8 @@ class LinkedInBrowser:
 
     async def wait_for_login(self) -> bool:
         """Navigate to LinkedIn and verify whether user is logged in."""
-        await self.page.goto("https://www.linkedin.com/")
-        await self.page.wait_for_load_state("networkidle")
+        await self.page.goto("https://www.linkedin.com/", timeout=60000, wait_until="domcontentloaded")
+        await self.page.wait_for_load_state("domcontentloaded")
 
         try:
             await self.page.wait_for_selector(

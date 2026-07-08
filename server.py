@@ -568,6 +568,7 @@ def _apply_profile_to_runtime(profile: dict):
     else:
         Config.YOUR_EXPECTED_CTC = ""
     Config.MIN_MATCH_SCORE = int(profile.get("min_match_score", 60) or 60)
+    Config.CANDIDATE_LEVEL = str(profile.get("candidate_level", "Fresher") or "Fresher").strip()
     exp = str(profile.get("overall_experience_years", "") or "")
     if exp:
         Config.EXPERIENCE_YEARS = exp

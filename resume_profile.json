@@ -52,6 +52,8 @@
   ],
   "salary_min_lpa": "3",
   "salary_max_lpa": "9",
+  "min_match_score": 45,
+  "candidate_level": "Fresher",
   "overall_experience_years": "0-1",
   "notice_period": "Immediate",
   "key_search_keywords": [

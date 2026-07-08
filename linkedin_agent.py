@@ -32,7 +32,7 @@ class LinkedInJobSearcher:
         )
 
         logger.info(f"LinkedIn search: {url}")
-        await self.page.goto(url)
+        await self.page.goto(url, timeout=60000, wait_until="domcontentloaded")
         await self.page.wait_for_load_state("domcontentloaded")
         await linkedin_human_delay(1.8, 3.2)
 
@@ -241,6 +241,7 @@ class LinkedInJobApplicant:
             "form input[type='text'], form input[type='number'], form textarea"
         )
         count = await fields.count()
+        logger.info(f"  [FIELDS] Found {count} text/number/textarea fields")
         for i in range(min(count, 20)):
             try:
                 field = fields.nth(i)
@@ -248,6 +249,7 @@ class LinkedInJobApplicant:
                     continue
                 current = (await field.input_value()).strip()
                 if current:
+                    logger.info(f"  [FIELD {i}] Already filled: '{current[:50]}'")
                     continue
                 label = (
                     await field.get_attribute("aria-label")
@@ -256,15 +258,21 @@ class LinkedInJobApplicant:
                 )
                 if not label:
                     continue
+                logger.info(f"  [FIELD {i}] Question: '{label}'")
+                print(f"    Q: {label}")
                 answer = self.ai.answer_question(label, None)
+                logger.info(f"  [FIELD {i}] AI Answer: '{answer}'")
+                print(f"    A: {answer}")
                 await field.fill(str(answer))
                 self._record_qa(label, str(answer))
-            except Exception:
+            except Exception as e:
+                logger.warning(f"  [FIELD {i}] Error: {e}")
                 continue
 
     async def _select_dropdown_questions(self):
         selects = self.page.locator("form select")
         count = await selects.count()
+        logger.info(f"  [DROPDOWNS] Found {count} select fields")
         for i in range(min(count, 20)):
             try:
                 sel = selects.nth(i)
@@ -275,6 +283,8 @@ class LinkedInJobApplicant:
                 if len(cleaned) <= 1:
                     continue
                 question = (await sel.get_attribute("aria-label") or "Select one option").strip()
+                logger.info(f"  [DROPDOWN {i}] Question: '{question}' | Options: {cleaned[:8]}")
+                print(f"    Q: {question} | Options: {cleaned[:8]}")
                 answer = self.ai.answer_question(question, cleaned)
                 chosen = None
                 for opt in cleaned:
@@ -284,16 +294,88 @@ class LinkedInJobApplicant:
                 if chosen:
                     await sel.select_option(label=chosen)
                     self._record_qa(question, chosen)
-            except Exception:
+                    logger.info(f"  [DROPDOWN {i}] AI Selected: '{chosen}'")
+                    print(f"    A: {chosen}")
+                else:
+                    logger.info(f"  [DROPDOWN {i}] AI answered '{answer}' but no match in options")
+                    print(f"    A: {answer} (no match in options)")
+            except Exception as e:
+                logger.warning(f"  [DROPDOWN {i}] Error: {e}")
                 continue
 
     async def _answer_visible_questions(self):
         await self._fill_text_questions()
         await self._select_dropdown_questions()
 
+    async def _answer_radio_questions(self):
+        """Handle radio button groups in LinkedIn Easy Apply forms."""
+        fieldsets = self.page.locator("fieldset")
+        count = await fieldsets.count()
+        logger.info(f"  [RADIOS] Found {count} fieldsets")
+        for i in range(min(count, 10)):
+            try:
+                fs = fieldsets.nth(i)
+                if not await fs.is_visible(timeout=300):
+                    continue
+                legend = fs.locator("legend, span.fb-dash-form-element__label")
+                question = ""
+                if await legend.count() > 0:
+                    question = (await legend.first.inner_text()).strip()
+                if not question:
+                    continue
+
+                radios = fs.locator("input[type='radio']")
+                radio_count = await radios.count()
+                if radio_count == 0:
+                    continue
+
+                # Check if any radio is already selected
+                already_selected = False
+                for ri in range(radio_count):
+                    if await radios.nth(ri).is_checked():
+                        already_selected = True
+                        break
+                if already_selected:
+                    continue
+
+                # Get label texts for each radio
+                labels = []
+                for ri in range(radio_count):
+                    radio = radios.nth(ri)
+                    radio_id = await radio.get_attribute("id") or ""
+                    label_el = fs.locator(f"label[for='{radio_id}']")
+                    if await label_el.count() > 0:
+                        labels.append((await label_el.first.inner_text()).strip())
+                    else:
+                        labels.append(await radio.get_attribute("value") or f"Option {ri+1}")
+
+                logger.info(f"  [RADIO {i}] Question: '{question}' | Options: {labels}")
+                print(f"    Q (radio): {question} | Options: {labels}")
+                answer = self.ai.answer_question(question, labels)
+                chosen_idx = None
+                for ri, lbl in enumerate(labels):
+                    if lbl.lower() == str(answer).strip().lower():
+                        chosen_idx = ri
+                        break
+                if chosen_idx is not None:
+                    await radios.nth(chosen_idx).click()
+                    self._record_qa(question, labels[chosen_idx])
+                    logger.info(f"  [RADIO {i}] AI Selected: '{labels[chosen_idx]}'")
+                    print(f"    A (radio): {labels[chosen_idx]}")
+                else:
+                    # Default to first option if no exact match
+                    await radios.first.click()
+                    self._record_qa(question, labels[0] if labels else str(answer))
+                    logger.info(f"  [RADIO {i}] No exact match for '{answer}', selected first: '{labels[0] if labels else 'N/A'}'")
+                    print(f"    A (radio): {labels[0] if labels else answer} (defaulted)")
+            except Exception as e:
+                logger.warning(f"  [RADIO {i}] Error: {e}")
+                continue
+
     async def _handle_easy_apply_flow(self) -> bool:
-        for _ in range(10):
+        for step in range(10):
             await linkedin_human_delay(1.0, 2.0)
+            logger.info(f"  [EASY APPLY] Step {step + 1}/10")
 
             success_markers = [
                 "text=/application submitted/i",
@@ -304,22 +386,30 @@ class LinkedInJobApplicant:
                 try:
                     loc = self.page.locator(marker).first
                     if await loc.is_visible(timeout=500):
+                        logger.info(f"  [EASY APPLY] SUCCESS - Application submitted!")
+                        print(f"  >>> APPLICATION SUBMITTED SUCCESSFULLY <<<")
                         return True
                 except Exception:
                     continue
 
+            logger.info(f"  [EASY APPLY] Answering visible questions...")
             await self._answer_visible_questions()
 
+            # Also handle radio button questions
+            await self._answer_radio_questions()
+
             # Prefer submit/review/next progression.
-            clicked = await self._click_first_visible(
-                [
-                    "button:has-text('Submit application')",
-                    "button:has-text('Review')",
-                    "button:has-text('Next')",
-                ],
-                timeout_ms=900,
-            )
-            if not clicked:
+            buttons_to_try = [
+                "button:has-text('Submit application')",
+                "button:has-text('Review')",
+                "button:has-text('Next')",
+            ]
+            clicked = await self._click_first_visible(buttons_to_try, timeout_ms=900)
+            if clicked:
+                logger.info(f"  [EASY APPLY] Clicked progression button")
+                print(f"  -> Clicked Next/Review/Submit button")
+            else:
+                logger.info(f"  [EASY APPLY] No progression button found, stopping")
                 break
 
         return False
@@ -331,18 +421,28 @@ class LinkedInJobApplicant:
         self.last_full_jd = ""
         self.last_qa_pairs = []
 
+        job_title = job.get('title', 'Unknown')
+        job_company = job.get('company', 'Unknown')
+        print(f"\n{'='*60}")
+        print(f"  JOB: {job_title} @ {job_company}")
+        print(f"  URL: {job.get('url', '')[:80]}")
+        print(f"{'='*60}")
+        logger.info(f"Evaluating: {job_title} @ {job_company}")
+
         try:
-            await self.page.goto(job["url"])
+            await self.page.goto(job["url"], timeout=60000, wait_until="domcontentloaded")
             await self.page.wait_for_load_state("domcontentloaded")
             await linkedin_human_delay(1.5, 3.0)
 
             full_jd = await self._extract_full_jd()
             self.last_full_jd = full_jd
             details = await self._extract_details(job)
+            print(f"  JD length: {len(full_jd)} chars | Salary: '{details.get('salary','')}' | Exp: '{details.get('experience','')}'")
 
             if not full_jd.strip():
                 self.last_skip_reason = "missing_jd"
                 self.last_match_reason = "No LinkedIn job description extracted"
+                print(f"  SKIP: No job description found")
                 return False
 
             salary_txt = details.get("salary", "")
@@ -350,24 +450,41 @@ class LinkedInJobApplicant:
             candidate_min_salary = self._candidate_min_salary_lpa()
             _, job_salary_max = self._parse_salary_range_lpa(salary_txt)
 
-            if salary_txt and candidate_min_salary is not None and job_salary_max is not None:
-                if job_salary_max < candidate_min_salary:
-                    self.last_skip_reason = "salary_below_min"
-                    self.last_match_reason = (
-                        f"Salary mismatch: job max {job_salary_max} LPA < expected {candidate_min_salary} LPA"
-                    )
-                    return False
+            # Ignore salary values < 1 LPA — likely false positives from page parsing
+            if job_salary_max is not None and job_salary_max < 1:
+                salary_txt = ""
+                job_salary_max = None
 
-            if not salary_txt:
-                # If candidate min salary is below 10 LPA, be lenient — consider all jobs
-                if candidate_min_salary is not None and candidate_min_salary < 10:
-                    logger.info(
-                        f"Salary not mentioned but candidate min {candidate_min_salary} LPA < 10 — proceeding to score"
-                    )
-                elif not self._is_experience_match(exp_txt):
-                    self.last_skip_reason = "salary_missing_experience_mismatch"
-                    self.last_match_reason = "Salary missing and experience mismatch"
+            # Fresher mode: skip all salary/experience gating, accept jobs 0-6 years
+            is_fresher = getattr(Config, 'CANDIDATE_LEVEL', '') == 'Fresher'
+            if is_fresher:
+                # Only skip if job explicitly requires 7+ years
+                job_min_exp, _ = self._parse_experience_range_years(exp_txt)
+                if job_min_exp is not None and job_min_exp > 6:
+                    self.last_skip_reason = "experience_too_high"
+                    self.last_match_reason = f"Job requires {job_min_exp}+ years, exceeds Fresher range (0-6)"
+                    print(f"  SKIP: Job requires {job_min_exp}+ years (Fresher max: 6)")
                     return False
+                logger.info(f"Fresher mode: skipping salary/experience gating")
+                print(f"  Fresher mode: salary/exp checks skipped")
+            else:
+                if salary_txt and candidate_min_salary is not None and job_salary_max is not None:
+                    if job_salary_max < candidate_min_salary:
+                        self.last_skip_reason = "salary_below_min"
+                        self.last_match_reason = (
+                            f"Salary mismatch: job max {job_salary_max} LPA < expected {candidate_min_salary} LPA"
+                        )
+                        return False
+
+                if not salary_txt:
+                    if candidate_min_salary is not None and candidate_min_salary < 10:
+                        logger.info(
+                            f"Salary not mentioned but candidate min {candidate_min_salary} LPA < 10 — proceeding to score"
+                        )
+                    elif not self._is_experience_match(exp_txt):
+                        self.last_skip_reason = "salary_missing_experience_mismatch"
+                        self.last_match_reason = "Salary missing and experience mismatch"
+                        return False
 
             skills_text = details.get("skills") or full_jd[:400]
             match_score, match_reason = self.ai.match_job_score(
@@ -381,29 +498,36 @@ class LinkedInJobApplicant:
             )
             self.last_match_score = match_score
             self.last_match_reason = match_reason
+            print(f"  Match Score: {match_score}% — {match_reason}")
 
             if match_score < min_match_pct:
                 self.last_skip_reason = "low_score"
+                print(f"  SKIP: Score {match_score}% below threshold {min_match_pct}%")
                 return False
 
             easy_apply = self.page.locator("button:has-text('Easy Apply')").first
             if not await easy_apply.is_visible(timeout=2000):
                 self.last_skip_reason = "no_easy_apply"
                 self.last_match_reason = "Easy Apply button not available"
+                print(f"  SKIP: No Easy Apply button found")
                 return False
 
             btn_text = (await easy_apply.inner_text()).strip().lower()
             if "applied" in btn_text:
                 self.last_skip_reason = "already_applied"
                 self.last_match_reason = "Already applied"
+                print(f"  SKIP: Already applied to this job")
                 return False
 
             if not await easy_apply.is_enabled(timeout=1200):
                 self.last_skip_reason = "button_disabled"
+                print(f"  SKIP: Easy Apply button is disabled")
                 return False
 
+            print(f"  >>> Clicking Easy Apply button...")
             await easy_apply.click()
             await linkedin_human_delay(1.0, 2.5)
+            print(f"  >>> Easy Apply modal opened, filling questions...")
 
             submitted = await self._handle_easy_apply_flow()
             if not submitted:

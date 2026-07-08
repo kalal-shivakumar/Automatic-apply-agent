@@ -464,37 +464,45 @@ class JobApplicant:
                 combined_skills += ", " + page_details["page_skills"]
 
             # Hard gating before match scoring:
-            # 1) If job salary is below candidate minimum expectation, skip.
-            # 2) If salary is not mentioned AND min salary >= 10 LPA, apply only when experience matches.
-            #    If min salary < 10 LPA, consider jobs without salary info (both salary-mentioned and not).
+            # Fresher mode: skip salary checks, accept jobs 0-6 years
+            # Normal mode: check salary and experience
             job_salary_text = str(job.get("salary", "") or "").strip()
             job_exp_text = str(job.get("experience", "") or "").strip()
             candidate_min_salary = self._candidate_min_salary_lpa()
             job_sal_min, job_sal_max = self._parse_salary_range_lpa(job_salary_text)
 
-            if job_salary_text and candidate_min_salary is not None and job_sal_max is not None:
-                if job_sal_max < candidate_min_salary:
-                    logger.info(
-                        f"Skipping salary mismatch: job max {job_sal_max} LPA < candidate min {candidate_min_salary} LPA"
-                    )
-                    self.last_skip_reason = "salary_below_min"
-                    self.last_match_reason = (
-                        f"Salary mismatch: job max {job_sal_max} LPA is below minimum expected {candidate_min_salary} LPA"
-                    )
+            is_fresher = getattr(Config, 'CANDIDATE_LEVEL', '') == 'Fresher'
+            if is_fresher:
+                # Only skip if job explicitly requires 7+ years
+                job_min_exp, _ = self._parse_experience_range_years(job_exp_text)
+                if job_min_exp is not None and job_min_exp > 6:
+                    logger.info(f"Fresher mode: job requires {job_min_exp}+ years, skipping")
+                    self.last_skip_reason = "experience_too_high"
+                    self.last_match_reason = f"Job requires {job_min_exp}+ years, exceeds Fresher range (0-6)"
                     return False
+                logger.info("Fresher mode: skipping salary/experience gating")
+            else:
+                if job_salary_text and candidate_min_salary is not None and job_sal_max is not None:
+                    if job_sal_max < candidate_min_salary:
+                        logger.info(
+                            f"Skipping salary mismatch: job max {job_sal_max} LPA < candidate min {candidate_min_salary} LPA"
+                        )
+                        self.last_skip_reason = "salary_below_min"
+                        self.last_match_reason = (
+                            f"Salary mismatch: job max {job_sal_max} LPA is below minimum expected {candidate_min_salary} LPA"
+                        )
+                        return False
 
-            if not job_salary_text:
-                # If candidate min salary is below 10 LPA, be lenient — consider all jobs
-                # regardless of whether salary is mentioned or not.
-                if candidate_min_salary is not None and candidate_min_salary < 10:
-                    logger.info(
-                        f"Salary not mentioned but candidate min {candidate_min_salary} LPA < 10 — proceeding to score"
-                    )
-                elif not self._is_experience_match(job_exp_text):
-                    logger.info("Skipping: salary not mentioned and experience not matching")
-                    self.last_skip_reason = "salary_missing_experience_mismatch"
-                    self.last_match_reason = "Salary not mentioned and experience does not match profile"
-                    return False
+                if not job_salary_text:
+                    if candidate_min_salary is not None and candidate_min_salary < 10:
+                        logger.info(
+                            f"Salary not mentioned but candidate min {candidate_min_salary} LPA < 10 — proceeding to score"
+                        )
+                    elif not self._is_experience_match(job_exp_text):
+                        logger.info("Skipping: salary not mentioned and experience not matching")
+                        self.last_skip_reason = "salary_missing_experience_mismatch"
+                        self.last_match_reason = "Salary not mentioned and experience does not match profile"
+                        return False
 
             # Always score against JD + key skills.
             if not combined_jd.strip():

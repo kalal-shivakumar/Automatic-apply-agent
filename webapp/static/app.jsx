@@ -9,6 +9,7 @@ const defaultProfile = {
   salary_min_lpa: "",
   salary_max_lpa: "",
   min_match_score: "60",
+  candidate_level: "Fresher",
   overall_experience_years: "",
   notice_period: "",
   key_search_keywords: [],
@@ -136,6 +137,7 @@ function App() {
   const noticePeriodValue = profile.notice_period || "";
   const profileSummaryItems = useMemo(() => ([
     { label: "Name", value: profile.full_name || "N/A" },
+    { label: "Candidate level", value: profile.candidate_level || "Fresher" },
     { label: "Experience", value: profile.overall_experience_years ? `${profile.overall_experience_years} years` : "N/A" },
     { label: "Notice period", value: profile.notice_period || "N/A" },
     { label: "Salary range", value: profile.salary_min_lpa || profile.salary_max_lpa ? `${profile.salary_min_lpa || "?"}-${profile.salary_max_lpa || "?"} LPA` : "N/A" },
@@ -597,6 +599,7 @@ function App() {
       ready_to_relocate: Boolean(profile.ready_to_relocate),
       notice_period: String(profile.notice_period || "").trim(),
       min_match_score: parseInt(profile.min_match_score, 10) || 60,
+      candidate_level: String(profile.candidate_level || "Fresher").trim(),
     };
 
     if (!normalized.skills.length || normalized.skills.length < 10) {
@@ -676,8 +679,25 @@ function App() {
               <input value={profile.full_name || ""} onChange={(e) => updateProfile("full_name", e.target.value)} />
             </div>
             <div className="field">
-              <label>4. What is your overall experience (years)</label>
+              <label>Candidate Experience Level</label>
+              <select value={profile.candidate_level || "Fresher"} onChange={(e) => updateProfile("candidate_level", e.target.value)}>
+                <option value="Fresher">Fresher (0-1 years)</option>
+                <option value="1-3 years">1-3 years</option>
+                <option value="3-5 years">3-5 years</option>
+                <option value="5-8 years">5-8 years</option>
+                <option value="8+ years">8+ years</option>
+              </select>
+              <small className="hint">{profile.candidate_level === "Fresher" ? "Fresher mode: salary checks skipped, jobs 0-6 years accepted, title/skills matching prioritized" : "Standard mode: experience and salary matching applied"}</small>
+            </div>
+          </div>
+
+          <div className="grid-2" style={{ marginTop: "12px" }}>
+            <div className="field">
+              <label>Overall experience (years)</label>
               <input value={profile.overall_experience_years || ""} onChange={(e) => updateProfile("overall_experience_years", e.target.value)} />
+            </div>
+            <div className="field">
+              <label>&nbsp;</label>
             </div>
           </div>
 
