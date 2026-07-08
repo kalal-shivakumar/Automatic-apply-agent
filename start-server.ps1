@@ -244,6 +244,14 @@ Write-Warn "Running terraform init..."
 terraform init -upgrade
 if ($LASTEXITCODE -ne 0) { Write-Fail "terraform init failed."; Pop-Location; exit 1 }
 
+Write-Warn "Running terraform validate..."
+terraform validate
+if ($LASTEXITCODE -ne 0) { Write-Fail "terraform validate failed."; Pop-Location; exit 1 }
+
+Write-Warn "Running terraform plan..."
+terraform plan -out=tfplan
+if ($LASTEXITCODE -ne 0) { Write-Fail "terraform plan failed."; Pop-Location; exit 1 }
+
 Write-Warn "Running terraform apply..."
 terraform apply --auto-approve
 if ($LASTEXITCODE -ne 0) { Write-Fail "terraform apply failed."; Pop-Location; exit 1 }
@@ -569,21 +577,23 @@ if (Test-Path $aiAnswererPy) {
 Write-Step "Testing Azure OpenAI endpoint connectivity..."
 
 $testScript = @"
-import sys
+import sys, io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 try:
     from config import Config
     from ai_answerer import QuestionAnswerer
-    print('✓ Config and QuestionAnswerer imported successfully')
+    print('[OK] Config and QuestionAnswerer imported successfully')
     
     # Initialize client (this tests SSL bypass works)
     qa = QuestionAnswerer()
-    print(f'✓ Azure OpenAI client initialized')
+    print(f'[OK] Azure OpenAI client initialized')
     print(f'  Endpoint: {Config.AZURE_OPENAI_ENDPOINT}')
     print(f'  Deployment: {qa.deployment}')
     print(f'  API Version: {Config.AZURE_OPENAI_API_VERSION}')
     
 except Exception as e:
-    print(f'✗ Error: {str(e)}', file=sys.stderr)
+    print(f'[FAIL] Error: {str(e)}', file=sys.stderr)
     import traceback
     traceback.print_exc()
     sys.exit(1)

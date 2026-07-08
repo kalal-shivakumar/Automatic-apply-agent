@@ -359,7 +359,12 @@ class LinkedInJobApplicant:
                     return False
 
             if not salary_txt:
-                if not self._is_experience_match(exp_txt):
+                # If candidate min salary is below 10 LPA, be lenient — consider all jobs
+                if candidate_min_salary is not None and candidate_min_salary < 10:
+                    logger.info(
+                        f"Salary not mentioned but candidate min {candidate_min_salary} LPA < 10 — proceeding to score"
+                    )
+                elif not self._is_experience_match(exp_txt):
                     self.last_skip_reason = "salary_missing_experience_mismatch"
                     self.last_match_reason = "Salary missing and experience mismatch"
                     return False

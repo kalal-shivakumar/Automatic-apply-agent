@@ -7,7 +7,7 @@ variable "subscription_id" {
 variable "resource_group_name" {
   description = "Name of the resource group"
   type        = string
-  default     = "rg-naukri-agent"
+  default     = "rg-job-agent"
 }
 
 variable "location" {
@@ -19,7 +19,7 @@ variable "location" {
 variable "openai_account_name" {
   description = "Azure OpenAI service account name"
   type        = string
-  default     = "naukri-agent-ai"
+  default     = "job-agent-ai"
 }
 
 variable "openai_deployment_name" {

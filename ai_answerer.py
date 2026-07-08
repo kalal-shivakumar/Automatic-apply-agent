@@ -295,6 +295,46 @@ IMPORTANT RULES:
         raw_answer = response.choices[0].message.content.strip()
         return self._apply_positive_overrides(question, raw_answer, options)
 
+    @staticmethod
+    def _parse_exp_years(text: str) -> float | None:
+        """Extract a numeric experience value from text like '0-1', '5', '3.5 years'."""
+        import re
+        nums = re.findall(r'[\d]+(?:\.[\d]+)?', str(text or ""))
+        if not nums:
+            return None
+        return float(nums[0])
+
+    @staticmethod
+    def _parse_exp_min_required(text: str) -> float | None:
+        """Extract the minimum required experience from job text like '5-8 years'."""
+        import re
+        nums = re.findall(r'[\d]+(?:\.[\d]+)?', str(text or ""))
+        if not nums:
+            return None
+        return float(nums[0])
+
+    def _apply_experience_cap(self, score: int, reason: str,
+                               candidate_exp_text: str, job_exp_text: str) -> int:
+        """Cap AI score when there's a large experience gap the AI might have ignored."""
+        candidate_years = self._parse_exp_years(candidate_exp_text)
+        job_min_years = self._parse_exp_min_required(job_exp_text)
+
+        if candidate_years is None or job_min_years is None:
+            return score
+
+        gap = job_min_years - candidate_years
+        if gap <= 1:
+            # Within 1 year — no cap needed
+            return score
+        if gap <= 2:
+            # 1-2 year gap — cap at 55
+            return min(score, 55)
+        if gap <= 3:
+            # 2-3 year gap — cap at 45
+            return min(score, 45)
+        # 3+ year gap — cap at 35
+        return min(score, 35)
+
     def match_job_score(self, job_title: str, company: str, location: str,
                          salary: str, experience: str, skills: str,
                          full_description: str) -> tuple[int, str]:
@@ -302,6 +342,20 @@ IMPORTANT RULES:
         
         Returns (match_percentage, reason) where match_percentage is 0-100.
         """
+        # Build dynamic evaluation criteria from actual profile
+        candidate_salary = getattr(Config, "YOUR_EXPECTED_CTC", "") or "Not specified"
+        candidate_exp = getattr(Config, "YOUR_EXPERIENCE", "") or "Not specified"
+        candidate_skills = getattr(Config, "YOUR_SKILLS", "") or "Not specified"
+        candidate_location = getattr(Config, "JOB_LOCATION", "") or "Not specified"
+
+        salary_note = ""
+        try:
+            min_lpa = float(str(candidate_salary).split("-")[0].replace("LPA", "").strip())
+            if min_lpa < 10:
+                salary_note = "\n    - If salary is not mentioned in the job details, do NOT penalize the score. Treat it as neutral and focus on skills, experience, and role fit."
+        except (ValueError, IndexError):
+            salary_note = "\n    - If salary is not mentioned in the job details, do NOT penalize the score. Focus on skills and experience fit."
+
         prompt = f"""You are a job matching expert. Evaluate how well this job matches the candidate's profile and search criteria.
 
 Candidate Profile:
@@ -322,15 +376,20 @@ Full Job Description:
 {full_description[:4000]}
 
 Evaluate the match based on:
-    1. Salary range / compensation fit (target ₹80 LPA) - weight 30%
-    2. Experience level fit (11 years) - weight 20%
-    3. Skills overlap (Azure, AWS, Kubernetes, Terraform, CI/CD, Docker, etc.) - weight 20%
-    4. Role/title relevance (DevOps, Platform, SRE, Cloud, Infrastructure) - weight 10%
-    5. Location preference (Remote/Hyderabad/Bangalore/Pune/Chennai/Noida) - weight 10%
-    6. Company quality & role type (avoid support/L1/L2/legacy) - weight 10%
+    1. Experience level fit (candidate has {candidate_exp} years) - weight 35%
+    2. Skills overlap with candidate skills ({candidate_skills[:200]}) - weight 25%
+    3. Role/title relevance to candidate's profile - weight 15%
+    4. Salary range / compensation fit (candidate expects {candidate_salary}) - weight 10%
+    5. Location preference ({candidate_location} / Remote) - weight 10%
+    6. Company quality & role type (avoid support/L1/L2/legacy) - weight 5%
 
-    Important rule:
-    - If salary is not mentioned in the job details, use experience fit as the primary ranking signal before other factors.
+    CRITICAL RULES:
+    - Experience is the MOST important factor. If the job requires significantly more experience than the candidate has, the score MUST be low.
+    - If the job requires X-Y years and the candidate has fewer than X years, cap the score at 40% maximum. For example: job needs 5-8 years but candidate has 0-1 years = score must be 30 or below.
+    - Only give scores above 60% when the candidate genuinely qualifies for the role in terms of BOTH experience AND skills.
+    - Match the candidate's ACTUAL profile above, not assumptions.{salary_note}
+    - If salary is mentioned and within the candidate's range, that's a positive signal.
+    - Skills overlap alone is NOT enough for a high score if experience is a major mismatch.
 
 Reply in EXACTLY this format (no other text):
 SCORE: <number 0-100>
@@ -358,6 +417,11 @@ REASON: <one line summary>"""
                         score = 0
                 elif line.upper().startswith("REASON:"):
                     reason = line.split(":", 1)[1].strip()
+
+            # Hard cap: if job requires significantly more experience than candidate has,
+            # enforce a maximum score regardless of what AI returned.
+            score = self._apply_experience_cap(score, reason, candidate_exp, experience)
+
             return (min(max(score, 0), 100), reason)
         except Exception as e:
             import traceback

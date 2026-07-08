@@ -465,7 +465,8 @@ class JobApplicant:
 
             # Hard gating before match scoring:
             # 1) If job salary is below candidate minimum expectation, skip.
-            # 2) If salary is not mentioned, apply only when experience matches.
+            # 2) If salary is not mentioned AND min salary >= 10 LPA, apply only when experience matches.
+            #    If min salary < 10 LPA, consider jobs without salary info (both salary-mentioned and not).
             job_salary_text = str(job.get("salary", "") or "").strip()
             job_exp_text = str(job.get("experience", "") or "").strip()
             candidate_min_salary = self._candidate_min_salary_lpa()
@@ -483,7 +484,13 @@ class JobApplicant:
                     return False
 
             if not job_salary_text:
-                if not self._is_experience_match(job_exp_text):
+                # If candidate min salary is below 10 LPA, be lenient — consider all jobs
+                # regardless of whether salary is mentioned or not.
+                if candidate_min_salary is not None and candidate_min_salary < 10:
+                    logger.info(
+                        f"Salary not mentioned but candidate min {candidate_min_salary} LPA < 10 — proceeding to score"
+                    )
+                elif not self._is_experience_match(job_exp_text):
                     logger.info("Skipping: salary not mentioned and experience not matching")
                     self.last_skip_reason = "salary_missing_experience_mismatch"
                     self.last_match_reason = "Salary not mentioned and experience does not match profile"

@@ -567,6 +567,7 @@ def _apply_profile_to_runtime(profile: dict):
         Config.YOUR_EXPECTED_CTC = f"{min_lpa} LPA"
     else:
         Config.YOUR_EXPECTED_CTC = ""
+    Config.MIN_MATCH_SCORE = int(profile.get("min_match_score", 60) or 60)
     exp = str(profile.get("overall_experience_years", "") or "")
     if exp:
         Config.EXPERIENCE_YEARS = exp
@@ -1258,7 +1259,8 @@ async def run_linkedin_agent():
                         })
 
                         try:
-                            success = await applicant.apply_to_job(job, min_match_pct=60)
+                            _min_match = getattr(Config, 'MIN_MATCH_SCORE', 60)
+                            success = await applicant.apply_to_job(job, min_match_pct=_min_match)
 
                             job_entry["match_score"] = applicant.last_match_score
                             job_entry["match_reason"] = applicant.last_match_reason
@@ -1291,7 +1293,7 @@ async def run_linkedin_agent():
                                 elif skip_reason == "button_disabled":
                                     state.linkedin_stats["skipped"] += 1
                                     job_entry["status"] = "Skipped (Button Disabled)"
-                                elif skip_reason == "low_score" or applicant.last_match_score < 60:
+                                elif skip_reason == "low_score" or applicant.last_match_score < _min_match:
                                     state.linkedin_stats["skipped"] += 1
                                     job_entry["status"] = "Skipped (Low Score)"
                                 else:
@@ -1476,7 +1478,8 @@ async def run_agent():
                                          "stats": state.stats})
 
                         try:
-                            success = await applicant.apply_to_job(job, min_match_pct=60)
+                            _min_match = getattr(Config, 'MIN_MATCH_SCORE', 60)
+                            success = await applicant.apply_to_job(job, min_match_pct=_min_match)
 
                             job_entry["match_score"] = applicant.last_match_score
                             job_entry["match_reason"] = applicant.last_match_reason
@@ -1501,7 +1504,7 @@ async def run_agent():
                                 elif skip_reason == "salary_missing_experience_mismatch":
                                     state.stats["skipped"] += 1
                                     job_entry["status"] = "Skipped (No Salary + Experience Mismatch)"
-                                elif skip_reason == "low_score" or applicant.last_match_score < 60:
+                                elif skip_reason == "low_score" or applicant.last_match_score < _min_match:
                                     state.stats["skipped"] += 1
                                     job_entry["status"] = "Skipped (Low Score)"
                                 elif skip_reason == "no_button":

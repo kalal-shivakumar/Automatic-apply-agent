@@ -8,6 +8,7 @@ const defaultProfile = {
   job_titles: [],
   salary_min_lpa: "",
   salary_max_lpa: "",
+  min_match_score: "60",
   overall_experience_years: "",
   notice_period: "",
   key_search_keywords: [],
@@ -138,6 +139,7 @@ function App() {
     { label: "Experience", value: profile.overall_experience_years ? `${profile.overall_experience_years} years` : "N/A" },
     { label: "Notice period", value: profile.notice_period || "N/A" },
     { label: "Salary range", value: profile.salary_min_lpa || profile.salary_max_lpa ? `${profile.salary_min_lpa || "?"}-${profile.salary_max_lpa || "?"} LPA` : "N/A" },
+    { label: "Min match score", value: `${profile.min_match_score || 60}%` },
     { label: "Preferred location", value: profile.preferred_location || "N/A" },
     { label: "Ready to relocate", value: profile.ready_to_relocate ? "Yes" : "No" },
     { label: "Skills", value: skillsText || "N/A" },
@@ -594,6 +596,7 @@ function App() {
       preferred_location: String(profile.preferred_location || "").trim() || "Hyderabad",
       ready_to_relocate: Boolean(profile.ready_to_relocate),
       notice_period: String(profile.notice_period || "").trim(),
+      min_match_score: parseInt(profile.min_match_score, 10) || 60,
     };
 
     if (!normalized.skills.length || normalized.skills.length < 10) {
@@ -632,8 +635,8 @@ function App() {
         </div>
         <div className="tabs">
           <button className={`tab-btn ${activeTab === "home" ? "active" : ""}`} onClick={() => setActiveTab("home")}>HOME</button>
-          <button className={`tab-btn ${activeTab === "apply" ? "active" : ""}`} onClick={() => setActiveTab("apply")}>Automatic Job Apply</button>
-          <button className={`tab-btn ${activeTab === "linkedin" ? "active" : ""}`} onClick={() => setActiveTab("linkedin")}>LinkedIn Auto Apply</button>
+          <button className={`tab-btn ${activeTab === "apply" ? "active" : ""}`} onClick={() => setActiveTab("apply")}>Naukri Automatic Job Apply</button>
+          <button className={`tab-btn ${activeTab === "linkedin" ? "active" : ""}`} onClick={() => setActiveTab("linkedin")}>LinkedIn Automatic Job Apply</button>
         </div>
       </header>
 
@@ -682,10 +685,21 @@ function App() {
             <div className="field">
               <label>3. Salary expectations min LPA</label>
               <input value={profile.salary_min_lpa || ""} onChange={(e) => updateProfile("salary_min_lpa", e.target.value)} />
+              <small className="hint">{Number(profile.salary_min_lpa || 0) < 10 ? "Below 10 LPA: jobs without salary info will also be considered" : "10+ LPA: jobs without salary info will need experience match"}</small>
             </div>
             <div className="field">
               <label>3. Salary expectations max LPA</label>
               <input value={profile.salary_max_lpa || ""} onChange={(e) => updateProfile("salary_max_lpa", e.target.value)} />
+            </div>
+          </div>
+          <div className="grid-2" style={{ marginTop: "12px" }}>
+            <div className="field">
+              <label>Minimum Match Score (%)</label>
+              <input type="number" min="0" max="100" value={profile.min_match_score || "60"} onChange={(e) => updateProfile("min_match_score", e.target.value)} />
+              <small className="hint">Jobs scoring below this threshold will be skipped (0-100). Default: 60</small>
+            </div>
+            <div className="field">
+              <label>&nbsp;</label>
             </div>
           </div>
 
@@ -780,7 +794,7 @@ function App() {
 
       {activeTab === "apply" && (
         <section className="panel">
-          <h2 className="card-title">Automatic Job Apply</h2>
+          <h2 className="card-title">Naukri Automatic Job Apply</h2>
 
           {!profileSaved ? (
             <div className="alert alert-warn">
@@ -943,7 +957,7 @@ function App() {
 
       {activeTab === "linkedin" && (
         <section className="panel">
-          <h2 className="card-title">LinkedIn Auto Apply</h2>
+          <h2 className="card-title">LinkedIn Automatic Job Apply</h2>
 
           <div className="summary-box" style={{ marginBottom: "12px" }}>
             <h3>Identify & Resolve First (LinkedIn)</h3>
@@ -982,7 +996,7 @@ function App() {
           </div>
 
           <div className="summary-box" style={{ marginBottom: "12px" }}>
-            <h3>Deep Inspection (Search -> Fields -> AI Answers -> Submit)</h3>
+            <h3>{"Deep Inspection (Search → Fields → AI Answers → Submit)"}</h3>
             {linkedinDeepError && <div className="alert alert-warn">{linkedinDeepError}</div>}
             {!linkedinDeepError && linkedinDeepReport && (
               <>
