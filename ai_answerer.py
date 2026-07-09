@@ -268,14 +268,15 @@ Profile:
 Question: {question}
 
 IMPORTANT RULES:
-- If the question asks "how many years" or about years of experience, reply with ONLY a number (e.g. "11" or "8"). Never write a sentence for experience questions.
+- If the question asks "how many years" or about years of experience, reply with ONLY a number based on the candidate's ACTUAL experience in the profile above. If the profile says "0-1" years, answer "1". If it says "3-5" years, answer "4". Never inflate beyond the profile.
 - If the question asks for a city/location, reply with just the city name (e.g. "Bangalore").
-- If the question asks for a name, reply with just the name.
-- If the question asks for notice period or joining timeline, reply with just: "60 days".
-- If the question asks for current CTC or expected CTC, reply with just the number in LPA (e.g. "80 LPA").
+- If the question asks for a name, reply with just the name from the profile.
+- If the question asks for a phone number or mobile number, reply with the phone number from the profile.
+- If the question asks for notice period or joining timeline, reply with the notice period from the profile. If the question asks for notice period "in days" or "in Days", reply with a number: "0" for Immediate, "15" for 15 days, "30" for 30 days, "60" for 60 days, "90" for 90 days.
+- If the question asks for current CTC or expected CTC, reply with the expected CTC from the profile.
 - For yes/no or willingness questions, answer positively (prefer "Yes").
 - For experience/expertise wording, answer positively and confidently.
-- For any question that asks "how many years" or "years of experience", answer with a single integer only.
+- For any question that asks "how many years" or "years of experience", answer with a single integer only based on the profile.
 - Never reply with "Not specified", "unknown", or similar placeholders.
 - If the answer is not obvious from the profile, choose the most interview-friendly positive response.
 - If the profile has no skills listed, use the generic positive section and answer as an experienced candidate.

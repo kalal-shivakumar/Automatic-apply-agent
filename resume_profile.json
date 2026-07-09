@@ -52,8 +52,6 @@
   ],
   "salary_min_lpa": "3",
   "salary_max_lpa": "9",
-  "min_match_score": 45,
-  "candidate_level": "Fresher",
   "overall_experience_years": "0-1",
   "notice_period": "Immediate",
   "key_search_keywords": [
@@ -83,5 +81,7 @@
     "Ahmedabad"
   ],
   "resume_file_name": "resume-devops_20260708_163753.pdf",
-  "min_match_score": 45
+  "min_match_score": 45,
+  "candidate_level": "Fresher",
+  "phone": "+91 7842084425"
 }

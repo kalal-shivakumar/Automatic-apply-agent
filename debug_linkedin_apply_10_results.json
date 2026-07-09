@@ -1,0 +1,284 @@
+[
+  {
+    "url": "https://www.linkedin.com/jobs/view/4436243010/",
+    "title": "Cloud EngineerCloud Engineer",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4433146807/",
+    "title": "Cloud Engineer \n    \n    \n\nCloud Engineer with verification",
+    "steps": [
+      {
+        "step": 1,
+        "fields_found": 3,
+        "actions": [
+          "ALREADY FILLED: '9999999999'",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
+          "ALREADY SELECTED: 'India (+91)'"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 2,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field",
+          "RADIO '' already answered"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 3,
+        "fields_found": 6,
+        "actions": [
+          "FILLED 'What is your Current CTC (in LPA)?' -> '3-9 LPA'",
+          "FILLED 'What is your Expected CTC (in LPA)?' -> '3-9 LPA'",
+          "FILLED 'What is your Notice Period (in Days)?' -> 'Immediate'",
+          "FILLED 'How many years of work experience do you have with IaC (Terraform)?' -> '0'",
+          "FILLED 'How many years of work experience do you have with Azure Cloud?' -> '0'",
+          "DEFAULT SELECTED 'Are you Serving your Notice Period?Are you Serving your Notice Period?' -> 'Yes'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 4,
+        "fields_found": 6,
+        "actions": [
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: 'Immediate'",
+          "ALREADY FILLED: '0'",
+          "ALREADY FILLED: '0'",
+          "ALREADY SELECTED: 'Yes'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 5,
+        "fields_found": 6,
+        "actions": [
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: 'Immediate'",
+          "ALREADY FILLED: '0'",
+          "ALREADY FILLED: '0'",
+          "ALREADY SELECTED: 'Yes'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 6,
+        "fields_found": 6,
+        "actions": [
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: 'Immediate'",
+          "ALREADY FILLED: '0'",
+          "ALREADY FILLED: '0'",
+          "ALREADY SELECTED: 'Yes'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 7,
+        "fields_found": 6,
+        "actions": [
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: 'Immediate'",
+          "ALREADY FILLED: '0'",
+          "ALREADY FILLED: '0'",
+          "ALREADY SELECTED: 'Yes'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 8,
+        "fields_found": 6,
+        "actions": [
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: '3-9 LPA'",
+          "ALREADY FILLED: 'Immediate'",
+          "ALREADY FILLED: '0'",
+          "ALREADY FILLED: '0'",
+          "ALREADY SELECTED: 'Yes'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      }
+    ],
+    "applied": false,
+    "error": null,
+    "verify_button_text": ""
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4437308576/",
+    "title": "DevOps Engineer (GCP) \n    \n    \n\nDevOps Engineer (GCP) with verification",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4435417928/",
+    "title": "Devops Platform EngineerDevops Platform Engineer",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4435411530/",
+    "title": "Cloud Engineer \n    \n    \n\nCloud Engineer with verification",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4437301880/",
+    "title": "DevOps Engineer – GitHub Enterprise & TerraformDevOps Engineer – GitHub Enterprise & Terraform",
+    "steps": [
+      {
+        "step": 1,
+        "fields_found": 3,
+        "actions": [
+          "ALREADY FILLED: '9999999999'",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
+          "ALREADY SELECTED: 'India (+91)'"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 2,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field",
+          "RADIO '' already answered"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 3,
+        "fields_found": 3,
+        "actions": [
+          "FILLED 'How many years of work experience do you have with DevOps?' -> '0'",
+          "ALREADY FILLED: '0'",
+          "ALREADY FILLED: '0'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 4,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field"
+        ],
+        "button_clicked": "Submit (aria-label)",
+        "progress": ""
+      }
+    ],
+    "applied": true,
+    "error": null,
+    "verify_button_text": ""
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4437358116/",
+    "title": "DevOps Engineer \n    \n    \n\nDevOps Engineer with verification",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4436045431/",
+    "title": "Lead DevOps EngineerLead DevOps Engineer",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4434839947/",
+    "title": "Data EngineerData Engineer",
+    "steps": [
+      {
+        "step": 1,
+        "fields_found": 3,
+        "actions": [
+          "ALREADY FILLED: '9999999999'",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
+          "ALREADY SELECTED: 'India (+91)'"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 2,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field",
+          "RADIO '' already answered"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 3,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field"
+        ],
+        "button_clicked": "Submit (aria-label)",
+        "progress": ""
+      }
+    ],
+    "applied": true,
+    "error": null,
+    "verify_button_text": ""
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4434536162/",
+    "title": "Sr.Application Support Engineer (.NET, React, Azure & DevOps)Sr.Application Support Engineer (.NET, ",
+    "steps": [
+      {
+        "step": 1,
+        "fields_found": 3,
+        "actions": [
+          "ALREADY FILLED: '9999999999'",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
+          "ALREADY SELECTED: 'India (+91)'"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 2,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field",
+          "RADIO '' already answered"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 3,
+        "fields_found": 0,
+        "actions": [],
+        "button_clicked": "Submit (aria-label)",
+        "progress": ""
+      }
+    ],
+    "applied": true,
+    "error": null,
+    "verify_button_text": ""
+  }
+]

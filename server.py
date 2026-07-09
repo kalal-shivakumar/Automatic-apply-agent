@@ -557,6 +557,7 @@ Resume text:
 
 def _apply_profile_to_runtime(profile: dict):
     Config.YOUR_NAME = str(profile.get("full_name", "") or "")
+    Config.YOUR_PHONE = str(profile.get("phone", "") or "")
     Config.YOUR_EXPERIENCE = str(profile.get("overall_experience_years", "") or "")
     Config.YOUR_SKILLS = ", ".join(profile.get("skills", []))
     min_lpa = str(profile.get("salary_min_lpa", "") or "")

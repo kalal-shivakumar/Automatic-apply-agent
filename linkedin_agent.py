@@ -236,8 +236,53 @@ class LinkedInJobApplicant:
                 continue
         return False
 
+    async def _get_field_label(self, field) -> str:
+        """Get the label text for a form field using multiple strategies."""
+        # Strategy 1: aria-label attribute
+        label = await field.get_attribute("aria-label")
+        if label and label != "None":
+            return label.strip()
+
+        # Strategy 2: Find label via field's id + label[for=id]
+        field_id = await field.get_attribute("id")
+        if field_id:
+            try:
+                label_el = self.page.locator(f"label[for='{field_id}']").first
+                if await label_el.count() > 0:
+                    label_text = (await label_el.inner_text()).strip()
+                    if label_text:
+                        return label_text
+            except Exception:
+                pass
+
+        # Strategy 3: Parent container's label/span
+        try:
+            parent = field.locator("xpath=..")
+            label_el = parent.locator("label, span.fb-dash-form-element__label").first
+            if await label_el.count() > 0:
+                label_text = (await label_el.inner_text()).strip()
+                if label_text:
+                    return label_text
+        except Exception:
+            pass
+
+        # Strategy 4: name or placeholder
+        name = await field.get_attribute("name")
+        if name:
+            return name
+        placeholder = await field.get_attribute("placeholder")
+        if placeholder:
+            return placeholder
+
+        return ""
+
     async def _fill_text_questions(self):
         fields = self.page.locator(
+            ":is(div.artdeco-modal, div[role='dialog']) input[type='text'], "
+            ":is(div.artdeco-modal, div[role='dialog']) input[type='number'], "
+            ":is(div.artdeco-modal, div[role='dialog']) textarea, "
+            "div.jobs-easy-apply-modal input[type='text'], div.jobs-easy-apply-modal input[type='number'], "
+            "div.jobs-easy-apply-modal textarea, "
             "form input[type='text'], form input[type='number'], form textarea"
         )
         count = await fields.count()
@@ -251,12 +296,9 @@ class LinkedInJobApplicant:
                 if current:
                     logger.info(f"  [FIELD {i}] Already filled: '{current[:50]}'")
                     continue
-                label = (
-                    await field.get_attribute("aria-label")
-                    or await field.get_attribute("name")
-                    or ""
-                )
+                label = await self._get_field_label(field)
                 if not label:
+                    logger.info(f"  [FIELD {i}] No label found, skipping")
                     continue
                 logger.info(f"  [FIELD {i}] Question: '{label}'")
                 print(f"    Q: {label}")
@@ -270,7 +312,10 @@ class LinkedInJobApplicant:
                 continue
 
     async def _select_dropdown_questions(self):
-        selects = self.page.locator("form select")
+        selects = self.page.locator(
+            ":is(div.artdeco-modal, div[role='dialog']) select, "
+            "div.jobs-easy-apply-modal select, form select"
+        )
         count = await selects.count()
         logger.info(f"  [DROPDOWNS] Found {count} select fields")
         for i in range(min(count, 20)):
@@ -282,7 +327,17 @@ class LinkedInJobApplicant:
                 cleaned = [o.strip() for o in options if o and o.strip()]
                 if len(cleaned) <= 1:
                     continue
-                question = (await sel.get_attribute("aria-label") or "Select one option").strip()
+                # Check if already selected (not on default "Select an option")
+                current_val = await sel.input_value()
+                if current_val and current_val != "Select an option" and current_val != "":
+                    sel_text = await sel.locator(f"option[value='{current_val}']").first.inner_text()
+                    if sel_text.strip() and sel_text.strip() != "Select an option":
+                        logger.info(f"  [DROPDOWN {i}] Already selected: '{sel_text.strip()[:50]}'")
+                        continue
+
+                question = await self._get_field_label(sel)
+                if not question:
+                    question = "Select one option"
                 logger.info(f"  [DROPDOWN {i}] Question: '{question}' | Options: {cleaned[:8]}")
                 print(f"    Q: {question} | Options: {cleaned[:8]}")
                 answer = self.ai.answer_question(question, cleaned)
@@ -304,12 +359,82 @@ class LinkedInJobApplicant:
                 continue
 
     async def _answer_visible_questions(self):
+        # First, handle LinkedIn's standard contact info fields (email, phone)
+        await self._prefill_contact_info()
         await self._fill_text_questions()
         await self._select_dropdown_questions()
 
+    async def _prefill_contact_info(self):
+        """Pre-fill LinkedIn's standard contact info step (email select, phone country, phone number)."""
+        try:
+            selects = self.page.locator(":is(div.artdeco-modal, div[role='dialog']) select")
+            sel_count = await selects.count()
+            logger.info(f"  [PREFILL] Found {sel_count} selects in modal")
+            for i in range(sel_count):
+                sel = selects.nth(i)
+                if not await sel.is_visible(timeout=200):
+                    continue
+                options = await sel.locator("option").all_inner_texts()
+                cleaned = [o.strip() for o in options if o and o.strip()]
+
+                # Email dropdown: has an email-like option — always force-select it
+                email_opt = next((o for o in cleaned if "@" in o), None)
+                if email_opt:
+                    await sel.select_option(label=email_opt)
+                    logger.info(f"  [PREFILL] Force-selected email: {email_opt}")
+                    print(f"    [PREFILL] Email: {email_opt}")
+                    continue
+
+                # Phone country code: has "India (+91)" — always force-select it
+                india_opt = next((o for o in cleaned if "India" in o), None)
+                if india_opt:
+                    await sel.select_option(label=india_opt)
+                    logger.info(f"  [PREFILL] Force-selected country: {india_opt}")
+                    print(f"    [PREFILL] Country: {india_opt}")
+                    continue
+
+            # Fill phone number if empty
+            phone = getattr(Config, "YOUR_PHONE", "").replace("+91", "").replace(" ", "").strip()
+            if phone:
+                inputs = self.page.locator(":is(div.artdeco-modal, div[role='dialog']) input[type='text']")
+                inp_count = await inputs.count()
+                for i in range(inp_count):
+                    inp = inputs.nth(i)
+                    if not await inp.is_visible(timeout=200):
+                        continue
+                    # Check label for phone/mobile
+                    inp_id = await inp.get_attribute("id") or ""
+                    label_text = ""
+                    if inp_id:
+                        try:
+                            lbl = self.page.locator(f"label[for='{inp_id}']").first
+                            if await lbl.count() > 0:
+                                label_text = (await lbl.inner_text()).strip().lower()
+                        except Exception:
+                            pass
+                    if "phone" in label_text or "mobile" in label_text:
+                        await inp.fill(phone)
+                        logger.info(f"  [PREFILL] Filled phone: {phone}")
+                        print(f"    [PREFILL] Phone: {phone}")
+                        break
+                    # Fallback: if this is the only required empty text input in the modal
+                    current = (await inp.input_value()).strip()
+                    required = await inp.get_attribute("required")
+                    if not current and required is not None:
+                        await inp.fill(phone)
+                        logger.info(f"  [PREFILL] Filled required empty input with phone: {phone}")
+                        print(f"    [PREFILL] Phone (required field): {phone}")
+                        break
+        except Exception as e:
+            logger.warning(f"  [PREFILL] Error: {e}")
+
     async def _answer_radio_questions(self):
         """Handle radio button groups in LinkedIn Easy Apply forms."""
-        fieldsets = self.page.locator("fieldset")
+        fieldsets = self.page.locator(
+            "fieldset, :is(div.artdeco-modal, div[role='dialog']) div[role='group'], "
+            "div.jobs-easy-apply-modal div[role='group'], "
+            "div.fb-dash-form-element"
+        )
         count = await fieldsets.count()
         logger.info(f"  [RADIOS] Found {count} fieldsets")
         for i in range(min(count, 10)):
@@ -373,24 +498,54 @@ class LinkedInJobApplicant:
                 continue
 
     async def _handle_easy_apply_flow(self) -> bool:
+        consecutive_empty_steps = 0
+        clicked_submit = False
         for step in range(10):
-            await linkedin_human_delay(1.0, 2.0)
+            await linkedin_human_delay(1.5, 2.5)
             logger.info(f"  [EASY APPLY] Step {step + 1}/10")
+
+            # Check if modal is still open (only treat as success if we clicked Submit first)
+            try:
+                modal = self.page.locator("div.artdeco-modal, div.jobs-easy-apply-modal, div[role='dialog']").first
+                modal_visible = await modal.is_visible(timeout=1500)
+                if not modal_visible:
+                    if clicked_submit:
+                        logger.info(f"  [EASY APPLY] Modal closed after Submit - SUCCESS")
+                        print(f"  >>> APPLICATION SUBMITTED (modal closed after submit) <<<")
+                        return True
+                    else:
+                        logger.info(f"  [EASY APPLY] Modal not visible at step {step+1} - modal failed to open")
+                        print(f"  WARN: Modal not visible (hasn't submitted yet)")
+                        return False
+            except Exception:
+                pass
 
             success_markers = [
                 "text=/application submitted/i",
                 "text=/you.re all set/i",
-                "text=/applied/i",
+                "text=/your application was sent/i",
+                "text=/applied.*successfully/i",
+                "h3:has-text('Your application was sent')",
             ]
             for marker in success_markers:
                 try:
                     loc = self.page.locator(marker).first
-                    if await loc.is_visible(timeout=500):
+                    if await loc.is_visible(timeout=800):
                         logger.info(f"  [EASY APPLY] SUCCESS - Application submitted!")
                         print(f"  >>> APPLICATION SUBMITTED SUCCESSFULLY <<<")
                         return True
                 except Exception:
                     continue
+
+            # Check if we already applied (button text changed)
+            try:
+                applied_btn = self.page.locator("button:has-text('Applied')").first
+                if await applied_btn.is_visible(timeout=300):
+                    logger.info(f"  [EASY APPLY] SUCCESS - 'Applied' button detected")
+                    print(f"  >>> APPLICATION SUBMITTED (Applied button detected) <<<")
+                    return True
+            except Exception:
+                pass
 
             logger.info(f"  [EASY APPLY] Answering visible questions...")
             await self._answer_visible_questions()
@@ -398,18 +553,113 @@ class LinkedInJobApplicant:
             # Also handle radio button questions
             await self._answer_radio_questions()
 
-            # Prefer submit/review/next progression.
-            buttons_to_try = [
-                "button:has-text('Submit application')",
-                "button:has-text('Review')",
-                "button:has-text('Next')",
-            ]
-            clicked = await self._click_first_visible(buttons_to_try, timeout_ms=900)
-            if clicked:
-                logger.info(f"  [EASY APPLY] Clicked progression button")
-                print(f"  -> Clicked Next/Review/Submit button")
-            else:
-                logger.info(f"  [EASY APPLY] No progression button found, stopping")
+            # Dismiss any typeahead/autocomplete dropdowns by clicking modal body
+            try:
+                typeahead = self.page.locator("div.search-typeahead-v2__hit, div.basic-typeahead__triggered-content").first
+                if await typeahead.is_visible(timeout=300):
+                    await self.page.locator("div.artdeco-modal__content").first.click(position={"x": 5, "y": 5})
+                    await linkedin_human_delay(0.3, 0.5)
+            except Exception:
+                pass
+
+            # Handle "Save this application?" dialog via JS
+            try:
+                await self.page.evaluate(r"""() => {
+                    const overlay = document.querySelector('[data-test-modal-id="data-test-easy-apply-discard-confirmation"]');
+                    if (overlay && overlay.offsetHeight > 0) {
+                        const saveBtn = overlay.querySelector('button[data-control-name="save_application_confirm_btn"], button[data-test-dialog-primary-btn]');
+                        if (saveBtn) { saveBtn.click(); return; }
+                        const btns = Array.from(overlay.querySelectorAll('button'));
+                        const save = btns.find(b => b.textContent?.trim() === 'Save');
+                        if (save) save.click();
+                    }
+                }""")
+                await linkedin_human_delay(0.5, 1.0)
+            except Exception:
+                pass
+
+            # Button priority: Next (to advance), Review, Submit -- use specific aria-labels
+            MS = ":is(div.artdeco-modal, div[role='dialog'])"
+            next_btn = self.page.locator(f"{MS} button[aria-label='Continue to next step']").first
+            review_btn = self.page.locator(f"{MS} button[aria-label='Review your application']").first
+            submit_btn = self.page.locator(f"{MS} button[aria-label='Submit application']").first
+
+            # Fallback: text-based within primary button class
+            next_btn_fallback = self.page.locator(f"{MS} button.artdeco-button--primary:has-text('Next')").first
+            review_btn_fallback = self.page.locator(f"{MS} button.artdeco-button--primary:has-text('Review')").first
+            submit_btn_fallback = self.page.locator(f"{MS} button.artdeco-button--primary:has-text('Submit')").first
+
+            try:
+                if await next_btn.is_visible(timeout=600):
+                    try:
+                        await next_btn.click(timeout=5000)
+                    except Exception:
+                        await self.page.evaluate("document.querySelector('button[aria-label=\"Continue to next step\"]')?.click()")
+                    consecutive_empty_steps += 1
+                    logger.info(f"  [EASY APPLY] Clicked Next (step {step+1})")
+                    print(f"  -> Clicked Next")
+                    if consecutive_empty_steps >= 6:
+                        logger.info(f"  [EASY APPLY] Too many Next clicks, stopping")
+                        break
+                elif await next_btn_fallback.is_visible(timeout=300):
+                    await next_btn_fallback.click()
+                    consecutive_empty_steps += 1
+                    logger.info(f"  [EASY APPLY] Clicked Next (fallback, step {step+1})")
+                    print(f"  -> Clicked Next (fallback)")
+                    if consecutive_empty_steps >= 6:
+                        break
+                elif await review_btn.is_visible(timeout=300):
+                    await review_btn.click()
+                    consecutive_empty_steps = 0
+                    logger.info(f"  [EASY APPLY] Clicked Review")
+                    print(f"  -> Clicked Review")
+                elif await review_btn_fallback.is_visible(timeout=300):
+                    await review_btn_fallback.click()
+                    consecutive_empty_steps = 0
+                    logger.info(f"  [EASY APPLY] Clicked Review (fallback)")
+                    print(f"  -> Clicked Review (fallback)")
+                elif await submit_btn.is_visible(timeout=300):
+                    await submit_btn.click()
+                    clicked_submit = True
+                    logger.info(f"  [EASY APPLY] Clicked SUBMIT (aria-label)!")
+                    print(f"  -> Clicked SUBMIT APPLICATION")
+                    await linkedin_human_delay(2.0, 3.5)
+                    for marker in success_markers:
+                        try:
+                            loc = self.page.locator(marker).first
+                            if await loc.is_visible(timeout=1500):
+                                logger.info(f"  [EASY APPLY] SUCCESS!")
+                                print(f"  >>> APPLICATION SUBMITTED SUCCESSFULLY <<<")
+                                return True
+                        except Exception:
+                            continue
+                    try:
+                        m = self.page.locator("div.artdeco-modal, div[role='dialog']").first
+                        if not await m.is_visible(timeout=1000):
+                            logger.info(f"  [EASY APPLY] Modal closed after submit - SUCCESS")
+                            print(f"  >>> APPLICATION SUBMITTED (modal closed) <<<")
+                            return True
+                    except Exception:
+                        pass
+                elif await submit_btn_fallback.is_visible(timeout=300):
+                    await submit_btn_fallback.click()
+                    clicked_submit = True
+                    logger.info(f"  [EASY APPLY] Clicked SUBMIT (fallback)!")
+                    print(f"  -> Clicked SUBMIT (fallback)")
+                    await linkedin_human_delay(2.0, 3.5)
+                    try:
+                        m = self.page.locator("div.artdeco-modal, div[role='dialog']").first
+                        if not await m.is_visible(timeout=1000):
+                            logger.info(f"  [EASY APPLY] Modal closed after submit - SUCCESS")
+                            print(f"  >>> APPLICATION SUBMITTED (modal closed) <<<")
+                            return True
+                    except Exception:
+                        pass
+                else:
+                    logger.info(f"  [EASY APPLY] No progression button found, stopping")
+                    break
+            except Exception as e:
+                logger.warning(f"  [EASY APPLY] Button click error: {e}")
                 break
 
         return False
@@ -526,7 +776,44 @@ class LinkedInJobApplicant:
 
             print(f"  >>> Clicking Easy Apply button...")
             await easy_apply.click()
-            await linkedin_human_delay(1.0, 2.5)
+            await linkedin_human_delay(3.0, 5.0)
+
+            # Wait for modal to appear — try button click first
+            modal_appeared = False
+            try:
+                modal = self.page.locator("div.artdeco-modal, div[role='dialog']").first
+                modal_appeared = await modal.is_visible(timeout=5000)
+            except Exception:
+                pass
+
+            # If modal didn't appear from button click, try direct URL navigation
+            if not modal_appeared:
+                logger.info(f"  [EASY APPLY] Modal not from button, trying direct apply URL...")
+                print(f"  -> Modal not opened from button, trying direct URL...")
+                try:
+                    # Extract job ID from URL and navigate to apply page
+                    import re
+                    job_id_match = re.search(r'/jobs/view/(\d+)', job.get("url", ""))
+                    if job_id_match:
+                        apply_url = f"https://www.linkedin.com/jobs/view/{job_id_match.group(1)}/apply/"
+                        await self.page.goto(apply_url, timeout=60000, wait_until="domcontentloaded")
+                        await linkedin_human_delay(3.0, 5.0)
+                        modal = self.page.locator("div.artdeco-modal, div[role='dialog']").first
+                        modal_appeared = await modal.is_visible(timeout=5000)
+                        if modal_appeared:
+                            logger.info(f"  [EASY APPLY] Modal appeared via direct URL!")
+                            print(f"  -> Modal opened via direct apply URL!")
+                except Exception as e:
+                    logger.warning(f"  [EASY APPLY] Direct URL failed: {e}")
+
+            if not modal_appeared:
+                logger.info(f"  [EASY APPLY] Modal did not appear")
+                self.last_skip_reason = "modal_not_opened"
+                self.last_match_reason = "Easy Apply modal did not open"
+                print(f"  SKIP: Easy Apply modal did not open")
+                return False
+
+            logger.info(f"  [EASY APPLY] Modal is visible, proceeding...")
             print(f"  >>> Easy Apply modal opened, filling questions...")
 
             submitted = await self._handle_easy_apply_flow()

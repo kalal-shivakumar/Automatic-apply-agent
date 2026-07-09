@@ -1,3 +1,6 @@
-2026/07/08-22:44:44.222 4410 Reusing MANIFEST C:\Users\Dell\Naukri-Job-automatic-Apply\browser_data_linkedin\Default\Local Storage\leveldb/MANIFEST-000001
-2026/07/08-22:44:44.258 4410 Recovering log #3
-2026/07/08-22:44:44.271 4410 Reusing old log C:\Users\Dell\Naukri-Job-automatic-Apply\browser_data_linkedin\Default\Local Storage\leveldb/000003.log 
+2026/07/09-13:07:55.926 8 Reusing MANIFEST C:\Users\Dell\Naukri-Job-automatic-Apply\browser_data_linkedin\Default\Local Storage\leveldb/MANIFEST-000001
+2026/07/09-13:07:55.938 8 Recovering log #10
+2026/07/09-13:07:55.942 8 Reusing old log C:\Users\Dell\Naukri-Job-automatic-Apply\browser_data_linkedin\Default\Local Storage\leveldb/000010.log 
+2026/07/09-13:09:43.151 4758 Level-0 table #14: started
+2026/07/09-13:09:43.166 4758 Level-0 table #14: 12608 bytes OK
+2026/07/09-13:09:43.169 4758 Delete type=0 #10

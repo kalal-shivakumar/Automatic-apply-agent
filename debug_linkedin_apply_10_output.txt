@@ -1,0 +1,1407 @@
+2026-07-09 11:50:52,910 [INFO] Searching: DevOps Engineer in hyderabad (page 1)
+2026-07-09 11:51:03,231 [INFO]   [1/10] Cloud EngineerCloud Engineer - https://www.linkedin.com/jobs/view/4436243010/
+2026-07-09 11:51:03,231 [INFO]   [2/10] Cloud Engineer 
+    
+    
+
+Cloud Engineer with verification - https://www.linkedin.com/jobs/view/4433146807/
+2026-07-09 11:51:03,231 [INFO]   [3/10] DevOps Engineer (GCP) 
+    
+    
+
+DevOps Engineer (GCP) with - https://www.linkedin.com/jobs/view/4437308576/
+2026-07-09 11:51:03,231 [INFO]   [4/10] Devops Platform EngineerDevops Platform Engineer - https://www.linkedin.com/jobs/view/4435417928/
+2026-07-09 11:51:03,231 [INFO]   [5/10] Cloud Engineer 
+    
+    
+
+Cloud Engineer with verification - https://www.linkedin.com/jobs/view/4435411530/
+2026-07-09 11:51:03,231 [INFO]   [6/10] Azure Devops EngineerAzure Devops Engineer - https://www.linkedin.com/jobs/view/4436311253/
+2026-07-09 11:51:03,231 [INFO]   [7/10] DevOps Engineer 
+    
+    
+
+DevOps Engineer with verificatio - https://www.linkedin.com/jobs/view/4437358116/
+2026-07-09 11:51:03,232 [INFO] Searching: DevOps Engineer in hyderabad (page 2)
+2026-07-09 11:51:14,215 [INFO]   [8/10] AWS Engineer 
+    
+    
+
+AWS Engineer with verification - https://www.linkedin.com/jobs/view/4436519027/
+2026-07-09 11:51:14,215 [INFO]   [9/10] Lead DevOps EngineerLead DevOps Engineer - https://www.linkedin.com/jobs/view/4436045431/
+2026-07-09 11:51:14,215 [INFO]   [10/10] Data EngineerData Engineer - https://www.linkedin.com/jobs/view/4437138688/
+2026-07-09 11:51:14,217 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4436243010/apply/
+2026-07-09 11:51:24,545 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4433146807/apply/
+2026-07-09 11:51:32,443 [INFO] Modal visible, starting form fill loop...
+2026-07-09 11:51:34,460 [INFO]   Step 1: 3 fields, progress=%
+2026-07-09 11:51:34,460 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:51:34,460 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:51:34,460 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:51:35,649 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:51:38,680 [INFO]   Step 2: 1 fields, progress=%
+2026-07-09 11:51:40,234 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:51:43,275 [INFO]   Step 3: 6 fields, progress=%
+2026-07-09 11:51:45,758 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:51:45,814 [INFO]     FILLED 'What is your Current CTC (in LPA)?' -> '3-9 LPA'
+2026-07-09 11:51:47,284 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:51:47,423 [INFO]     FILLED 'What is your Expected CTC (in LPA)?' -> '3-9 LPA'
+2026-07-09 11:51:48,717 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:51:48,756 [INFO]     FILLED 'What is your Notice Period (in Days)?' -> 'Immediate'
+2026-07-09 11:51:49,873 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:51:49,907 [INFO]     FILLED 'How many years of work experience do you have with IaC (Terraform)?' -> '0'
+2026-07-09 11:51:51,117 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:51:51,157 [INFO]     FILLED 'How many years of work experience do you have with Azure Cloud?' -> '0'
+2026-07-09 11:51:52,617 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:51:52,639 [INFO]     DEFAULT SELECTED 'Are you Serving your Notice Period?Are you Serving your Notice Period?' -> 'Yes'
+2026-07-09 11:51:53,750 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:51:56,790 [INFO]   Step 4: 6 fields, progress=%
+2026-07-09 11:51:56,790 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:51:56,790 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:51:56,790 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 11:51:56,790 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:51:56,790 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:51:56,790 [INFO]     ALREADY SELECTED: 'Yes'
+2026-07-09 11:51:57,911 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:52:00,945 [INFO]   Step 5: 6 fields, progress=%
+2026-07-09 11:52:00,945 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:52:00,945 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:52:00,945 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 11:52:00,945 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:52:00,945 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:52:00,945 [INFO]     ALREADY SELECTED: 'Yes'
+2026-07-09 11:52:02,061 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:52:05,085 [INFO]   Step 6: 6 fields, progress=%
+2026-07-09 11:52:05,085 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:52:05,085 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:52:05,085 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 11:52:05,085 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:52:05,085 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:52:05,085 [INFO]     ALREADY SELECTED: 'Yes'
+2026-07-09 11:52:06,196 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:52:09,218 [INFO]   Step 7: 6 fields, progress=%
+2026-07-09 11:52:09,218 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:52:09,218 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:52:09,218 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 11:52:09,218 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:52:09,218 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:52:09,218 [INFO]     ALREADY SELECTED: 'Yes'
+2026-07-09 11:52:10,310 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:52:13,349 [INFO]   Step 8: 6 fields, progress=%
+
+======================================================================
+  LinkedIn Easy Apply: 10-Job Debug Script
+======================================================================
+
+  Profile loaded: Rasabathula Sahasra, Exp: 0-1, Phone: +91 7842084425
+  Level: Fresher, Skills: Python, Microsoft Azure, Azure DevOps, GitHub Actions, Azure Pipelines, Terrafor...
+
+[PHASE 1] Collecting Easy Apply job URLs...
+
+Collected 10 job URLs:
+  1. Cloud EngineerCloud Engineer - https://www.linkedin.com/jobs/view/4436243010/
+  2. Cloud Engineer 
+    
+    
+
+Cloud Engineer with verification - https://www.linkedin.com/jobs/view/4433146807/
+  3. DevOps Engineer (GCP) 
+    
+    
+
+DevOps Engineer (GCP) with - https://www.linkedin.com/jobs/view/4437308576/
+  4. Devops Platform EngineerDevops Platform Engineer - https://www.linkedin.com/jobs/view/4435417928/
+  5. Cloud Engineer 
+    
+    
+
+Cloud Engineer with verification - https://www.linkedin.com/jobs/view/4435411530/
+  6. Azure Devops EngineerAzure Devops Engineer - https://www.linkedin.com/jobs/view/4436311253/
+  7. DevOps Engineer 
+    
+    
+
+DevOps Engineer with verificatio - https://www.linkedin.com/jobs/view/4437358116/
+  8. AWS Engineer 
+    
+    
+
+AWS Engineer with verification - https://www.linkedin.com/jobs/view/4436519027/
+  9. Lead DevOps EngineerLead DevOps Engineer - https://www.linkedin.com/jobs/view/4436045431/
+  10. Data EngineerData Engineer - https://www.linkedin.com/jobs/view/4437138688/
+
+[PHASE 2] Applying to 10 jobs...
+
+
+============================================================
+[1/10] Cloud EngineerCloud Engineer
+URL: https://www.linkedin.com/jobs/view/4436243010/
+============================================================
+
+  RESULT: ERROR - Modal did not appear
+
+============================================================
+[2/10] Cloud Engineer 
+    
+    
+
+Cloud Engineer with verification
+URL: https://www.linkedin.com/jobs/view/4433146807/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 3
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+    >> ALREADY SELECTED: 'India (+91)'
+  -> Button: Next (aria-label)
+
+  --- Step 2 (progress: %) ---
+  Fields: 1
+    input: label='Deselect resume resume-devops_20260708_1' value='on' id=jobsDocumentCardToggle-ember22
+  -> Button: Next (aria-label)
+
+  --- Step 3 (progress: %) ---
+  Fields: 6
+    input: label='What is your Current CTC (in LPA)?' value='' id=single-line-text-form-componen
+    input: label='What is your Expected CTC (in LPA)?' value='' id=single-line-text-form-componen
+    input: label='What is your Notice Period (in Days)?' value='' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    select: label='Are you Serving your Notice Period?Are y' value='' id=text-entity-list-form-componen
+    >> FILLED 'What is your Current CTC (in LPA)?' -> '3-9 LPA'
+    >> FILLED 'What is your Expected CTC (in LPA)?' -> '3-9 LPA'
+    >> FILLED 'What is your Notice Period (in Days)?' -> 'Immediate'
+    >> FILLED 'How many years of work experience do you have with IaC (Terraform)?' -> '0'
+    >> FILLED 'How many years of work experience do you have with Azure Cloud?' -> '0'
+    >> DEFAULT SELECTED 'Are you Serving your Notice Period?Are you Serving your Notice Period?' -> 'Yes'
+  -> Button: Review (aria-label)
+
+  --- Step 4 (progress: %) ---
+  Fields: 6
+    input: label='What is your Current CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Expected CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period (in Days)?' value='Immediate' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    select: label='Are you Serving your Notice Period?Are y' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+    >> ALREADY FILLED: '0'
+    >> ALREADY FILLED: '0'
+    >> ALREADY SELECTED: 'Yes'
+  -> Button: Review (aria-label)
+
+  --- Step 5 (progress: %) ---
+  Fields: 6
+    input: label='What is your Current CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Expected CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period (in Days)?' value='Immediate' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    select: label='Are you Serving your Notice Period?Are y' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+    >> ALREADY FILLED: '0'
+    >> ALREADY FILLED: '0'
+    >> ALREADY SELECTED: 'Yes'
+  -> Button: Review (aria-label)
+
+  --- Step 6 (progress: %) ---
+  Fields: 6
+    input: label='What is your Current CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Expected CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period (in Days)?' value='Immediate' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    select: label='Are you Serving your Notice Period?Are y' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+    >> ALREADY FILLED: '0'
+    >> ALREADY FILLED: '0'
+    >> ALREADY SELECTED: 'Yes'
+  -> Button: Review (aria-label)
+
+  --- Step 7 (progress: %) ---
+  Fields: 6
+    input: label='What is your Current CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Expected CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period (in Days)?' value='Immediate' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    select: label='Are you Serving your Notice Period?Are y' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+    >> ALREADY FILLED: '0'
+    >> ALREADY FILLED: '0'
+    >> ALREADY SELECTED: 'Yes'
+  -> Button: Review (aria-label)
+
+  --- Step 8 (progress: %) ---
+  Fields: 6
+    input: label='What is your Current CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Expected CTC (in LPA)?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period (in Days)?' value='Immediate' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+2026-07-09 11:52:13,349 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:52:13,350 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 11:52:13,350 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 11:52:13,350 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:52:13,350 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:52:13,350 [INFO]     ALREADY SELECTED: 'Yes'
+2026-07-09 11:52:14,491 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:52:21,553 [INFO]   NOT VERIFIED: Button says 'Easy Apply'
+2026-07-09 11:52:23,560 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4437308576/apply/
+2026-07-09 11:52:32,356 [INFO] Modal visible, starting form fill loop...
+2026-07-09 11:52:34,378 [INFO]   Step 1: 3 fields, progress=%
+2026-07-09 11:52:34,379 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:52:34,379 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:52:34,379 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:52:35,561 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:52:38,600 [INFO]   Step 2: 1 fields, progress=%
+2026-07-09 11:52:39,709 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:52:42,755 [INFO]   Step 3: 3 fields, progress=%
+2026-07-09 11:52:44,647 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:52:44,681 [INFO]     FILLED 'How many years of work experience do you have with Google Cloud Platform (GCP)?' -> '0'
+2026-07-09 11:52:45,980 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:52:46,116 [INFO]     FILLED 'How many years of work experience do you have with DevOps?' -> '0'
+2026-07-09 11:52:47,518 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:52:47,541 [INFO]     AI SELECTED 'are you comfortable working on contract role?are you comfortable working on contract role?' -> 'Yes'
+2026-07-09 11:52:48,691 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:52:51,718 [INFO]   Step 4: 1 fields, progress=%
+2026-07-09 11:52:52,837 [INFO]   Clicked: Submit (aria-label)
+2026-07-09 11:52:55,879 [INFO]   >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+2026-07-09 11:53:00,391 [INFO]   NOT VERIFIED: Button says ''
+2026-07-09 11:53:02,396 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4435417928/apply/
+2026-07-09 11:53:11,459 [INFO] Modal visible, starting form fill loop...
+2026-07-09 11:53:13,483 [INFO]   Step 1: 3 fields, progress=%
+2026-07-09 11:53:13,483 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:53:13,483 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:53:13,484 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:53:14,609 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:53:17,637 [INFO]   Step 2: 1 fields, progress=%
+2026-07-09 11:53:18,900 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:53:21,937 [INFO]   Step 3: 3 fields, progress=%
+2026-07-09 11:53:24,153 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:53:24,189 [INFO]     FILLED 'How many years of work experience do you have with Docker Products?' -> '0'
+2026-07-09 11:53:25,959 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:53:26,099 [INFO]     FILLED 'How many years of work experience do you have with Python (Programming Language)?' -> '0'
+2026-07-09 11:53:27,368 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:53:27,408 [INFO]     FILLED 'How many years of work experience do you have with Amazon Web Services (AWS)?' -> '0'
+2026-07-09 11:53:28,601 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:53:31,636 [INFO]   Step 4: 1 fields, progress=%
+2026-07-09 11:53:32,774 [INFO]   Clicked: Submit (aria-label)
+2026-07-09 11:53:35,821 [INFO]   >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+2026-07-09 11:53:40,706 [INFO]   NOT VERIFIED: Button says ''
+2026-07-09 11:53:42,709 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4435411530/apply/
+2026-07-09 11:53:52,414 [INFO] Modal visible, starting form fill loop...
+2026-07-09 11:53:54,439 [INFO]   Step 1: 3 fields, progress=%
+2026-07-09 11:53:54,440 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:53:54,440 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:53:54,440 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:53:55,594 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:53:58,635 [INFO]   Step 2: 1 fields, progress=%
+2026-07-09 11:53:59,715 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:54:02,756 [INFO]   Step 3: 3 fields, progress=%
+2026-07-09 11:54:02,756 [INFO]     ALREADY FILLED: '0'
+2026-07-09 11:54:04,775 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:54:04,805 [INFO]     FILLED 'How many years of work experience do you have with GitHub?' -> '0'
+2026-07-09 11:54:04,805 [INFO]     ALREADY FILLED: '11'
+2026-07-09 11:54:06,168 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:54:09,192 [INFO]   Step 4: 0 fields, progress=%
+2026-07-09 11:54:10,299 [INFO]   Clicked: Submit (aria-label)
+2026-07-09 11:54:13,434 [INFO]   >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+2026-07-09 11:54:17,987 [INFO]   NOT VERIFIED: Button says ''
+2026-07-09 11:54:19,995 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4436311253/apply/
+2026-07-09 11:54:28,659 [INFO] Modal visible, starting form fill loop...
+2026-07-09 11:54:30,674 [INFO]   Step 1: 6 fields, progress=%
+2026-07-09 11:54:30,674 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 11:54:30,674 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 11:54:30,674 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:54:32,932 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:54:32,982 [INFO]     FILLED 'Location (city)Location (city)' -> 'Hyderabad'
+2026-07-09 11:54:32,982 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:54:32,983 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:55:04,076 [INFO]   Clicked: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">à</button>
+  -   - attempting click action
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+    select: label='Are you Serving your Notice Period?Are y' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+    >> ALREADY FILLED: '0'
+    >> ALREADY FILLED: '0'
+    >> ALREADY SELECTED: 'Yes'
+  -> Button: Review (aria-label)
+
+  RESULT: NOT APPLIED
+
+============================================================
+[3/10] DevOps Engineer (GCP) 
+    
+    
+
+DevOps Engineer (GCP) with
+URL: https://www.linkedin.com/jobs/view/4437308576/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 3
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+    >> ALREADY SELECTED: 'India (+91)'
+  -> Button: Next (aria-label)
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ╫ waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+
+  --- Step 2 (progress: %) ---
+  Fields: 1
+    input: label='Deselect resume resume-devops_20260708_1' value='on' id=jobsDocumentCardToggle-ember23
+  -> Button: Next (aria-label)
+
+  --- Step 3 (progress: %) ---
+  Fields: 3
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    select: label='are you comfortable working on contract ' value='' id=text-entity-list-form-componen
+    >> FILLED 'How many years of work experience do you have with Google Cloud Platform (GCP)?' -> '0'
+    >> FILLED 'How many years of work experience do you have with DevOps?' -> '0'
+    >> AI SELECTED 'are you comfortable working on contract role?are you comfortable working on contract role?' -> 'Yes'
+  -> Button: Review (aria-label)
+
+  --- Step 4 (progress: %) ---
+  Fields: 1
+    input: label='Follow MatchPoint to stay up to date wit' value='on' id=follow-company-checkbox
+  -> Button: Submit (aria-label)
+  >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+
+  RESULT: APPLIED (Total: 1)
+
+============================================================
+[4/10] Devops Platform EngineerDevops Platform Engineer
+URL: https://www.linkedin.com/jobs/view/4435417928/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 3
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+    >> ALREADY SELECTED: 'India (+91)'
+  -> Button: Next (aria-label)
+
+  --- Step 2 (progress: %) ---
+  Fields: 1
+    input: label='Deselect resume resume-devops_20260708_1' value='on' id=jobsDocumentCardToggle-ember22
+  -> Button: Next (aria-label)
+
+  --- Step 3 (progress: %) ---
+  Fields: 3
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    >> FILLED 'How many years of work experience do you have with Docker Products?' -> '0'
+    >> FILLED 'How many years of work experience do you have with Python (Programming Language)?' -> '0'
+    >> FILLED 'How many years of work experience do you have with Amazon Web Services (AWS)?' -> '0'
+  -> Button: Review (aria-label)
+
+  --- Step 4 (progress: %) ---
+  Fields: 1
+    input: label='Follow The Hartford India to stay up to ' value='on' id=follow-company-checkbox
+  -> Button: Submit (aria-label)
+  >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+
+  RESULT: APPLIED (Total: 2)
+
+============================================================
+[5/10] Cloud Engineer 
+    
+    
+
+Cloud Engineer with verification
+URL: https://www.linkedin.com/jobs/view/4435411530/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 3
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+    >> ALREADY SELECTED: 'India (+91)'
+  -> Button: Next (aria-label)
+
+  --- Step 2 (progress: %) ---
+  Fields: 1
+    input: label='Deselect resume resume-devops_20260708_1' value='on' id=jobsDocumentCardToggle-ember24
+  -> Button: Next (aria-label)
+
+  --- Step 3 (progress: %) ---
+  Fields: 3
+    input: label='How many years of work experience do you' value='0' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='11' id=single-line-text-form-componen
+    >> ALREADY FILLED: '0'
+    >> FILLED 'How many years of work experience do you have with GitHub?' -> '0'
+    >> ALREADY FILLED: '11'
+  -> Button: Review (aria-label)
+
+  --- Step 4 (progress: %) ---
+  Fields: 0
+  -> Button: Submit (aria-label)
+  >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+
+  RESULT: APPLIED (Total: 3)
+
+============================================================
+[6/10] Azure Devops EngineerAzure Devops Engineer
+URL: https://www.linkedin.com/jobs/view/4436311253/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 6
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    input: label='Location (city)Location (city)' value='' id=single-typeahead-entity-form-c
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> FILLED 'Location (city)Location (city)' -> 'Hyderabad'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">ΓÇª</button>
+  -   - attempting click action
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ├ù waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+2026-07-09 11:55:07,123 [INFO]   Step 2: 6 fields, progress=%
+2026-07-09 11:55:07,123 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 11:55:07,124 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 11:55:07,124 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:55:07,124 [INFO]     ALREADY FILLED: 'Hyderabad'
+2026-07-09 11:55:07,124 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:55:07,124 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:55:38,178 [INFO]   Clicked: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">à</button>
+  -   - attempting click action
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ╫ waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+2026-07-09 11:55:41,209 [INFO]   Step 3: 6 fields, progress=%
+2026-07-09 11:55:41,209 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 11:55:41,209 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 11:55:41,209 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:55:41,209 [INFO]     ALREADY FILLED: 'Hyderabad'
+2026-07-09 11:55:41,209 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:55:41,209 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:56:12,260 [INFO]   Clicked: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">à</button>
+  -   - attempting click action
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ╫ waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+2026-07-09 11:56:15,294 [INFO]   Step 4: 6 fields, progress=%
+2026-07-09 11:56:15,294 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 11:56:15,294 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 11:56:15,294 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:56:15,294 [INFO]     ALREADY FILLED: 'Hyderabad'
+2026-07-09 11:56:15,294 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:56:15,295 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:56:46,370 [INFO]   Clicked: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">à</button>
+  -   - attempting click action
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+
+
+  --- Step 2 (progress: %) ---
+  Fields: 6
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    input: label='Location (city)Location (city)' value='Hyderabad' id=single-typeahead-entity-form-c
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY FILLED: 'Hyderabad'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ╫ waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">ΓÇª</button>
+  -   - attempting click action
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ├ù waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+
+  --- Step 3 (progress: %) ---
+  Fields: 6
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    input: label='Location (city)Location (city)' value='Hyderabad' id=single-typeahead-entity-form-c
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY FILLED: 'Hyderabad'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">ΓÇª</button>
+  -   - attempting click action
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ├ù waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+
+  --- Step 4 (progress: %) ---
+  Fields: 6
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    input: label='Location (city)Location (city)' value='Hyderabad' id=single-typeahead-entity-form-c
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY FILLED: 'Hyderabad'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">ΓÇª</button>
+  -   - attempting click action
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ├ù waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+2026-07-09 11:56:49,425 [INFO]   Step 5: 6 fields, progress=%
+2026-07-09 11:56:49,425 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 11:56:49,425 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 11:56:49,425 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:56:49,425 [INFO]     ALREADY FILLED: 'Hyderabad'
+2026-07-09 11:56:49,426 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:56:49,426 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:57:20,470 [INFO]   Clicked: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">à</button>
+  -   - attempting click action
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ╫ waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+2026-07-09 11:57:23,517 [INFO]   Step 6: 6 fields, progress=%
+2026-07-09 11:57:23,517 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 11:57:23,517 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 11:57:23,517 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:57:23,517 [INFO]     ALREADY FILLED: 'Hyderabad'
+2026-07-09 11:57:23,517 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:57:23,517 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:57:54,560 [INFO]   Clicked: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">à</button>
+  -   - attempting click action
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ╫ waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+2026-07-09 11:57:57,611 [INFO]   Step 7: 6 fields, progress=%
+2026-07-09 11:57:57,611 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 11:57:57,612 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 11:57:57,612 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:57:57,612 [INFO]     ALREADY FILLED: 'Hyderabad'
+2026-07-09 11:57:57,612 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:57:57,612 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:58:28,663 [INFO]   Clicked: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">à</button>
+  -   - attempting click action
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+
+
+  --- Step 5 (progress: %) ---
+  Fields: 6
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    input: label='Location (city)Location (city)' value='Hyderabad' id=single-typeahead-entity-form-c
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY FILLED: 'Hyderabad'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ╫ waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">ΓÇª</button>
+  -   - attempting click action
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ├ù waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+
+  --- Step 6 (progress: %) ---
+  Fields: 6
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    input: label='Location (city)Location (city)' value='Hyderabad' id=single-typeahead-entity-form-c
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY FILLED: 'Hyderabad'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">ΓÇª</button>
+  -   - attempting click action
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ├ù waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+
+  --- Step 7 (progress: %) ---
+  Fields: 6
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    input: label='Location (city)Location (city)' value='Hyderabad' id=single-typeahead-entity-form-c
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY FILLED: 'Hyderabad'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">ΓÇª</button>
+  -   - attempting click action
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ├ù waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+2026-07-09 11:58:31,700 [INFO]   Step 8: 6 fields, progress=%
+2026-07-09 11:58:31,701 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 11:58:31,701 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 11:58:31,701 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:58:31,701 [INFO]     ALREADY FILLED: 'Hyderabad'
+2026-07-09 11:58:31,701 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:58:31,701 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:59:02,735 [INFO]   Clicked: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">à</button>
+  -   - attempting click action
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ╫ waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ╫ waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">à</div> from <div class="ph5">à</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+2026-07-09 11:59:10,180 [INFO]   NOT VERIFIED: Button says 'Easy Apply'
+2026-07-09 11:59:12,184 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4437358116/apply/
+2026-07-09 11:59:21,183 [INFO] Modal visible, starting form fill loop...
+2026-07-09 11:59:23,213 [INFO]   Step 1: 3 fields, progress=%
+2026-07-09 11:59:23,213 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 11:59:23,213 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 11:59:23,213 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 11:59:24,332 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:59:27,358 [INFO]   Step 2: 1 fields, progress=%
+2026-07-09 11:59:28,487 [INFO]   Clicked: Next (aria-label)
+2026-07-09 11:59:31,525 [INFO]   Step 3: 6 fields, progress=%
+2026-07-09 11:59:33,787 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:59:33,817 [INFO]     FILLED 'How many years of experience do you have as a DevOps Engineer?' -> '0'
+2026-07-09 11:59:35,073 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:59:35,368 [INFO]     FILLED 'How many years of experience do you have with troubleshooting (middleware, infra etc.), automation, regular operation' -> '0'
+2026-07-09 11:59:36,590 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:59:36,631 [INFO]     FILLED 'How many years of experience do you have with GCP, VPC, and Terraform?' -> '0'
+2026-07-09 11:59:38,075 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:59:38,119 [INFO]     DEFAULT SELECTED 'This role requires relocation to Japan, are you able to relocate to Japan? Choose "No" if you prefer to apply while remaining in your current country.This role requires relocation to Japan, are you able to relocate to Japan? Choose "No" if you prefer to apply while remaining in your current country.' -> 'Yes'
+2026-07-09 11:59:39,276 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:59:39,298 [INFO]     AI SELECTED 'Are you currently working at an IT Consulting company (such as TCS/HCL Tech)? Choose "No" if you are currently working at a product company.Are you currently working at an IT Consulting company (such as TCS/HCL Tech)? Choose "No" if you are currently working at a product company.' -> 'Yes'
+2026-07-09 11:59:40,723 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 11:59:40,744 [INFO]     AI SELECTED 'Have you had more than two job changes in the past (excluding internships)? Choose "Yes" if you have had more than two job changes in the past.Have you had more than two job changes in the past (excluding internships)? Choose "Yes" if you have had more than two job changes in the past.' -> 'No'
+2026-07-09 11:59:41,898 [INFO]   Clicked: Review (aria-label)
+2026-07-09 11:59:44,933 [INFO]   Step 4: 1 fields, progress=%
+2026-07-09 11:59:46,062 [INFO]   Clicked: Submit (aria-label)
+2026-07-09 11:59:49,108 [INFO]   >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+2026-07-09 11:59:53,828 [INFO]   NOT VERIFIED: Button says ''
+2026-07-09 11:59:55,834 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4436519027/apply/
+2026-07-09 12:00:04,710 [INFO] Modal visible, starting form fill loop...
+2026-07-09 12:00:06,733 [INFO]   Step 1: 3 fields, progress=%
+2026-07-09 12:00:06,733 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 12:00:06,733 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 12:00:06,733 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 12:00:07,872 [INFO]   Clicked: Next (aria-label)
+2026-07-09 12:00:10,900 [INFO]   Step 2: 1 fields, progress=%
+2026-07-09 12:00:11,985 [INFO]   Clicked: Next (aria-label)
+2026-07-09 12:00:15,021 [INFO]   Step 3: 2 fields, progress=%
+2026-07-09 12:00:17,343 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 12:00:17,381 [INFO]     FILLED 'What is your current CTC ?' -> '3-9 LPA'
+2026-07-09 12:00:18,710 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 12:00:18,846 [INFO]     FILLED 'What is your Notice Period ?' -> 'Immediate'
+2026-07-09 12:00:19,968 [INFO]   Clicked: Review (aria-label)
+2026-07-09 12:00:23,002 [INFO]   Step 4: 2 fields, progress=%
+2026-07-09 12:00:23,002 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 12:00:23,002 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 12:00:24,106 [INFO]   Clicked: Review (aria-label)
+2026-07-09 12:00:27,144 [INFO]   Step 5: 2 fields, progress=%
+2026-07-09 12:00:27,144 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 12:00:27,144 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 12:00:28,256 [INFO]   Clicked: Review (aria-label)
+2026-07-09 12:00:31,288 [INFO]   Step 6: 2 fields, progress=%
+
+
+  --- Step 8 (progress: %) ---
+  Fields: 6
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    input: label='Location (city)Location (city)' value='Hyderabad' id=single-typeahead-entity-form-c
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY FILLED: 'Hyderabad'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: ERROR: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("div.artdeco-modal button[aria-label='Continue to next step'], div[role='dialog'] button[aria-label='Continue to next step']").first
+  -     - locator resolved to <button id="ember125" type="button" data-easy-apply-next-button="" aria-label="Continue to next step" data-live-test-easy-apply-next-button="" class="artdeco-button artdeco-button--2 artdeco-button--primary ember-view">ΓÇª</button>
+  -   - attempting click action
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 ├ù waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     56 ├ù waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div data-test-single-typeahead-entity-form-search-result="true" class="search-typeahead-v2__hit search-typeahead-v2__hit--autocomplete">ΓÇª</div> from <div class="ph5">ΓÇª</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+
+  RESULT: NOT APPLIED
+
+============================================================
+[7/10] DevOps Engineer 
+    
+    
+
+DevOps Engineer with verificatio
+URL: https://www.linkedin.com/jobs/view/4437358116/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 3
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+    >> ALREADY SELECTED: 'India (+91)'
+  -> Button: Next (aria-label)
+
+  --- Step 2 (progress: %) ---
+  Fields: 1
+    input: label='Deselect resume resume-devops_20260708_1' value='on' id=jobsDocumentCardToggle-ember22
+  -> Button: Next (aria-label)
+
+  --- Step 3 (progress: %) ---
+  Fields: 6
+    input: label='How many years of experience do you have' value='' id=single-line-text-form-componen
+    input: label='How many years of experience do you have' value='' id=single-line-text-form-componen
+    input: label='How many years of experience do you have' value='' id=single-line-text-form-componen
+    select: label='This role requires relocation to Japan, ' value='' id=text-entity-list-form-componen
+    select: label='Are you currently working at an IT Consu' value='' id=text-entity-list-form-componen
+    select: label='Have you had more than two job changes i' value='' id=text-entity-list-form-componen
+    >> FILLED 'How many years of experience do you have as a DevOps Engineer?' -> '0'
+    >> FILLED 'How many years of experience do you have with troubleshooting (middleware, infra etc.), automation, regular operation' -> '0'
+    >> FILLED 'How many years of experience do you have with GCP, VPC, and Terraform?' -> '0'
+    >> DEFAULT SELECTED 'This role requires relocation to Japan, are you able to relocate to Japan? Choose "No" if you prefer to apply while remaining in your current country.This role requires relocation to Japan, are you able to relocate to Japan? Choose "No" if you prefer to apply while remaining in your current country.' -> 'Yes'
+    >> AI SELECTED 'Are you currently working at an IT Consulting company (such as TCS/HCL Tech)? Choose "No" if you are currently working at a product company.Are you currently working at an IT Consulting company (such as TCS/HCL Tech)? Choose "No" if you are currently working at a product company.' -> 'Yes'
+    >> AI SELECTED 'Have you had more than two job changes in the past (excluding internships)? Choose "Yes" if you have had more than two job changes in the past.Have you had more than two job changes in the past (excluding internships)? Choose "Yes" if you have had more than two job changes in the past.' -> 'No'
+  -> Button: Review (aria-label)
+
+  --- Step 4 (progress: %) ---
+  Fields: 1
+    input: label='Follow Huxley to stay up to date with th' value='on' id=follow-company-checkbox
+  -> Button: Submit (aria-label)
+  >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+
+  RESULT: APPLIED (Total: 4)
+
+============================================================
+[8/10] AWS Engineer 
+    
+    
+
+AWS Engineer with verification
+URL: https://www.linkedin.com/jobs/view/4436519027/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 3
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+    >> ALREADY SELECTED: 'India (+91)'
+  -> Button: Next (aria-label)
+
+  --- Step 2 (progress: %) ---
+  Fields: 1
+    input: label='Deselect resume resume-devops_20260708_1' value='on' id=jobsDocumentCardToggle-ember25
+  -> Button: Next (aria-label)
+
+  --- Step 3 (progress: %) ---
+  Fields: 2
+    input: label='What is your current CTC ?' value='' id=single-line-text-form-componen
+    input: label='What is your Notice Period ?' value='' id=single-line-text-form-componen
+    >> FILLED 'What is your current CTC ?' -> '3-9 LPA'
+    >> FILLED 'What is your Notice Period ?' -> 'Immediate'
+  -> Button: Review (aria-label)
+
+  --- Step 4 (progress: %) ---
+  Fields: 2
+    input: label='What is your current CTC ?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period ?' value='Immediate' id=single-line-text-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+  -> Button: Review (aria-label)
+
+  --- Step 5 (progress: %) ---
+  Fields: 2
+    input: label='What is your current CTC ?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period ?' value='Immediate' id=single-line-text-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+  -> Button: Review (aria-label)
+
+  --- Step 6 (progress: %) ---
+  Fields: 2
+    input: label='What is your current CTC ?' value='3-9 LPA' id=single-line-text-form-componen
+2026-07-09 12:00:31,289 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 12:00:31,289 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 12:00:32,387 [INFO]   Clicked: Review (aria-label)
+2026-07-09 12:00:35,421 [INFO]   Step 7: 2 fields, progress=%
+2026-07-09 12:00:35,421 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 12:00:35,421 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 12:00:36,509 [INFO]   Clicked: Review (aria-label)
+2026-07-09 12:00:39,536 [INFO]   Step 8: 2 fields, progress=%
+2026-07-09 12:00:39,537 [INFO]     ALREADY FILLED: '3-9 LPA'
+2026-07-09 12:00:39,537 [INFO]     ALREADY FILLED: 'Immediate'
+2026-07-09 12:00:40,662 [INFO]   Clicked: Review (aria-label)
+2026-07-09 12:00:47,552 [INFO]   NOT VERIFIED: Button says 'Easy Apply'
+2026-07-09 12:00:49,568 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4436045431/apply/
+2026-07-09 12:00:58,251 [INFO] Modal visible, starting form fill loop...
+2026-07-09 12:01:00,267 [INFO]   Step 1: 5 fields, progress=%
+2026-07-09 12:01:00,267 [INFO]     ALREADY FILLED: 'Sahasra'
+2026-07-09 12:01:00,267 [INFO]     ALREADY FILLED: 'Rasabathula'
+2026-07-09 12:01:00,267 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 12:01:00,267 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 12:01:00,267 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 12:01:01,395 [INFO]   Clicked: Next (aria-label)
+2026-07-09 12:01:04,422 [INFO]   Step 2: 1 fields, progress=%
+2026-07-09 12:01:05,498 [INFO]   Clicked: Next (aria-label)
+2026-07-09 12:01:08,535 [INFO]   Step 3: 1 fields, progress=%
+2026-07-09 12:01:10,869 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 12:01:10,901 [INFO]     FILLED 'What is your current location?' -> 'Hyderabad'
+2026-07-09 12:01:12,260 [INFO]   Clicked: Review (aria-label)
+2026-07-09 12:01:15,291 [INFO]   Step 4: 1 fields, progress=%
+2026-07-09 12:01:16,407 [INFO]   Clicked: Submit (aria-label)
+2026-07-09 12:01:19,450 [INFO]   >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+2026-07-09 12:01:23,636 [INFO]   NOT VERIFIED: Button says ''
+2026-07-09 12:01:25,644 [INFO] Navigating to: https://www.linkedin.com/jobs/view/4437138688/apply/
+2026-07-09 12:01:39,429 [INFO] Modal visible, starting form fill loop...
+2026-07-09 12:01:41,444 [INFO]   Step 1: 3 fields, progress=%
+2026-07-09 12:01:41,444 [INFO]     ALREADY FILLED: '9999999999'
+2026-07-09 12:01:41,444 [INFO]     ALREADY SELECTED: 'rsahasra2009@gmail.com'
+2026-07-09 12:01:41,444 [INFO]     ALREADY SELECTED: 'India (+91)'
+2026-07-09 12:01:42,618 [INFO]   Clicked: Next (aria-label)
+2026-07-09 12:01:45,660 [INFO]   Step 2: 1 fields, progress=%
+2026-07-09 12:01:46,759 [INFO]   Clicked: Next (aria-label)
+2026-07-09 12:01:49,800 [INFO]   Step 3: 4 fields, progress=%
+2026-07-09 12:01:51,708 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 12:01:51,755 [INFO]     FILLED 'How many years of work experience do you have with Data Engineering?' -> '0'
+2026-07-09 12:01:52,934 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 12:01:53,067 [INFO]     FILLED 'How many years of work experience do you have with SQL Server Integration Services (SSIS)?' -> '0'
+2026-07-09 12:01:54,199 [INFO] HTTP Request: POST https://job-agent-ai.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2026-07-09 12:02:24,238 [INFO]     RADIO JS 'Are you comfortable commuting to this job's location?Are you comfortable commuting to this job's location?
+      
+
+        
+          Required' -> 'Hyderabad'
+2026-07-09 12:02:25,380 [INFO]   Clicked: Review (aria-label)
+2026-07-09 12:02:28,425 [INFO]   Step 4: 1 fields, progress=%
+2026-07-09 12:02:29,549 [INFO]   Clicked: Submit (aria-label)
+2026-07-09 12:02:32,602 [INFO]   >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+2026-07-09 12:02:37,489 [INFO]   NOT VERIFIED: Button says ''
+    input: label='What is your Notice Period ?' value='Immediate' id=single-line-text-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+  -> Button: Review (aria-label)
+
+  --- Step 7 (progress: %) ---
+  Fields: 2
+    input: label='What is your current CTC ?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period ?' value='Immediate' id=single-line-text-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+  -> Button: Review (aria-label)
+
+  --- Step 8 (progress: %) ---
+  Fields: 2
+    input: label='What is your current CTC ?' value='3-9 LPA' id=single-line-text-form-componen
+    input: label='What is your Notice Period ?' value='Immediate' id=single-line-text-form-componen
+    >> ALREADY FILLED: '3-9 LPA'
+    >> ALREADY FILLED: 'Immediate'
+  -> Button: Review (aria-label)
+
+  RESULT: NOT APPLIED
+
+============================================================
+[9/10] Lead DevOps EngineerLead DevOps Engineer
+URL: https://www.linkedin.com/jobs/view/4436045431/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 5
+    input: label='First name' value='Sahasra' id=single-line-text-form-componen
+    input: label='Last name' value='Rasabathula' id=single-line-text-form-componen
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: 'Sahasra'
+    >> ALREADY FILLED: 'Rasabathula'
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY SELECTED: 'India (+91)'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+  -> Button: Next (aria-label)
+
+  --- Step 2 (progress: %) ---
+  Fields: 1
+    input: label='Deselect resume resume-devops_20260708_1' value='on' id=jobsDocumentCardToggle-ember22
+  -> Button: Next (aria-label)
+
+  --- Step 3 (progress: %) ---
+  Fields: 1
+    input: label='What is your current location?' value='' id=single-line-text-form-componen
+    >> FILLED 'What is your current location?' -> 'Hyderabad'
+  -> Button: Review (aria-label)
+
+  --- Step 4 (progress: %) ---
+  Fields: 1
+    input: label='Follow Jobgether to stay up to date with' value='on' id=follow-company-checkbox
+  -> Button: Submit (aria-label)
+  >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+
+  RESULT: APPLIED (Total: 5)
+
+============================================================
+[10/10] Data EngineerData Engineer
+URL: https://www.linkedin.com/jobs/view/4437138688/
+============================================================
+
+  --- Step 1 (progress: %) ---
+  Fields: 3
+    input: label='Mobile phone number' value='9999999999' id=single-line-text-form-componen
+    select: label='Email addressEmail address' value='' id=text-entity-list-form-componen
+    select: label='Phone country codePhone country code' value='' id=text-entity-list-form-componen
+    >> ALREADY FILLED: '9999999999'
+    >> ALREADY SELECTED: 'rsahasra2009@gmail.com'
+    >> ALREADY SELECTED: 'India (+91)'
+  -> Button: Next (aria-label)
+
+  --- Step 2 (progress: %) ---
+  Fields: 1
+    input: label='Deselect resume resume-devops_20260708_1' value='on' id=jobsDocumentCardToggle-ember22
+  -> Button: Next (aria-label)
+
+  --- Step 3 (progress: %) ---
+  Fields: 4
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    input: label='How many years of work experience do you' value='' id=single-line-text-form-componen
+    input: label='Yes' value='Yes' id=urn:li:fsd_formElement:urn:li:
+    input: label='No' value='No' id=urn:li:fsd_formElement:urn:li:
+    >> FILLED 'How many years of work experience do you have with Data Engineering?' -> '0'
+    >> FILLED 'How many years of work experience do you have with SQL Server Integration Services (SSIS)?' -> '0'
+    >> RADIO JS 'Are you comfortable commuting to this job's location?Are you comfortable commuting to this job's location?
+      
+
+        
+          Required' -> 'Hyderabad'
+  -> Button: Review (aria-label)
+
+  --- Step 4 (progress: %) ---
+  Fields: 1
+    input: label='Follow NationsBenefits India to stay up ' value='on' id=follow-company-checkbox
+  -> Button: Submit (aria-label)
+  >>> MODAL CLOSED AFTER SUBMIT - SUCCESS!
+
+  RESULT: APPLIED (Total: 6)
+
+
+======================================================================
+  FINAL SUMMARY
+======================================================================
+  Total jobs attempted: 10
+  Successfully applied: 6
+  Failed: 4
+    [FAILED (Modal did not appear)] Cloud EngineerCloud Engineer (0 steps)
+Traceback (most recent call last):
+  File "C:\Users\Dell\Naukri-Job-automatic-Apply\debug_linkedin_apply_10.py", line 608, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 196, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\Dell\Naukri-Job-automatic-Apply\debug_linkedin_apply_10.py", line 594, in main
+    status = "APPLIED Γ£ô" if r["applied"] else f"FAILED ({r.get('error','unknown')[:40]})"
+                                                         ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'NoneType' object is not subscriptable
