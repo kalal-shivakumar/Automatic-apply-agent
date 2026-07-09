@@ -497,170 +497,269 @@ class LinkedInJobApplicant:
                 logger.warning(f"  [RADIO {i}] Error: {e}")
                 continue
 
-    async def _handle_easy_apply_flow(self) -> bool:
-        consecutive_empty_steps = 0
-        clicked_submit = False
-        for step in range(10):
-            await linkedin_human_delay(1.5, 2.5)
-            logger.info(f"  [EASY APPLY] Step {step + 1}/10")
+    async def _extract_modal_fields_js(self) -> dict:
+        """Extract all visible form fields from Easy Apply modal using JavaScript."""
+        return await self.page.evaluate(r"""() => {
+            const modal = document.querySelector('div.artdeco-modal, div[role="dialog"]');
+            if (!modal) return { error: 'No modal', fields: [], buttons: [] };
+            const fields = [];
+            modal.querySelectorAll('input').forEach(el => {
+                if (el.type === 'hidden' || !el.offsetHeight) return;
+                const label = el.id ? document.querySelector(`label[for="${el.id}"]`)?.textContent?.trim() : '';
+                fields.push({ type: 'input', inputType: el.type || 'text', id: el.id, value: el.value,
+                    label: label || el.getAttribute('aria-label') || el.placeholder || '', required: el.required });
+            });
+            modal.querySelectorAll('select').forEach(el => {
+                if (!el.offsetHeight) return;
+                const label = el.id ? document.querySelector(`label[for="${el.id}"]`)?.textContent?.trim() : '';
+                const opts = Array.from(el.options).map(o => ({ text: o.text.trim(), value: o.value }));
+                fields.push({ type: 'select', id: el.id, label: label || '', options: opts.slice(0, 20),
+                    currentText: el.options[el.selectedIndex]?.text?.trim() || '' });
+            });
+            modal.querySelectorAll('textarea').forEach(el => {
+                if (!el.offsetHeight) return;
+                const label = el.id ? document.querySelector(`label[for="${el.id}"]`)?.textContent?.trim() : '';
+                fields.push({ type: 'textarea', id: el.id, value: el.value, label: label || '' });
+            });
+            return { error: null, fields };
+        }""")
 
-            # Check if modal is still open (only treat as success if we clicked Submit first)
-            try:
-                modal = self.page.locator("div.artdeco-modal, div.jobs-easy-apply-modal, div[role='dialog']").first
-                modal_visible = await modal.is_visible(timeout=1500)
-                if not modal_visible:
-                    if clicked_submit:
-                        logger.info(f"  [EASY APPLY] Modal closed after Submit - SUCCESS")
-                        print(f"  >>> APPLICATION SUBMITTED (modal closed after submit) <<<")
-                        return True
-                    else:
-                        logger.info(f"  [EASY APPLY] Modal not visible at step {step+1} - modal failed to open")
-                        print(f"  WARN: Modal not visible (hasn't submitted yet)")
-                        return False
-            except Exception:
-                pass
+    async def _fill_modal_fields_js(self, fields: list) -> list[str]:
+        """Fill modal fields using AI answers. Returns list of actions taken."""
+        actions = []
+        for field in fields:
+            ftype = field.get("type", "")
+            fid = field.get("id", "")
+            label = field.get("label", "")
+            if not fid:
+                continue
 
-            success_markers = [
-                "text=/application submitted/i",
-                "text=/you.re all set/i",
-                "text=/your application was sent/i",
-                "text=/applied.*successfully/i",
-                "h3:has-text('Your application was sent')",
-            ]
-            for marker in success_markers:
-                try:
-                    loc = self.page.locator(marker).first
-                    if await loc.is_visible(timeout=800):
-                        logger.info(f"  [EASY APPLY] SUCCESS - Application submitted!")
-                        print(f"  >>> APPLICATION SUBMITTED SUCCESSFULLY <<<")
-                        return True
-                except Exception:
+            if ftype == "input":
+                if field.get("inputType") in ("radio", "checkbox"):
                     continue
+                current = (field.get("value") or "").strip()
+                if current:
+                    continue
+                if not label:
+                    continue
+                answer = self.ai.answer_question(label, None)
+                try:
+                    await self.page.locator(f"#{fid}").fill(str(answer))
+                    self._record_qa(label, str(answer))
+                    actions.append(f"FILLED '{label[:40]}' -> '{answer}'")
+                    logger.info(f"    FILLED '{label[:40]}' -> '{answer}'")
+                except Exception:
+                    pass
 
-            # Check if we already applied (button text changed)
+            elif ftype == "select":
+                current_text = field.get("currentText", "")
+                if current_text and "Select" not in current_text:
+                    continue
+                opt_texts = [o["text"] for o in field.get("options", []) if o.get("text")]
+                email_opt = next((o for o in opt_texts if "@" in o), None)
+                if email_opt:
+                    try:
+                        await self.page.locator(f"#{fid}").select_option(label=email_opt)
+                        actions.append(f"SELECTED email: '{email_opt}'")
+                    except Exception:
+                        pass
+                    continue
+                india_opt = next((o for o in opt_texts if "India" in o), None)
+                if india_opt:
+                    try:
+                        await self.page.locator(f"#{fid}").select_option(label=india_opt)
+                        actions.append(f"SELECTED country: '{india_opt}'")
+                    except Exception:
+                        pass
+                    continue
+                if label and len(opt_texts) > 1:
+                    answer = self.ai.answer_question(label, opt_texts)
+                    chosen = next((o for o in opt_texts if o.lower() == str(answer).strip().lower()), None)
+                    if not chosen:
+                        chosen = next((o for o in opt_texts if "Select" not in o and o), None)
+                    if chosen:
+                        try:
+                            await self.page.locator(f"#{fid}").select_option(label=chosen)
+                            self._record_qa(label, chosen)
+                            actions.append(f"AI SELECTED '{label[:40]}' -> '{chosen}'")
+                            logger.info(f"    AI SELECTED '{label[:40]}' -> '{chosen}'")
+                        except Exception:
+                            pass
+
+            elif ftype == "textarea":
+                current = (field.get("value") or "").strip()
+                if current or not label:
+                    continue
+                answer = self.ai.answer_question(label, None)
+                try:
+                    await self.page.locator(f"#{fid}").fill(str(answer))
+                    self._record_qa(label, str(answer))
+                    actions.append(f"FILLED textarea '{label[:40]}'")
+                except Exception:
+                    pass
+        return actions
+
+    async def _handle_radio_buttons_js(self) -> list[str]:
+        """Handle radio button groups via JavaScript."""
+        actions = []
+        groups = await self.page.evaluate(r"""() => {
+            const modal = document.querySelector('div.artdeco-modal, div[role="dialog"]');
+            if (!modal) return [];
+            const groups = {};
+            modal.querySelectorAll('input[type="radio"]').forEach(r => {
+                if (!r.offsetHeight) return;
+                const name = r.name;
+                if (!groups[name]) groups[name] = { name, options: [], anyChecked: false };
+                const label = r.id ? document.querySelector(`label[for="${r.id}"]`)?.textContent?.trim() : r.value;
+                groups[name].options.push({ id: r.id, value: r.value, label: label || r.value, checked: r.checked });
+                if (r.checked) groups[name].anyChecked = true;
+            });
+            Object.values(groups).forEach(g => {
+                const firstRadio = document.getElementById(g.options[0]?.id);
+                if (firstRadio) {
+                    const fieldset = firstRadio.closest('fieldset');
+                    g.question = fieldset?.querySelector('legend, span')?.textContent?.trim() || g.name;
+                }
+            });
+            return Object.values(groups);
+        }""")
+        for group in groups:
+            if group.get("anyChecked"):
+                continue
+            options = [o["label"] for o in group.get("options", [])]
+            question = group.get("question", "")
+            if not options or not question:
+                continue
+            answer = self.ai.answer_question(question, options)
+            chosen_id = None
+            for opt in group.get("options", []):
+                if opt["label"].lower() == str(answer).strip().lower():
+                    chosen_id = opt["id"]
+                    break
+            if not chosen_id and group["options"]:
+                chosen_id = group["options"][0]["id"]
+            if chosen_id:
+                try:
+                    await self.page.evaluate(f"document.getElementById('{chosen_id}')?.click()")
+                    self._record_qa(question, str(answer))
+                    actions.append(f"RADIO '{question[:40]}' -> '{answer}'")
+                    logger.info(f"    RADIO '{question[:40]}' -> '{answer}'")
+                except Exception:
+                    pass
+        return actions
+
+    async def _dismiss_save_dialog(self):
+        """Dismiss 'Save this application?' dialog via JS."""
+        try:
+            await self.page.evaluate(r"""() => {
+                const overlay = document.querySelector('[data-test-modal-id="data-test-easy-apply-discard-confirmation"]');
+                if (overlay && overlay.offsetHeight > 0) {
+                    const saveBtn = overlay.querySelector('button[data-control-name="save_application_confirm_btn"], button[data-test-dialog-primary-btn]');
+                    if (saveBtn) { saveBtn.click(); return; }
+                    const btns = Array.from(overlay.querySelectorAll('button'));
+                    const save = btns.find(b => b.textContent?.trim() === 'Save');
+                    if (save) save.click();
+                }
+            }""")
+        except Exception:
+            pass
+
+    async def _handle_easy_apply_flow(self) -> bool:
+        prev_field_sig = ""
+        stuck_count = 0
+        for step in range(8):
+            await linkedin_human_delay(1.5, 2.5)
+            logger.info(f"  [EASY APPLY] Step {step + 1}/8")
+
+            # Check if modal still open
             try:
-                applied_btn = self.page.locator("button:has-text('Applied')").first
-                if await applied_btn.is_visible(timeout=300):
-                    logger.info(f"  [EASY APPLY] SUCCESS - 'Applied' button detected")
-                    print(f"  >>> APPLICATION SUBMITTED (Applied button detected) <<<")
+                modal = self.page.locator("div.artdeco-modal, div[role='dialog']").first
+                if not await modal.is_visible(timeout=1500):
+                    logger.info(f"  [EASY APPLY] Modal closed - assuming success")
                     return True
             except Exception:
                 pass
 
-            logger.info(f"  [EASY APPLY] Answering visible questions...")
-            await self._answer_visible_questions()
+            # Extract fields via JS
+            modal_data = await self._extract_modal_fields_js()
+            if modal_data.get("error"):
+                break
+            fields = modal_data.get("fields", [])
 
-            # Also handle radio button questions
-            await self._answer_radio_questions()
+            # Stuck detection
+            field_sig = str([(f.get("label", "")[:20], f.get("value", "")[:10]) for f in fields])
+            if field_sig == prev_field_sig:
+                stuck_count += 1
+                if stuck_count >= 2:
+                    logger.info(f"  [EASY APPLY] STUCK on same fields, skipping")
+                    break
+            else:
+                stuck_count = 0
+            prev_field_sig = field_sig
 
-            # Dismiss any typeahead/autocomplete dropdowns by clicking modal body
+            # Fill fields
+            await self._fill_modal_fields_js(fields)
+            await self._handle_radio_buttons_js()
+            await linkedin_human_delay(0.5, 1.0)
+
+            # Dismiss typeahead
             try:
-                typeahead = self.page.locator("div.search-typeahead-v2__hit, div.basic-typeahead__triggered-content").first
+                typeahead = self.page.locator("div.search-typeahead-v2__hit").first
                 if await typeahead.is_visible(timeout=300):
                     await self.page.locator("div.artdeco-modal__content").first.click(position={"x": 5, "y": 5})
                     await linkedin_human_delay(0.3, 0.5)
             except Exception:
                 pass
 
-            # Handle "Save this application?" dialog via JS
+            # Dismiss save dialog
+            await self._dismiss_save_dialog()
+
+            # Click buttons: Next > Review > Submit
+            clicked = None
             try:
-                await self.page.evaluate(r"""() => {
-                    const overlay = document.querySelector('[data-test-modal-id="data-test-easy-apply-discard-confirmation"]');
-                    if (overlay && overlay.offsetHeight > 0) {
-                        const saveBtn = overlay.querySelector('button[data-control-name="save_application_confirm_btn"], button[data-test-dialog-primary-btn]');
-                        if (saveBtn) { saveBtn.click(); return; }
-                        const btns = Array.from(overlay.querySelectorAll('button'));
-                        const save = btns.find(b => b.textContent?.trim() === 'Save');
-                        if (save) save.click();
-                    }
-                }""")
-                await linkedin_human_delay(0.5, 1.0)
+                for aria, name in [
+                    ("Continue to next step", "Next"),
+                    ("Review your application", "Review"),
+                    ("Submit application", "Submit"),
+                ]:
+                    btn = self.page.locator(f":is(div.artdeco-modal, div[role='dialog']) button[aria-label='{aria}']").first
+                    if await btn.is_visible(timeout=400):
+                        try:
+                            await btn.click(timeout=5000)
+                        except Exception:
+                            await self._dismiss_save_dialog()
+                            await self.page.evaluate(f"document.querySelector('button[aria-label=\"{aria}\"]')?.click()")
+                        clicked = name
+                        logger.info(f"  [EASY APPLY] Clicked {name}")
+                        break
             except Exception:
                 pass
 
-            # Button priority: Next (to advance), Review, Submit -- use specific aria-labels
-            MS = ":is(div.artdeco-modal, div[role='dialog'])"
-            next_btn = self.page.locator(f"{MS} button[aria-label='Continue to next step']").first
-            review_btn = self.page.locator(f"{MS} button[aria-label='Review your application']").first
-            submit_btn = self.page.locator(f"{MS} button[aria-label='Submit application']").first
+            if not clicked:
+                # Fallback: primary button with text
+                for text, name in [("Next", "Next"), ("Review", "Review"), ("Submit", "Submit")]:
+                    try:
+                        fb = self.page.locator(f":is(div.artdeco-modal, div[role='dialog']) button.artdeco-button--primary:has-text('{text}')").first
+                        if await fb.is_visible(timeout=300):
+                            await fb.click(timeout=5000)
+                            clicked = f"{name} (fallback)"
+                            break
+                    except Exception:
+                        continue
 
-            # Fallback: text-based within primary button class
-            next_btn_fallback = self.page.locator(f"{MS} button.artdeco-button--primary:has-text('Next')").first
-            review_btn_fallback = self.page.locator(f"{MS} button.artdeco-button--primary:has-text('Review')").first
-            submit_btn_fallback = self.page.locator(f"{MS} button.artdeco-button--primary:has-text('Submit')").first
-
-            try:
-                if await next_btn.is_visible(timeout=600):
-                    try:
-                        await next_btn.click(timeout=5000)
-                    except Exception:
-                        await self.page.evaluate("document.querySelector('button[aria-label=\"Continue to next step\"]')?.click()")
-                    consecutive_empty_steps += 1
-                    logger.info(f"  [EASY APPLY] Clicked Next (step {step+1})")
-                    print(f"  -> Clicked Next")
-                    if consecutive_empty_steps >= 6:
-                        logger.info(f"  [EASY APPLY] Too many Next clicks, stopping")
-                        break
-                elif await next_btn_fallback.is_visible(timeout=300):
-                    await next_btn_fallback.click()
-                    consecutive_empty_steps += 1
-                    logger.info(f"  [EASY APPLY] Clicked Next (fallback, step {step+1})")
-                    print(f"  -> Clicked Next (fallback)")
-                    if consecutive_empty_steps >= 6:
-                        break
-                elif await review_btn.is_visible(timeout=300):
-                    await review_btn.click()
-                    consecutive_empty_steps = 0
-                    logger.info(f"  [EASY APPLY] Clicked Review")
-                    print(f"  -> Clicked Review")
-                elif await review_btn_fallback.is_visible(timeout=300):
-                    await review_btn_fallback.click()
-                    consecutive_empty_steps = 0
-                    logger.info(f"  [EASY APPLY] Clicked Review (fallback)")
-                    print(f"  -> Clicked Review (fallback)")
-                elif await submit_btn.is_visible(timeout=300):
-                    await submit_btn.click()
-                    clicked_submit = True
-                    logger.info(f"  [EASY APPLY] Clicked SUBMIT (aria-label)!")
-                    print(f"  -> Clicked SUBMIT APPLICATION")
-                    await linkedin_human_delay(2.0, 3.5)
-                    for marker in success_markers:
-                        try:
-                            loc = self.page.locator(marker).first
-                            if await loc.is_visible(timeout=1500):
-                                logger.info(f"  [EASY APPLY] SUCCESS!")
-                                print(f"  >>> APPLICATION SUBMITTED SUCCESSFULLY <<<")
-                                return True
-                        except Exception:
-                            continue
-                    try:
-                        m = self.page.locator("div.artdeco-modal, div[role='dialog']").first
-                        if not await m.is_visible(timeout=1000):
-                            logger.info(f"  [EASY APPLY] Modal closed after submit - SUCCESS")
-                            print(f"  >>> APPLICATION SUBMITTED (modal closed) <<<")
-                            return True
-                    except Exception:
-                        pass
-                elif await submit_btn_fallback.is_visible(timeout=300):
-                    await submit_btn_fallback.click()
-                    clicked_submit = True
-                    logger.info(f"  [EASY APPLY] Clicked SUBMIT (fallback)!")
-                    print(f"  -> Clicked SUBMIT (fallback)")
-                    await linkedin_human_delay(2.0, 3.5)
-                    try:
-                        m = self.page.locator("div.artdeco-modal, div[role='dialog']").first
-                        if not await m.is_visible(timeout=1000):
-                            logger.info(f"  [EASY APPLY] Modal closed after submit - SUCCESS")
-                            print(f"  >>> APPLICATION SUBMITTED (modal closed) <<<")
-                            return True
-                    except Exception:
-                        pass
-                else:
-                    logger.info(f"  [EASY APPLY] No progression button found, stopping")
-                    break
-            except Exception as e:
-                logger.warning(f"  [EASY APPLY] Button click error: {e}")
+            if not clicked:
+                logger.info(f"  [EASY APPLY] No button found, stopping")
                 break
+
+            # Check submit success
+            if clicked and "Submit" in clicked:
+                await linkedin_human_delay(2.0, 3.5)
+                try:
+                    if not await modal.is_visible(timeout=2000):
+                        logger.info(f"  [EASY APPLY] Modal closed after Submit - SUCCESS!")
+                        return True
+                except Exception:
+                    pass
 
         return False
 
@@ -755,65 +854,40 @@ class LinkedInJobApplicant:
                 print(f"  SKIP: Score {match_score}% below threshold {min_match_pct}%")
                 return False
 
-            easy_apply = self.page.locator("button:has-text('Easy Apply')").first
-            if not await easy_apply.is_visible(timeout=2000):
-                self.last_skip_reason = "no_easy_apply"
-                self.last_match_reason = "Easy Apply button not available"
-                print(f"  SKIP: No Easy Apply button found")
-                return False
+            # Navigate directly to apply URL (proven more reliable than button click)
+            import re as _re
+            job_id_match = _re.search(r'/jobs/view/(\d+)', job.get("url", ""))
+            if job_id_match:
+                apply_url = f"https://www.linkedin.com/jobs/view/{job_id_match.group(1)}/apply/"
+                print(f"  >>> Navigating to apply URL...")
+                await self.page.goto(apply_url, timeout=60000, wait_until="domcontentloaded")
+                await linkedin_human_delay(3.0, 5.0)
+            else:
+                # Fallback: click Easy Apply button
+                easy_apply = self.page.locator("button:has-text('Easy Apply')").first
+                if not await easy_apply.is_visible(timeout=2000):
+                    self.last_skip_reason = "no_easy_apply"
+                    self.last_match_reason = "Easy Apply button not available"
+                    print(f"  SKIP: No Easy Apply button found")
+                    return False
+                btn_text = (await easy_apply.inner_text()).strip().lower()
+                if "applied" in btn_text:
+                    self.last_skip_reason = "already_applied"
+                    self.last_match_reason = "Already applied"
+                    return False
+                await easy_apply.click()
+                await linkedin_human_delay(3.0, 5.0)
 
-            btn_text = (await easy_apply.inner_text()).strip().lower()
-            if "applied" in btn_text:
-                self.last_skip_reason = "already_applied"
-                self.last_match_reason = "Already applied"
-                print(f"  SKIP: Already applied to this job")
-                return False
-
-            if not await easy_apply.is_enabled(timeout=1200):
-                self.last_skip_reason = "button_disabled"
-                print(f"  SKIP: Easy Apply button is disabled")
-                return False
-
-            print(f"  >>> Clicking Easy Apply button...")
-            await easy_apply.click()
-            await linkedin_human_delay(3.0, 5.0)
-
-            # Wait for modal to appear — try button click first
-            modal_appeared = False
-            try:
-                modal = self.page.locator("div.artdeco-modal, div[role='dialog']").first
-                modal_appeared = await modal.is_visible(timeout=5000)
-            except Exception:
-                pass
-
-            # If modal didn't appear from button click, try direct URL navigation
-            if not modal_appeared:
-                logger.info(f"  [EASY APPLY] Modal not from button, trying direct apply URL...")
-                print(f"  -> Modal not opened from button, trying direct URL...")
-                try:
-                    # Extract job ID from URL and navigate to apply page
-                    import re
-                    job_id_match = re.search(r'/jobs/view/(\d+)', job.get("url", ""))
-                    if job_id_match:
-                        apply_url = f"https://www.linkedin.com/jobs/view/{job_id_match.group(1)}/apply/"
-                        await self.page.goto(apply_url, timeout=60000, wait_until="domcontentloaded")
-                        await linkedin_human_delay(3.0, 5.0)
-                        modal = self.page.locator("div.artdeco-modal, div[role='dialog']").first
-                        modal_appeared = await modal.is_visible(timeout=5000)
-                        if modal_appeared:
-                            logger.info(f"  [EASY APPLY] Modal appeared via direct URL!")
-                            print(f"  -> Modal opened via direct apply URL!")
-                except Exception as e:
-                    logger.warning(f"  [EASY APPLY] Direct URL failed: {e}")
+            # Check if modal appeared
+            modal = self.page.locator("div.artdeco-modal, div[role='dialog']").first
+            modal_appeared = await modal.is_visible(timeout=5000)
 
             if not modal_appeared:
-                logger.info(f"  [EASY APPLY] Modal did not appear")
                 self.last_skip_reason = "modal_not_opened"
-                self.last_match_reason = "Easy Apply modal did not open"
-                print(f"  SKIP: Easy Apply modal did not open")
+                self.last_match_reason = "Easy Apply modal did not open (likely already applied)"
+                print(f"  SKIP: Modal did not open")
                 return False
 
-            logger.info(f"  [EASY APPLY] Modal is visible, proceeding...")
             print(f"  >>> Easy Apply modal opened, filling questions...")
 
             submitted = await self._handle_easy_apply_flow()

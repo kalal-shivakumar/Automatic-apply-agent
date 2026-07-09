@@ -1,5 +1,0 @@
-Ravi Teja
-Cloud Platform Engineer
-Experience: 8 years
-Skills: Azure, Terraform, Docker, Kubernetes, Linux, Python, PowerShell, DevOps, CI/CD, Monitoring, Networking
-Worked on automation, AKS deployments, and release pipelines.

@@ -50,7 +50,8 @@ async def collect_easy_apply_urls(page, count=10) -> list[dict]:
             if len(jobs) >= count:
                 break
             start = (page_no - 1) * 25
-            url = f"https://www.linkedin.com/jobs/search/?keywords={quote_plus(keywords)}&location={quote_plus(location)}&f_TPR=r604800&f_AL=true&start={start}"
+            # f_AL=true = Easy Apply only, f_TPR=r86400 = last 24 hours
+            url = f"https://www.linkedin.com/jobs/search/?keywords={quote_plus(keywords)}&location={quote_plus(location)}&f_TPR=r86400&f_AL=true&start={start}"
             logger.info(f"Searching: {keywords} in {location} (page {page_no})")
             try:
                 await page.goto(url, timeout=60000, wait_until="domcontentloaded")

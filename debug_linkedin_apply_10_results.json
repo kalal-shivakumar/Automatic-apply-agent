@@ -1,190 +1,14 @@
 [
   {
-    "url": "https://www.linkedin.com/jobs/view/4436243010/",
-    "title": "Cloud EngineerCloud Engineer",
+    "url": "https://www.linkedin.com/jobs/view/4438597295/",
+    "title": "Devops Engineer (Upto 40 LPA)Devops Engineer (Upto 40 LPA)",
     "steps": [],
     "applied": false,
     "error": "Modal did not appear"
-  },
-  {
-    "url": "https://www.linkedin.com/jobs/view/4433146807/",
-    "title": "Cloud Engineer \n    \n    \n\nCloud Engineer with verification",
-    "steps": [
-      {
-        "step": 1,
-        "fields_found": 3,
-        "actions": [
-          "ALREADY FILLED: '9999999999'",
-          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
-          "ALREADY SELECTED: 'India (+91)'"
-        ],
-        "button_clicked": "Next (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 2,
-        "fields_found": 1,
-        "actions": [
-          "SKIP radio/checkbox via fill_field",
-          "RADIO '' already answered"
-        ],
-        "button_clicked": "Next (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 3,
-        "fields_found": 6,
-        "actions": [
-          "FILLED 'What is your Current CTC (in LPA)?' -> '3-9 LPA'",
-          "FILLED 'What is your Expected CTC (in LPA)?' -> '3-9 LPA'",
-          "FILLED 'What is your Notice Period (in Days)?' -> 'Immediate'",
-          "FILLED 'How many years of work experience do you have with IaC (Terraform)?' -> '0'",
-          "FILLED 'How many years of work experience do you have with Azure Cloud?' -> '0'",
-          "DEFAULT SELECTED 'Are you Serving your Notice Period?Are you Serving your Notice Period?' -> 'Yes'"
-        ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 4,
-        "fields_found": 6,
-        "actions": [
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: 'Immediate'",
-          "ALREADY FILLED: '0'",
-          "ALREADY FILLED: '0'",
-          "ALREADY SELECTED: 'Yes'"
-        ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 5,
-        "fields_found": 6,
-        "actions": [
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: 'Immediate'",
-          "ALREADY FILLED: '0'",
-          "ALREADY FILLED: '0'",
-          "ALREADY SELECTED: 'Yes'"
-        ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 6,
-        "fields_found": 0,
-        "actions": [
-          "STUCK - same fields repeated"
-        ],
-        "button_clicked": ""
-      }
-    ],
-    "applied": false,
-    "error": null,
-    "verify_button_text": ""
-  },
-  {
-    "url": "https://www.linkedin.com/jobs/view/4438597295/",
-    "title": "Devops Engineer (Upto 40 LPA)Devops Engineer (Upto 40 LPA)",
-    "steps": [
-      {
-        "step": 1,
-        "fields_found": 3,
-        "actions": [
-          "ALREADY FILLED: '9999999999'",
-          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
-          "ALREADY SELECTED: 'India (+91)'"
-        ],
-        "button_clicked": "Next (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 2,
-        "fields_found": 1,
-        "actions": [
-          "SKIP radio/checkbox via fill_field",
-          "RADIO '' already answered"
-        ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 3,
-        "fields_found": 1,
-        "actions": [
-          "SKIP radio/checkbox via fill_field"
-        ],
-        "button_clicked": "Submit (aria-label)",
-        "progress": ""
-      }
-    ],
-    "applied": true,
-    "error": null,
-    "verify_button_text": ""
   },
   {
     "url": "https://www.linkedin.com/jobs/view/4437308576/",
     "title": "DevOps Engineer (GCP) \n    \n    \n\nDevOps Engineer (GCP) with verification",
-    "steps": [],
-    "applied": false,
-    "error": "Modal did not appear"
-  },
-  {
-    "url": "https://www.linkedin.com/jobs/view/4432784036/",
-    "title": "Site Reliability Engineer \n    \n    \n\nSite Reliability Engineer with verification",
-    "steps": [
-      {
-        "step": 1,
-        "fields_found": 3,
-        "actions": [
-          "ALREADY FILLED: '9999999999'",
-          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
-          "ALREADY SELECTED: 'India (+91)'"
-        ],
-        "button_clicked": "Next (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 2,
-        "fields_found": 1,
-        "actions": [
-          "SKIP radio/checkbox via fill_field",
-          "RADIO '' already answered"
-        ],
-        "button_clicked": "Next (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 3,
-        "fields_found": 3,
-        "actions": [
-          "ALREADY FILLED: '0'",
-          "FILLED 'How many years of work experience do you have with Bash?' -> '0'",
-          "ALREADY FILLED: '11'"
-        ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 4,
-        "fields_found": 1,
-        "actions": [
-          "SKIP radio/checkbox via fill_field"
-        ],
-        "button_clicked": "Submit (aria-label)",
-        "progress": ""
-      }
-    ],
-    "applied": true,
-    "error": null,
-    "verify_button_text": ""
-  },
-  {
-    "url": "https://www.linkedin.com/jobs/view/4435417928/",
-    "title": "Devops Platform EngineerDevops Platform Engineer",
     "steps": [],
     "applied": false,
     "error": "Modal did not appear"
@@ -204,25 +28,184 @@
     "error": "Modal did not appear"
   },
   {
-    "url": "https://www.linkedin.com/jobs/view/4426458131/",
-    "title": "Senior DevOps Engineer (Azure)Senior DevOps Engineer (Azure)",
+    "url": "https://www.linkedin.com/jobs/view/4437366704/",
+    "title": "DevOps Engineer \n    \n    \n\nDevOps Engineer with verification",
     "steps": [],
     "applied": false,
     "error": "Modal did not appear"
   },
   {
-    "url": "https://www.linkedin.com/jobs/view/4437366704/",
-    "title": "DevOps Engineer \n    \n    \n\nDevOps Engineer with verification",
+    "url": "https://www.linkedin.com/jobs/view/4438223886/",
+    "title": "Site Reliability EngineerSite Reliability Engineer",
     "steps": [
       {
         "step": 1,
-        "fields_found": 4,
+        "fields_found": 3,
         "actions": [
           "ALREADY FILLED: '9999999999'",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
+          "ALREADY SELECTED: 'India (+91)'"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 2,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field",
+          "RADIO '' already answered"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 3,
+        "fields_found": 4,
+        "actions": [
+          "FILLED 'How many years of work experience do you have with Site Reliability Engineering?' -> '0'",
+          "DEFAULT SELECTED 'Can you join within 30 days?Can you join within 30 days?' -> 'Yes'",
+          "AI SELECTED 'Do you have hands-on experience working with error budgets and building CI/CD pipeline from scratch?Do you have hands-on experience working with error budgets and building CI/CD pipeline from scratch?' -> 'Yes'",
+          "AI SELECTED 'Do you have hands-on project experience in implementing SLIs and SLOs?Do you have hands-on project experience in implementing SLIs and SLOs?' -> 'Yes'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 4,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field"
+        ],
+        "button_clicked": "Submit (aria-label)",
+        "progress": ""
+      }
+    ],
+    "applied": true,
+    "error": null,
+    "verify_button_text": ""
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4438263516/",
+    "title": "Staff DevOps Engineer IStaff DevOps Engineer I",
+    "steps": [
+      {
+        "step": 1,
+        "fields_found": 5,
+        "actions": [
+          "ALREADY FILLED: '9999999999'",
+          "SKIP radio/checkbox via fill_field",
           "SKIP radio/checkbox via fill_field",
           "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
           "ALREADY SELECTED: 'India (+91)'",
           "RADIO '' already answered"
+        ],
+        "button_clicked": "Submit (aria-label)",
+        "progress": ""
+      }
+    ],
+    "applied": true,
+    "error": null,
+    "verify_button_text": ""
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4437356102/",
+    "title": "Engineer III - TechOps CICD SRE (Reliability Focused)Engineer III - TechOps CICD SRE (Reliability Fo",
+    "steps": [
+      {
+        "step": 1,
+        "fields_found": 5,
+        "actions": [
+          "ALREADY FILLED: 'Sahasra'",
+          "ALREADY FILLED: 'Rasabathula'",
+          "ALREADY FILLED: '9999999999'",
+          "ALREADY SELECTED: 'India (+91)'",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 2,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field",
+          "RADIO '' already answered"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 3,
+        "fields_found": 1,
+        "actions": [
+          "FILLED 'What is your current location?' -> 'Hyderabad'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 4,
+        "fields_found": 0,
+        "actions": [],
+        "button_clicked": "Submit (aria-label)",
+        "progress": ""
+      }
+    ],
+    "applied": true,
+    "error": null,
+    "verify_button_text": ""
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4434839947/",
+    "title": "Data EngineerData Engineer",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4437035777/",
+    "title": "Sr System Engineer(Sweden) \n    \n    \n\nSr System Engineer(Sweden) with verification",
+    "steps": [
+      {
+        "step": 1,
+        "fields_found": 3,
+        "actions": [
+          "ALREADY FILLED: '9999999999'",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
+          "ALREADY SELECTED: 'India (+91)'"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 2,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field",
+          "RADIO '' already answered"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 3,
+        "fields_found": 5,
+        "actions": [
+          "FILLED 'How many years of work experience do you have with Linux?' -> '0'",
+          "FILLED 'How many years of work experience do you have with Unix?' -> '0'",
+          "ALREADY FILLED: '0'",
+          "DEFAULT SELECTED 'Can you join immediate or within a week?Can you join immediate or within a week?' -> 'Yes'",
+          "AI SELECTED 'Can you relocate to Sweden?Can you relocate to Sweden?' -> 'Yes'"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 4,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field"
         ],
         "button_clicked": "Submit (aria-label)",
         "progress": ""
