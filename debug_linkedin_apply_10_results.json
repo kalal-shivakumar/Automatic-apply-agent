@@ -75,48 +75,53 @@
       },
       {
         "step": 6,
-        "fields_found": 6,
+        "fields_found": 0,
         "actions": [
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: 'Immediate'",
-          "ALREADY FILLED: '0'",
-          "ALREADY FILLED: '0'",
-          "ALREADY SELECTED: 'Yes'"
+          "STUCK - same fields repeated"
         ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 7,
-        "fields_found": 6,
-        "actions": [
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: 'Immediate'",
-          "ALREADY FILLED: '0'",
-          "ALREADY FILLED: '0'",
-          "ALREADY SELECTED: 'Yes'"
-        ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 8,
-        "fields_found": 6,
-        "actions": [
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: '3-9 LPA'",
-          "ALREADY FILLED: 'Immediate'",
-          "ALREADY FILLED: '0'",
-          "ALREADY FILLED: '0'",
-          "ALREADY SELECTED: 'Yes'"
-        ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
+        "button_clicked": ""
       }
     ],
     "applied": false,
+    "error": null,
+    "verify_button_text": ""
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4438597295/",
+    "title": "Devops Engineer (Upto 40 LPA)Devops Engineer (Upto 40 LPA)",
+    "steps": [
+      {
+        "step": 1,
+        "fields_found": 3,
+        "actions": [
+          "ALREADY FILLED: '9999999999'",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
+          "ALREADY SELECTED: 'India (+91)'"
+        ],
+        "button_clicked": "Next (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 2,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field",
+          "RADIO '' already answered"
+        ],
+        "button_clicked": "Review (aria-label)",
+        "progress": ""
+      },
+      {
+        "step": 3,
+        "fields_found": 1,
+        "actions": [
+          "SKIP radio/checkbox via fill_field"
+        ],
+        "button_clicked": "Submit (aria-label)",
+        "progress": ""
+      }
+    ],
+    "applied": true,
     "error": null,
     "verify_button_text": ""
   },
@@ -128,22 +133,8 @@
     "error": "Modal did not appear"
   },
   {
-    "url": "https://www.linkedin.com/jobs/view/4435417928/",
-    "title": "Devops Platform EngineerDevops Platform Engineer",
-    "steps": [],
-    "applied": false,
-    "error": "Modal did not appear"
-  },
-  {
-    "url": "https://www.linkedin.com/jobs/view/4435411530/",
-    "title": "Cloud Engineer \n    \n    \n\nCloud Engineer with verification",
-    "steps": [],
-    "applied": false,
-    "error": "Modal did not appear"
-  },
-  {
-    "url": "https://www.linkedin.com/jobs/view/4437301880/",
-    "title": "DevOps Engineer – GitHub Enterprise & TerraformDevOps Engineer – GitHub Enterprise & Terraform",
+    "url": "https://www.linkedin.com/jobs/view/4432784036/",
+    "title": "Site Reliability Engineer \n    \n    \n\nSite Reliability Engineer with verification",
     "steps": [
       {
         "step": 1,
@@ -170,9 +161,9 @@
         "step": 3,
         "fields_found": 3,
         "actions": [
-          "FILLED 'How many years of work experience do you have with DevOps?' -> '0'",
           "ALREADY FILLED: '0'",
-          "ALREADY FILLED: '0'"
+          "FILLED 'How many years of work experience do you have with Bash?' -> '0'",
+          "ALREADY FILLED: '11'"
         ],
         "button_clicked": "Review (aria-label)",
         "progress": ""
@@ -192,6 +183,20 @@
     "verify_button_text": ""
   },
   {
+    "url": "https://www.linkedin.com/jobs/view/4435417928/",
+    "title": "Devops Platform EngineerDevops Platform Engineer",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
+    "url": "https://www.linkedin.com/jobs/view/4437301880/",
+    "title": "DevOps Engineer – GitHub Enterprise & TerraformDevOps Engineer – GitHub Enterprise & Terraform",
+    "steps": [],
+    "applied": false,
+    "error": "Modal did not appear"
+  },
+  {
     "url": "https://www.linkedin.com/jobs/view/4437358116/",
     "title": "DevOps Engineer \n    \n    \n\nDevOps Engineer with verification",
     "steps": [],
@@ -199,80 +204,26 @@
     "error": "Modal did not appear"
   },
   {
-    "url": "https://www.linkedin.com/jobs/view/4436045431/",
-    "title": "Lead DevOps EngineerLead DevOps Engineer",
+    "url": "https://www.linkedin.com/jobs/view/4426458131/",
+    "title": "Senior DevOps Engineer (Azure)Senior DevOps Engineer (Azure)",
     "steps": [],
     "applied": false,
     "error": "Modal did not appear"
   },
   {
-    "url": "https://www.linkedin.com/jobs/view/4434839947/",
-    "title": "Data EngineerData Engineer",
+    "url": "https://www.linkedin.com/jobs/view/4437366704/",
+    "title": "DevOps Engineer \n    \n    \n\nDevOps Engineer with verification",
     "steps": [
       {
         "step": 1,
-        "fields_found": 3,
+        "fields_found": 4,
         "actions": [
           "ALREADY FILLED: '9999999999'",
-          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
-          "ALREADY SELECTED: 'India (+91)'"
-        ],
-        "button_clicked": "Next (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 2,
-        "fields_found": 1,
-        "actions": [
           "SKIP radio/checkbox via fill_field",
+          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
+          "ALREADY SELECTED: 'India (+91)'",
           "RADIO '' already answered"
         ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 3,
-        "fields_found": 1,
-        "actions": [
-          "SKIP radio/checkbox via fill_field"
-        ],
-        "button_clicked": "Submit (aria-label)",
-        "progress": ""
-      }
-    ],
-    "applied": true,
-    "error": null,
-    "verify_button_text": ""
-  },
-  {
-    "url": "https://www.linkedin.com/jobs/view/4434536162/",
-    "title": "Sr.Application Support Engineer (.NET, React, Azure & DevOps)Sr.Application Support Engineer (.NET, ",
-    "steps": [
-      {
-        "step": 1,
-        "fields_found": 3,
-        "actions": [
-          "ALREADY FILLED: '9999999999'",
-          "ALREADY SELECTED: 'rsahasra2009@gmail.com'",
-          "ALREADY SELECTED: 'India (+91)'"
-        ],
-        "button_clicked": "Next (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 2,
-        "fields_found": 1,
-        "actions": [
-          "SKIP radio/checkbox via fill_field",
-          "RADIO '' already answered"
-        ],
-        "button_clicked": "Review (aria-label)",
-        "progress": ""
-      },
-      {
-        "step": 3,
-        "fields_found": 0,
-        "actions": [],
         "button_clicked": "Submit (aria-label)",
         "progress": ""
       }
